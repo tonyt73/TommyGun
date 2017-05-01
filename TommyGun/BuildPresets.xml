@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Presets>
+  <Preset>
+    <UpdateParserTags>true</UpdateParserTags>
+    <JumpToError>true</JumpToError>
+    <ClearConsole>true</ClearConsole>
+    <Name>Pasmo, ZX Spin</Name>
+    <Assembler>C:\Users\Moo\Google Drive\TommyGun\ZXSpectrum\pasmo\pasmo.exe</Assembler>
+    <AssemblerParams>-v --tapbas --err game.asm %game%.tap %game%.map</AssemblerParams>
+    <Compiler/>
+    <CompilerParams/>
+    <Linker/>
+    <LinkerParams/>
+    <Emulator>C:\Users\Moo\Google Drive\TommyGun\ZXSpectrum\Spin\ZXSpin.exe</Emulator>
+    <EmulatorParams>%Pfolder%\%game%.tap</EmulatorParams>
+    <ErrorPrefix>ERROR</ErrorPrefix>
+    <FilePrefix>file</FilePrefix>
+    <LinePrefix>line</LinePrefix>
+  </Preset>
+  <Preset>
+    <UpdateParserTags>false</UpdateParserTags>
+    <JumpToError>true</JumpToError>
+    <ClearConsole>true</ClearConsole>
+    <Name>Z88DK, Spin</Name>
+    <Assembler/>
+    <AssemblerParams/>
+    <Compiler>C:\z88dk\bin\zcc.exe</Compiler>
+    <CompilerParams>+zx -lndos -create-app -o main main.c</CompilerParams>
+    <Linker/>
+    <LinkerParams/>
+    <Emulator>D:\ZXSpectrum\Spin\ZXSpin.exe</Emulator>
+    <EmulatorParams>%Pfolder%\main.tap</EmulatorParams>
+    <ErrorPrefix>ERROR</ErrorPrefix>
+    <FilePrefix>file</FilePrefix>
+    <LinePrefix>line</LinePrefix>
+  </Preset>
+</Presets>

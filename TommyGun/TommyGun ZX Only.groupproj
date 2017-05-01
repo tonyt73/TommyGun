@@ -1,0 +1,364 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{d6338a29-afa7-45a9-8864-3fa464f72c90}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Projects Include="FrameWork\CoreUtils_R6.cbproj" />
+    <Projects Include="FrameWork\Core_R6.cbproj" />
+    <Projects Include="Helpers\LogFiles_R6.cbproj" />
+    <Projects Include="Plugins\CodeEditor\CodeEditor.cbproj" />
+    <Projects Include="Plugins\CodeEditor\ImageParser\AttributeImageParser.cbproj" />
+    <Projects Include="Plugins\CodeEditor\ImageTableParser\ZXImageTableParser.cbproj" />
+    <Projects Include="Plugins\CodeEditor\MapParser\MapParser.cbproj" />
+    <Projects Include="Plugins\CodeEditor\PaletteImageParser\PaletteImageParser.cbproj" />
+    <Projects Include="Plugins\CodeEditor\PaletteParser\PaletteParser.cbproj" />
+    <Projects Include="Plugins\CodeEditor\Pasmo\Pasmo.cbproj" />
+    <Projects Include="Plugins\CodeEditor\SevenuPImageParser\SevenuPImageParser.cbproj" />
+    <Projects Include="Plugins\CodeEditor\StringTableParser\StringTableParser.cbproj" />
+    <Projects Include="Plugins\CodeEditor\ZXScreen$Parser\ZXScreenParser.cbproj" />
+    <Projects Include="Plugins\Common\PluginCommon_R6.cbproj" />
+    <Projects Include="Plugins\ImageEditor\CharacterSetImage\CharacterType.cbproj" />
+    <Projects Include="Plugins\ImageEditor\ImageEditor.cbproj" />
+    <Projects Include="Plugins\ImageEditor\ImageLibrary_R6.cbproj" />
+    <Projects Include="Plugins\ImageEditor\ImageTools\ImageTools.cbproj" />
+    <Projects Include="Plugins\ImageEditor\ImportImage\ImageImport.cbproj" />
+    <Projects Include="Plugins\ImageEditor\MonochromePalette\MonochromePalette.cbproj" />
+    <Projects Include="Plugins\ImageEditor\PaintTools\PaintTools.cbproj" />
+    <Projects Include="Plugins\ImageEditor\ScreenImage\ScreenType.cbproj" />
+    <Projects Include="Plugins\ImageEditor\SpriteImage\SpriteType.cbproj" />
+    <Projects Include="Plugins\ImageEditor\TileImage\TileType.cbproj" />
+    <Projects Include="Plugins\ImageEditor\UDGImage\UDGType.cbproj" />
+    <Projects Include="Plugins\ImageEditor\ZXSpectrumHiColourPalette\ZXSpectrumHiColourPalette.cbproj" />
+    <Projects Include="Plugins\ImageEditor\ZXSpectrumNextPalette\ZXSpectrumNextPalette.cbproj" />
+    <Projects Include="Plugins\ImageEditor\ZXSpectrumPalette\ZXSpectrumPalette.cbproj" />
+    <Projects Include="Plugins\ImageEditor\ZXSpectrumUlaPlusPalette\ZXSpectrumUlaPlusPalette.cbproj" />
+    <Projects Include="Plugins\MapEditor\MapEditor.cbproj" />
+    <Projects Include="Plugins\MemoryEditor\MemoryEditor.cbproj" />
+    <Projects Include="Plugins\StringEditor\StringEditor.cbproj" />
+    <Projects Include="TommyGun.cbproj" />
+    <Projects Include="Updater\Updater.cbproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+<BorlandProject xmlns=""><Default.Personality></Default.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Target Name="CoreUtils_R6">
+    <MSBuild Projects="FrameWork\CoreUtils_R6.cbproj" Targets="" />
+  </Target>
+  <Target Name="CoreUtils_R6:Clean">
+    <MSBuild Projects="FrameWork\CoreUtils_R6.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="CoreUtils_R6:Make">
+    <MSBuild Projects="FrameWork\CoreUtils_R6.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="LogFiles_R6">
+    <MSBuild Projects="Helpers\LogFiles_R6.cbproj" Targets="" />
+  </Target>
+  <Target Name="LogFiles_R6:Clean">
+    <MSBuild Projects="Helpers\LogFiles_R6.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="LogFiles_R6:Make">
+    <MSBuild Projects="Helpers\LogFiles_R6.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="PluginCommon_R6">
+    <MSBuild Projects="Plugins\Common\PluginCommon_R6.cbproj" Targets="" />
+  </Target>
+  <Target Name="PluginCommon_R6:Clean">
+    <MSBuild Projects="Plugins\Common\PluginCommon_R6.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="PluginCommon_R6:Make">
+    <MSBuild Projects="Plugins\Common\PluginCommon_R6.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ImageLibrary_R6">
+    <MSBuild Projects="Plugins\ImageEditor\ImageLibrary_R6.cbproj" Targets="" />
+  </Target>
+  <Target Name="ImageLibrary_R6:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\ImageLibrary_R6.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ImageLibrary_R6:Make">
+    <MSBuild Projects="Plugins\ImageEditor\ImageLibrary_R6.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="TommyGun">
+    <MSBuild Projects="TommyGun.cbproj" Targets="" />
+  </Target>
+  <Target Name="TommyGun:Clean">
+    <MSBuild Projects="TommyGun.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="TommyGun:Make">
+    <MSBuild Projects="TommyGun.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="Core_R6">
+    <MSBuild Projects="FrameWork\Core_R6.cbproj" Targets="" />
+  </Target>
+  <Target Name="Core_R6:Clean">
+    <MSBuild Projects="FrameWork\Core_R6.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="Core_R6:Make">
+    <MSBuild Projects="FrameWork\Core_R6.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="MapEditor">
+    <MSBuild Projects="Plugins\MapEditor\MapEditor.cbproj" Targets="" />
+  </Target>
+  <Target Name="MapEditor:Clean">
+    <MSBuild Projects="Plugins\MapEditor\MapEditor.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="MapEditor:Make">
+    <MSBuild Projects="Plugins\MapEditor\MapEditor.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ImageEditor">
+    <MSBuild Projects="Plugins\ImageEditor\ImageEditor.cbproj" Targets="" />
+  </Target>
+  <Target Name="ImageEditor:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\ImageEditor.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ImageEditor:Make">
+    <MSBuild Projects="Plugins\ImageEditor\ImageEditor.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="TileType">
+    <MSBuild Projects="Plugins\ImageEditor\TileImage\TileType.cbproj" Targets="" />
+  </Target>
+  <Target Name="TileType:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\TileImage\TileType.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="TileType:Make">
+    <MSBuild Projects="Plugins\ImageEditor\TileImage\TileType.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ScreenType">
+    <MSBuild Projects="Plugins\ImageEditor\ScreenImage\ScreenType.cbproj" Targets="" />
+  </Target>
+  <Target Name="ScreenType:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\ScreenImage\ScreenType.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ScreenType:Make">
+    <MSBuild Projects="Plugins\ImageEditor\ScreenImage\ScreenType.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="SpriteType">
+    <MSBuild Projects="Plugins\ImageEditor\SpriteImage\SpriteType.cbproj" Targets="" />
+  </Target>
+  <Target Name="SpriteType:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\SpriteImage\SpriteType.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="SpriteType:Make">
+    <MSBuild Projects="Plugins\ImageEditor\SpriteImage\SpriteType.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="CharacterType">
+    <MSBuild Projects="Plugins\ImageEditor\CharacterSetImage\CharacterType.cbproj" Targets="" />
+  </Target>
+  <Target Name="CharacterType:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\CharacterSetImage\CharacterType.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="CharacterType:Make">
+    <MSBuild Projects="Plugins\ImageEditor\CharacterSetImage\CharacterType.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="UDGType">
+    <MSBuild Projects="Plugins\ImageEditor\UDGImage\UDGType.cbproj" Targets="" />
+  </Target>
+  <Target Name="UDGType:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\UDGImage\UDGType.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="UDGType:Make">
+    <MSBuild Projects="Plugins\ImageEditor\UDGImage\UDGType.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="PaintTools">
+    <MSBuild Projects="Plugins\ImageEditor\PaintTools\PaintTools.cbproj" Targets="" />
+  </Target>
+  <Target Name="PaintTools:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\PaintTools\PaintTools.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="PaintTools:Make">
+    <MSBuild Projects="Plugins\ImageEditor\PaintTools\PaintTools.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ImageTools">
+    <MSBuild Projects="Plugins\ImageEditor\ImageTools\ImageTools.cbproj" Targets="" />
+  </Target>
+  <Target Name="ImageTools:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\ImageTools\ImageTools.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ImageTools:Make">
+    <MSBuild Projects="Plugins\ImageEditor\ImageTools\ImageTools.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ImageImport">
+    <MSBuild Projects="Plugins\ImageEditor\ImportImage\ImageImport.cbproj" Targets="" />
+  </Target>
+  <Target Name="ImageImport:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\ImportImage\ImageImport.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ImageImport:Make">
+    <MSBuild Projects="Plugins\ImageEditor\ImportImage\ImageImport.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ZXSpectrumPalette">
+    <MSBuild Projects="Plugins\ImageEditor\ZXSpectrumPalette\ZXSpectrumPalette.cbproj" Targets="" />
+  </Target>
+  <Target Name="ZXSpectrumPalette:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\ZXSpectrumPalette\ZXSpectrumPalette.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ZXSpectrumPalette:Make">
+    <MSBuild Projects="Plugins\ImageEditor\ZXSpectrumPalette\ZXSpectrumPalette.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ZXSpectrumHiColourPalette">
+    <MSBuild Projects="Plugins\ImageEditor\ZXSpectrumHiColourPalette\ZXSpectrumHiColourPalette.cbproj" Targets="" />
+  </Target>
+  <Target Name="ZXSpectrumHiColourPalette:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\ZXSpectrumHiColourPalette\ZXSpectrumHiColourPalette.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ZXSpectrumHiColourPalette:Make">
+    <MSBuild Projects="Plugins\ImageEditor\ZXSpectrumHiColourPalette\ZXSpectrumHiColourPalette.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ZXSpectrumUlaPlusPalette">
+    <MSBuild Projects="Plugins\ImageEditor\ZXSpectrumUlaPlusPalette\ZXSpectrumUlaPlusPalette.cbproj" Targets="" />
+  </Target>
+  <Target Name="ZXSpectrumUlaPlusPalette:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\ZXSpectrumUlaPlusPalette\ZXSpectrumUlaPlusPalette.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ZXSpectrumUlaPlusPalette:Make">
+    <MSBuild Projects="Plugins\ImageEditor\ZXSpectrumUlaPlusPalette\ZXSpectrumUlaPlusPalette.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ZXSpectrumNextPalette">
+    <MSBuild Projects="Plugins\ImageEditor\ZXSpectrumNextPalette\ZXSpectrumNextPalette.cbproj" Targets="" />
+  </Target>
+  <Target Name="ZXSpectrumNextPalette:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\ZXSpectrumNextPalette\ZXSpectrumNextPalette.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ZXSpectrumNextPalette:Make">
+    <MSBuild Projects="Plugins\ImageEditor\ZXSpectrumNextPalette\ZXSpectrumNextPalette.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="MonochromePalette">
+    <MSBuild Projects="Plugins\ImageEditor\MonochromePalette\MonochromePalette.cbproj" Targets="" />
+  </Target>
+  <Target Name="MonochromePalette:Clean">
+    <MSBuild Projects="Plugins\ImageEditor\MonochromePalette\MonochromePalette.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="MonochromePalette:Make">
+    <MSBuild Projects="Plugins\ImageEditor\MonochromePalette\MonochromePalette.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="CodeEditor">
+    <MSBuild Projects="Plugins\CodeEditor\CodeEditor.cbproj" Targets="" />
+  </Target>
+  <Target Name="CodeEditor:Clean">
+    <MSBuild Projects="Plugins\CodeEditor\CodeEditor.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="CodeEditor:Make">
+    <MSBuild Projects="Plugins\CodeEditor\CodeEditor.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="PaletteParser">
+    <MSBuild Projects="Plugins\CodeEditor\PaletteParser\PaletteParser.cbproj" Targets="" />
+  </Target>
+  <Target Name="PaletteParser:Clean">
+    <MSBuild Projects="Plugins\CodeEditor\PaletteParser\PaletteParser.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="PaletteParser:Make">
+    <MSBuild Projects="Plugins\CodeEditor\PaletteParser\PaletteParser.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="AttributeImageParser">
+    <MSBuild Projects="Plugins\CodeEditor\ImageParser\AttributeImageParser.cbproj" Targets="" />
+  </Target>
+  <Target Name="AttributeImageParser:Clean">
+    <MSBuild Projects="Plugins\CodeEditor\ImageParser\AttributeImageParser.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="AttributeImageParser:Make">
+    <MSBuild Projects="Plugins\CodeEditor\ImageParser\AttributeImageParser.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="PaletteImageParser">
+    <MSBuild Projects="Plugins\CodeEditor\PaletteImageParser\PaletteImageParser.cbproj" Targets="" />
+  </Target>
+  <Target Name="PaletteImageParser:Clean">
+    <MSBuild Projects="Plugins\CodeEditor\PaletteImageParser\PaletteImageParser.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="PaletteImageParser:Make">
+    <MSBuild Projects="Plugins\CodeEditor\PaletteImageParser\PaletteImageParser.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ZXImageTableParser">
+    <MSBuild Projects="Plugins\CodeEditor\ImageTableParser\ZXImageTableParser.cbproj" Targets="" />
+  </Target>
+  <Target Name="ZXImageTableParser:Clean">
+    <MSBuild Projects="Plugins\CodeEditor\ImageTableParser\ZXImageTableParser.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ZXImageTableParser:Make">
+    <MSBuild Projects="Plugins\CodeEditor\ImageTableParser\ZXImageTableParser.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="SevenuPImageParser">
+    <MSBuild Projects="Plugins\CodeEditor\SevenuPImageParser\SevenuPImageParser.cbproj" Targets="" />
+  </Target>
+  <Target Name="SevenuPImageParser:Clean">
+    <MSBuild Projects="Plugins\CodeEditor\SevenuPImageParser\SevenuPImageParser.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="SevenuPImageParser:Make">
+    <MSBuild Projects="Plugins\CodeEditor\SevenuPImageParser\SevenuPImageParser.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ZXScreenParser">
+    <MSBuild Projects="Plugins\CodeEditor\ZXScreen$Parser\ZXScreenParser.cbproj" Targets="" />
+  </Target>
+  <Target Name="ZXScreenParser:Clean">
+    <MSBuild Projects="Plugins\CodeEditor\ZXScreen$Parser\ZXScreenParser.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ZXScreenParser:Make">
+    <MSBuild Projects="Plugins\CodeEditor\ZXScreen$Parser\ZXScreenParser.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="StringTableParser">
+    <MSBuild Projects="Plugins\CodeEditor\StringTableParser\StringTableParser.cbproj" Targets="" />
+  </Target>
+  <Target Name="StringTableParser:Clean">
+    <MSBuild Projects="Plugins\CodeEditor\StringTableParser\StringTableParser.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="StringTableParser:Make">
+    <MSBuild Projects="Plugins\CodeEditor\StringTableParser\StringTableParser.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="MapParser">
+    <MSBuild Projects="Plugins\CodeEditor\MapParser\MapParser.cbproj" Targets="" />
+  </Target>
+  <Target Name="MapParser:Clean">
+    <MSBuild Projects="Plugins\CodeEditor\MapParser\MapParser.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="MapParser:Make">
+    <MSBuild Projects="Plugins\CodeEditor\MapParser\MapParser.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="StringEditor">
+    <MSBuild Projects="Plugins\StringEditor\StringEditor.cbproj" Targets="" />
+  </Target>
+  <Target Name="StringEditor:Clean">
+    <MSBuild Projects="Plugins\StringEditor\StringEditor.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="StringEditor:Make">
+    <MSBuild Projects="Plugins\StringEditor\StringEditor.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="MemoryEditor">
+    <MSBuild Projects="Plugins\MemoryEditor\MemoryEditor.cbproj" Targets="" />
+  </Target>
+  <Target Name="MemoryEditor:Clean">
+    <MSBuild Projects="Plugins\MemoryEditor\MemoryEditor.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="MemoryEditor:Make">
+    <MSBuild Projects="Plugins\MemoryEditor\MemoryEditor.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="Pasmo">
+    <MSBuild Projects="Plugins\CodeEditor\Pasmo\Pasmo.cbproj" Targets="" />
+  </Target>
+  <Target Name="Pasmo:Clean">
+    <MSBuild Projects="Plugins\CodeEditor\Pasmo\Pasmo.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="Pasmo:Make">
+    <MSBuild Projects="Plugins\CodeEditor\Pasmo\Pasmo.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="Updater">
+    <MSBuild Projects="Updater\Updater.cbproj" Targets="" />
+  </Target>
+  <Target Name="Updater:Clean">
+    <MSBuild Projects="Updater\Updater.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="Updater:Make">
+    <MSBuild Projects="Updater\Updater.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="Build">
+    <CallTarget Targets="CoreUtils_R6;LogFiles_R6;PluginCommon_R6;ImageLibrary_R6;TommyGun;Core_R6;MapEditor;ImageEditor;TileType;ScreenType;SpriteType;CharacterType;UDGType;PaintTools;ImageTools;ImageImport;ZXSpectrumPalette;ZXSpectrumHiColourPalette;ZXSpectrumUlaPlusPalette;ZXSpectrumNextPalette;MonochromePalette;CodeEditor;PaletteParser;AttributeImageParser;PaletteImageParser;ZXImageTableParser;SevenuPImageParser;ZXScreenParser;StringTableParser;MapParser;StringEditor;MemoryEditor;Pasmo;Updater" />
+  </Target>
+  <Target Name="Clean">
+    <CallTarget Targets="CoreUtils_R6:Clean;LogFiles_R6:Clean;PluginCommon_R6:Clean;ImageLibrary_R6:Clean;TommyGun:Clean;Core_R6:Clean;MapEditor:Clean;ImageEditor:Clean;TileType:Clean;ScreenType:Clean;SpriteType:Clean;CharacterType:Clean;UDGType:Clean;PaintTools:Clean;ImageTools:Clean;ImageImport:Clean;ZXSpectrumPalette:Clean;ZXSpectrumHiColourPalette:Clean;ZXSpectrumUlaPlusPalette:Clean;ZXSpectrumNextPalette:Clean;MonochromePalette:Clean;CodeEditor:Clean;PaletteParser:Clean;AttributeImageParser:Clean;PaletteImageParser:Clean;ZXImageTableParser:Clean;SevenuPImageParser:Clean;ZXScreenParser:Clean;StringTableParser:Clean;MapParser:Clean;StringEditor:Clean;MemoryEditor:Clean;Pasmo:Clean;Updater:Clean" />
+  </Target>
+  <Target Name="Make">
+    <CallTarget Targets="CoreUtils_R6:Make;LogFiles_R6:Make;PluginCommon_R6:Make;ImageLibrary_R6:Make;TommyGun:Make;Core_R6:Make;MapEditor:Make;ImageEditor:Make;TileType:Make;ScreenType:Make;SpriteType:Make;CharacterType:Make;UDGType:Make;PaintTools:Make;ImageTools:Make;ImageImport:Make;ZXSpectrumPalette:Make;ZXSpectrumHiColourPalette:Make;ZXSpectrumUlaPlusPalette:Make;ZXSpectrumNextPalette:Make;MonochromePalette:Make;CodeEditor:Make;PaletteParser:Make;AttributeImageParser:Make;PaletteImageParser:Make;ZXImageTableParser:Make;SevenuPImageParser:Make;ZXScreenParser:Make;StringTableParser:Make;MapParser:Make;StringEditor:Make;MemoryEditor:Make;Pasmo:Make;Updater:Make" />
+  </Target>
+  <Import Condition="Exists('$(MSBuildBinPath)\Borland.Group.Targets')" Project="$(MSBuildBinPath)\Borland.Group.Targets" />
+</Project>

@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Definitions>
+  <Definition>
+    <Name>Pasmo Z80 Assembler</Name>
+    <Executable>D:\ZXSpectrum\pasmo\pasmo.exe</Executable>
+    <Extensions>.asm;.a;.s;.z80</Extensions>
+    <DefaultParameters>-v --tapbas --err %game%.asm %game%.tap %game%.map</DefaultParameters>
+    <AcceptsMultipleInputFiles>false</AcceptsMultipleInputFiles>
+    <Type>Builder</Type>
+    <PrefixError>ERROR</PrefixError>
+    <PrefixFile>file</PrefixFile>
+    <PrefixLine>line</PrefixLine>
+  </Definition>
+  <Definition>
+    <Name>SjAsmPlus</Name>
+    <Executable>D:\ZXSpectrum\SjAsmPlus\sjasmplus.exe</Executable>
+    <Extensions>.asm;.a;.s;.z80</Extensions>
+    <DefaultParameters>-v --tapbas --err %game%.asm %game%.tap %game%.map</DefaultParameters>
+    <AcceptsMultipleInputFiles>false</AcceptsMultipleInputFiles>
+    <Type>Builder</Type>
+    <PrefixError/>
+    <PrefixFile/>
+    <PrefixLine/>
+  </Definition>
+  <Definition>
+    <Name>SjAsm 0.42</Name>
+    <Executable>D:\ZXSpectrum\SjAsm42\sjasm.exe</Executable>
+    <Extensions>.asm;.a;.s;.z80</Extensions>
+    <DefaultParameters>-v --tapbas --err %game%.asm %game%.tap %game%.map</DefaultParameters>
+    <AcceptsMultipleInputFiles>false</AcceptsMultipleInputFiles>
+    <Type>Builder</Type>
+    <PrefixError/>
+    <PrefixFile/>
+    <PrefixLine/>
+  </Definition>
+  <Definition>
+    <Name>Z88DK C Compiler</Name>
+    <Executable>C:\z88dk\bin\zcc.exe</Executable>
+    <Extensions>.c;.asm</Extensions>
+    <DefaultParameters>-lndos *.c</DefaultParameters>
+    <AcceptsMultipleInputFiles>true</AcceptsMultipleInputFiles>
+    <Type>Builder</Type>
+    <PrefixError>Error;Warning</PrefixError>
+    <PrefixFile>sccz80:&quot;</PrefixFile>
+    <PrefixLine>L:</PrefixLine>
+  </Definition>
+  <Definition>
+    <Name>ZCC Compile</Name>
+    <Executable>C:\z88dk\bin\zcc.exe</Executable>
+    <Extensions>.o</Extensions>
+    <DefaultParameters>+zx -lndos -create-app -o %game% *.o</DefaultParameters>
+    <AcceptsMultipleInputFiles>true</AcceptsMultipleInputFiles>
+    <Type>Builder</Type>
+    <PrefixError>Error;Warning</PrefixError>
+    <PrefixFile>sccz80:&quot;</PrefixFile>
+    <PrefixLine>L:</PrefixLine>
+  </Definition>
+  <Definition>
+    <Name>ZCC link</Name>
+    <Executable>C:\z88dk\bin\zcc.exe</Executable>
+    <Extensions>.o</Extensions>
+    <DefaultParameters>+zx -lndos -create-app -o %game% *.o</DefaultParameters>
+    <AcceptsMultipleInputFiles>true</AcceptsMultipleInputFiles>
+    <Type>Builder</Type>
+    <PrefixError>Error;Warning</PrefixError>
+    <PrefixFile>sccz80:&quot;</PrefixFile>
+    <PrefixLine>L:</PrefixLine>
+  </Definition>
+  <Definition>
+    <Name>ZX Basic Compiler</Name>
+    <Executable>D:\ZXSpectrum\ZX Basic Compiler\zxb.exe</Executable>
+    <Extensions>.bas</Extensions>
+    <DefaultParameters>%ask% -t -a -o %game%.tap -B</DefaultParameters>
+    <AcceptsMultipleInputFiles>false</AcceptsMultipleInputFiles>
+    <Type>Builder</Type>
+    <PrefixError>ERROR </PrefixError>
+    <PrefixFile>file </PrefixFile>
+    <PrefixLine>line </PrefixLine>
+  </Definition>
+  <Definition>
+    <Name>ZX Spin v0.7s</Name>
+    <Executable>D:\ZXSpectrum\ZX Spin 0.7s\ZXSpin.exe</Executable>
+    <Extensions>.tap;.sna</Extensions>
+    <DefaultParameters>%Pfolder%\%game%.tap</DefaultParameters>
+    <AcceptsMultipleInputFiles>false</AcceptsMultipleInputFiles>
+    <Type>Emulator</Type>
+    <PrefixError/>
+    <PrefixFile/>
+    <PrefixLine/>
+  </Definition>
+  <Definition>
+    <Name>ZX Spin v0.666</Name>
+    <Executable>D:\ZXSpectrum\Spin\zxspin.exe</Executable>
+    <Extensions>.tap;.sna</Extensions>
+    <DefaultParameters>%Pfolder%\%game%.tap</DefaultParameters>
+    <AcceptsMultipleInputFiles>false</AcceptsMultipleInputFiles>
+    <Type>Emulator</Type>
+    <PrefixError/>
+    <PrefixFile/>
+    <PrefixLine/>
+  </Definition>
+  <Definition>
+    <Name>Batch Build</Name>
+    <Executable>%Pfolder%\build.bat</Executable>
+    <Extensions>.bat</Extensions>
+    <DefaultParameters/>
+    <AcceptsMultipleInputFiles>false</AcceptsMultipleInputFiles>
+    <Type>Builder</Type>
+    <PrefixError>ERROR</PrefixError>
+    <PrefixFile>file</PrefixFile>
+    <PrefixLine>line</PrefixLine>
+  </Definition>
+</Definitions>
