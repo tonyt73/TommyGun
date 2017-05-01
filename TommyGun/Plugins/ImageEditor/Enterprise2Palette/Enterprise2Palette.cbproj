@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{dfcba3e7-bcad-4a59-8476-36f12198a455}</ProjectGuid>
+    <ProjectType>CppDynamicLibrary</ProjectType>
+    <Config Condition="'$(Config)'==''">Debug Build</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+    <Base>true</Base>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Debug Build' or '$(Cfg_1)'!=''">
+    <Base>true</Base>
+    <Cfg_1>true</Cfg_1>
+    <CfgParent>Base</CfgParent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Release Build' or '$(Cfg_2)'!=''">
+    <Base>true</Base>
+    <Cfg_2>true</Cfg_2>
+    <CfgParent>Base</CfgParent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Base)'!=''">
+    <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
+    <BCC_StopPCHAfter>vcl.h</BCC_StopPCHAfter>
+    <OutputExt>ipi</OutputExt>
+    <ILINK_IntermediateOutputPath>obj</ILINK_IntermediateOutputPath>
+    <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
+    <BCC_OutputDir>obj\</BCC_OutputDir>
+    <BCC_whid>false</BCC_whid>
+    <DynamicRTL>true</DynamicRTL>
+    <BCC_InstructionSet>6</BCC_InstructionSet>
+    <BRCC_OutputDir>obj\</BRCC_OutputDir>
+    <ILINK_AppType>Windows</ILINK_AppType>
+    <BCC_MergeDuplicateStrings>true</BCC_MergeDuplicateStrings>
+    <DCC_DebugInformation>false</DCC_DebugInformation>
+    <ILINK_ObjectSearchPath>..\Enterprise256Palette</ILINK_ObjectSearchPath>
+    <UsePackages>true</UsePackages>
+    <BCC_ZeroLengthEmptyMemberFuncs>true</BCC_ZeroLengthEmptyMemberFuncs>
+    <DCC_MakeModifiedUnits>true</DCC_MakeModifiedUnits>
+    <FinalOutputDir>$(Projects)\TommyGun\Plugins\_Enterprise\</FinalOutputDir>
+    <BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
+    <TASM_AdditionalSwitches> /w2 obj\</TASM_AdditionalSwitches>
+    <PackageImports>vcl.bpi;rtl.bpi;vclx.bpi</PackageImports>
+    <DCC_UnitSearchPath>.\;$(BDS)\lib;$(BDS)\lib\obj</DCC_UnitSearchPath>
+    <BCC_wpar>false</BCC_wpar>
+    <BCC_GenerateMultithreaded>true</BCC_GenerateMultithreaded>
+    <ILINK_WinAppType>DLL</ILINK_WinAppType>
+    <BRCC_UserSuppliedOptions> -I..\Enterprise256Palette;$(BDS)\include;$(BDS)\include\vcl;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\Scorpio6;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\FrameWork;$(BDS)\include\dinkumware</BRCC_UserSuppliedOptions>
+    <IncludePath>..\Enterprise256Palette</IncludePath>
+    <BCC_PCHCache>true</BCC_PCHCache>
+    <DCC_DcuOutput>obj\</DCC_DcuOutput>
+    <BCC_IncludePath>..\Enterprise256Palette;$(BDS)\include;$(BDS)\include\vcl;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\Scorpio6;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\FrameWork;$(BDS)\include\dinkumware</BCC_IncludePath>
+    <TASM_IncludePath>..\Enterprise256Palette;$(BDS)\include;$(BDS)\include\vcl;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\Scorpio6;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\FrameWork;$(BDS)\include\dinkumware</TASM_IncludePath>
+    <AllPackageLibs>rtl.lib;vcl.lib</AllPackageLibs>
+    <BRCC_IncludePath>..\Enterprise256Palette;$(BDS)\include;$(BDS)\include\vcl;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\Scorpio6;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\FrameWork;$(BDS)\include\dinkumware</BRCC_IncludePath>
+    <DCC_IncludePath>.\;$(BDS)\lib;$(BDS)\lib\obj</DCC_IncludePath>
+    <BCC_ZeroLengthEmptyBaseClass>true</BCC_ZeroLengthEmptyBaseClass>
+    <ILINK_LibraryPath>..\Enterprise256Palette;$(BDS)\Projects\Lib;$(BDS)\lib\obj;$(BDS)\lib</ILINK_LibraryPath>
+    <BCC_Defines>NO_STRICT;USE_REMOTE_LOGGING2;USE_EVENT_MANAGER;RL_LOG_METHODS;USE_PCH</BCC_Defines>
+    <BCC_GenerateDLL>true</BCC_GenerateDLL>
+    <DCC_ObjOutput>obj\</DCC_ObjOutput>
+    <BRCC_Defines>USE_REMOTE_LOGGING2;USE_EVENT_MANAGER;RL_LOG_METHODS;USE_PCH</BRCC_Defines>
+    <TASM_Defines>USE_REMOTE_LOGGING2 USE_EVENT_MANAGER RL_LOG_METHODS USE_PCH</TASM_Defines>
+    <Multithreaded>true</Multithreaded>
+    <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+    <TASM_Debugging>None</TASM_Debugging>
+    <DCC_SymbolReferenceInfo>2</DCC_SymbolReferenceInfo>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_1)'!=''">
+    <DCC_Optimize>false</DCC_Optimize>
+    <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
+    <ILINK_FullDebugInfo>true</ILINK_FullDebugInfo>
+    <BCC_InlineFunctionExpansion>false</BCC_InlineFunctionExpansion>
+    <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
+    <DCC_DebugInformation>true</DCC_DebugInformation>
+    <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+    <BCC_DebugLineNumbers>true</BCC_DebugLineNumbers>
+    <IntermediateOutputDir>Debug_Build</IntermediateOutputDir>
+    <TASM_DisplaySourceLines>true</TASM_DisplaySourceLines>
+    <BCC_StackFrames>true</BCC_StackFrames>
+    <BCC_DisableOptimizations>true</BCC_DisableOptimizations>
+    <ILINK_LibraryPath>$(BDS)\lib\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+    <BCC_Defines>_DEBUG;$(BCC_Defines)</BCC_Defines>
+    <TASM_Debugging>Full</TASM_Debugging>
+    <BCC_SourceDebuggingOn>true</BCC_SourceDebuggingOn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_2)'!=''">
+    <IntermediateOutputDir>Release_Build</IntermediateOutputDir>
+    <ILINK_LibraryPath>$(BDS)\lib\release;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+    <BCC_Defines>NDEBUG;$(BCC_Defines)</BCC_Defines>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>CPlusPlusBuilder.Personality</Borland.Personality>
+    <Borland.ProjectType>CppDynamicLibrary</Borland.ProjectType>
+    <BorlandProject>
+<BorlandProject><CPlusPlusBuilder.Personality><VersionInfo><VersionInfo Name="IncludeVerInfo">True</VersionInfo><VersionInfo Name="AutoIncBuild">False</VersionInfo><VersionInfo Name="MajorVer">0</VersionInfo><VersionInfo Name="MinorVer">1</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">8</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">3081</VersionInfo><VersionInfo Name="CodePage">1252</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName">KiwiWare</VersionInfoKeys><VersionInfoKeys Name="FileDescription">Image Editor Palette Plugin (Enterprise 64/128 - 2 Colours)</VersionInfoKeys><VersionInfoKeys Name="FileVersion">0.1.0.8</VersionInfoKeys><VersionInfoKeys Name="InternalName">Enterprise2Palette.mpi</VersionInfoKeys><VersionInfoKeys Name="LegalCopyright">2006 KiwiWare</VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename">Enterprise2Palette.mpi</VersionInfoKeys><VersionInfoKeys Name="ProductName">TommyGun</VersionInfoKeys><VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments">Programmed by Tony Thompson</VersionInfoKeys></VersionInfoKeys><ExcludedPackages><ExcludedPackages Name="c:\program files\borland\cbuilder6\Projects\Bpl\ThemeManagerC6D.bpl">Soft Gems Theme Manager</ExcludedPackages></ExcludedPackages><HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Count">7</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item0">..\Enterprise256Palette</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item1">..\Enterprise256Palette;$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\Scorpio6;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\FrameWork</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item2">..\Enterprise256Palette;..\Enterprise2Palette;$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\Scorpio6;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\FrameWork</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item3">..\Enterprise2Palette;$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\Scorpio6;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\FrameWork</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item4">..\CPCMode0Palette;$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\Scorpio6;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\FrameWork</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item5">..\CPCMode0Palette;$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\Scorpio6;$(PROJECTS)\TommyGun\Plugins\Common</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item6">$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\Scorpio6;$(PROJECTS)\TommyGun\Plugins\Common</HistoryLists_hlIncludePath></HistoryLists_hlIncludePath><HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Count">4</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item0">..\Enterprise256Palette;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item1">..\Enterprise256Palette;..\CPCMode0Palette;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item2">..\CPCMode0Palette;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item3">$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib</HistoryLists_hlLibraryPath></HistoryLists_hlLibraryPath><HistoryLists_hlDebugSourcePath><HistoryLists_hlDebugSourcePath Name="Count">1</HistoryLists_hlDebugSourcePath><HistoryLists_hlDebugSourcePath Name="Item0">$(BCB)\source\vcl</HistoryLists_hlDebugSourcePath></HistoryLists_hlDebugSourcePath><HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Count">4</HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Item0">USE_REMOTE_LOGGING2;USE_EVENT_MANAGER;RL_LOG_METHODS;USE_PCH</HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Item1">USE_REMOTE_LOGGING2;USE_EVENT_MANAGER;RL_LOG_METHODS;USE_PCH;_DEBUG</HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Item2">USE_REMOTE_LOGGING2;USE_EVENT_MANAGER;RL_LOG_METHODS</HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Item3">USE_REMOTE_LOGGING2;USE_EVENT_MANAGER;RL_LOG_METHODS;_DEBUG</HistoryLists_hlConditionals></HistoryLists_hlConditionals><HistoryLists_hlIntOutputDir><HistoryLists_hlIntOutputDir Name="Count">2</HistoryLists_hlIntOutputDir><HistoryLists_hlIntOutputDir Name="Item0">obj</HistoryLists_hlIntOutputDir><HistoryLists_hlIntOutputDir Name="Item1">D:\Projects\TommyGun\Plugins\ImageEditor\CPCMode2Palette\obj</HistoryLists_hlIntOutputDir></HistoryLists_hlIntOutputDir><HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Count">3</HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Item0">$(Projects)\TommyGun\Plugins\_Enterprise\</HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Item1">$(Projects)\TommyGun\Plugins\_Amstrad CPC\</HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Item2">$(Projects)\TommyGun\Plugins\_AmstradCPC\</HistoryLists_hlFinalOutputDir></HistoryLists_hlFinalOutputDir><Debugging><Debugging Name="DebugSourceDirs">$(BCB)\source\vcl</Debugging></Debugging><Parameters><Parameters Name="RunParams"></Parameters><Parameters Name="Launcher"></Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="DebugCWD"></Parameters><Parameters Name="HostApplication">\Projects\TommyGun\TommyGun.exe</Parameters><Parameters Name="RemoteHost"></Parameters><Parameters Name="RemotePath"></Parameters><Parameters Name="RemoteLauncher"></Parameters><Parameters Name="RemoteCWD"></Parameters><Parameters Name="RemoteDebug">False</Parameters><Parameters Name="RemoteParams"></Parameters><Parameters Name="UseRemoteLauncher">False</Parameters><Parameters Name="Debug Symbols Search Path"></Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><Compiler><Compiler Name="ShowInfoMsgs">1</Compiler><Compiler Name="LinkDebugVcl">0</Compiler><Compiler Name="LinkCGLIB">0</Compiler></Compiler><Linker><Linker Name="LibPrefix"></Linker><Linker Name="LibSuffix"></Linker><Linker Name="LibVersion"></Linker></Linker><ProjectProperties><ProjectProperties Name="AutoShowDeps">False</ProjectProperties><ProjectProperties Name="ManagePaths">True</ProjectProperties><ProjectProperties Name="VerifyPackages">True</ProjectProperties></ProjectProperties><HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Count">1</HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Item0">..\Enterprise256Palette;$(BDS)\Projects\Lib;$(BDS)\lib\obj;$(BDS)\lib</HistoryLists_hlILINK_LibraryPath></HistoryLists_hlILINK_LibraryPath></CPlusPlusBuilder.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Borland.Cpp.Targets" />
+  <ItemGroup>
+    <ResFiles Include="Enterprise2Palette.res">
+      <BuildOrder>0</BuildOrder>
+    </ResFiles>
+    <CppCompile Include="..\Enterprise256Palette\fEnterpriseColors.cpp">
+      <Form>dlgEnterpriseColors</Form>
+      <DependentOn>..\Enterprise256Palette\fEnterpriseColors.h</DependentOn>
+      <BuildOrder>6</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Enterprise2Palette.cpp">
+      <BuildOrder>4</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Enterprise2PaletteDLL.cpp">
+      <BuildOrder>1</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Enterprise2PalettePlugin.cpp">
+      <BuildOrder>2</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Enterprise2PluginInterface.cpp">
+      <BuildOrder>3</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="fEnterprise2Palette.cpp">
+      <Form>frmEnterprise2Palette</Form>
+      <DependentOn>fEnterprise2Palette.h</DependentOn>
+      <BuildOrder>5</BuildOrder>
+    </CppCompile>
+    <LibFiles Include="..\..\..\Lib\ImageLibrary.lib">
+      <BuildOrder>8</BuildOrder>
+    </LibFiles>
+    <LibFiles Include="..\..\..\Lib\LogFiles.lib">
+      <BuildOrder>7</BuildOrder>
+    </LibFiles>
+    <LibFiles Include="..\..\..\Lib\PluginCommon.lib">
+      <BuildOrder>9</BuildOrder>
+    </LibFiles>
+    <FormResources Include="..\Enterprise256Palette\fEnterpriseColors.dfm" />
+    <FormResources Include="fEnterprise2Palette.dfm" />
+    <BuildConfiguration Include="Debug Build">
+      <Key>Cfg_1</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Release Build">
+      <Key>Cfg_2</Key>
+    </BuildConfiguration>
+  </ItemGroup>
+</Project>

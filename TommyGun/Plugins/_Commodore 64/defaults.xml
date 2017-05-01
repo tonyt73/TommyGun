@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Defaults>
+	<Screen>
+		<Width>320</Width>
+		<Height>200</Height>
+	</Screen>
+	<CharacterSet> !&quot;#$%&amp;&apos;()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_(p)abcdefghijklmnopqrstuvwxyz{|}~(c)</CharacterSet>
+</Defaults>

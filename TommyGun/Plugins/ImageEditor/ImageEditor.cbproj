@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{1b217b1e-9556-4d36-aff4-2e98a97d0303}</ProjectGuid>
+    <Config Condition="'$(Config)'==''">Release</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+    <Base>true</Base>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_1)'!=''">
+    <Base>true</Base>
+    <Cfg_1>true</Cfg_1>
+    <CfgParent>Base</CfgParent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_2)'!=''">
+    <Base>true</Base>
+    <Cfg_2>true</Cfg_2>
+    <CfgParent>Base</CfgParent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Base)'!=''">
+    <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
+    <OutputExt>tpi</OutputExt>
+    <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
+    <Defines>NO_STRICT</Defines>
+    <DynamicRTL>true</DynamicRTL>
+    <BCC_InstructionSet>6</BCC_InstructionSet>
+    <ILINK_GenerateImportLibrary>true</ILINK_GenerateImportLibrary>
+    <UsePackages>true</UsePackages>
+    <ILINK_ObjectSearchPath>D:\Projects\CodeGear Rad Studio 2006\TommyGun\Plugins\ImageEditor;..\..\..\VCL</ILINK_ObjectSearchPath>
+    <ProjectType>CppDynamicLibrary</ProjectType>
+    <FinalOutputDir>..\</FinalOutputDir>
+    <PackageImports>vclx.bpi;vcl.bpi;rtl.bpi;Scorpio_R6.bpi</PackageImports>
+    <BCC_wpar>false</BCC_wpar>
+    <IncludePath>$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;$(PROJECTS)\Scorpio;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\Framework;$(PROJECTS)\TommyGun</IncludePath>
+    <ILINK_BpiLibOutputDir>..\..\Lib\</ILINK_BpiLibOutputDir>
+    <AllPackageLibs>rtl.lib;vcl.lib;Scorpio_R6.lib</AllPackageLibs>
+    <ILINK_LibraryPath>$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk;$(PROJECTS)\VCL;$(PROJECTS)\TommyGun\Lib</ILINK_LibraryPath>
+    <Multithreaded>true</Multithreaded>
+    <BCC_CallingConvention>fastcall</BCC_CallingConvention>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_1)'!=''">
+    <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
+    <DCC_Optimize>false</DCC_Optimize>
+    <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
+    <Defines>_DEBUG;$(Defines)</Defines>
+    <ILINK_FullDebugInfo>true</ILINK_FullDebugInfo>
+    <BCC_InlineFunctionExpansion>false</BCC_InlineFunctionExpansion>
+    <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
+    <BCC_UseRegisterVariables>None</BCC_UseRegisterVariables>
+    <DCC_Define>DEBUG</DCC_Define>
+    <BCC_DebugLineNumbers>true</BCC_DebugLineNumbers>
+    <IntermediateOutputDir>Debug</IntermediateOutputDir>
+    <TASM_DisplaySourceLines>true</TASM_DisplaySourceLines>
+    <BCC_StackFrames>true</BCC_StackFrames>
+    <BCC_DisableOptimizations>true</BCC_DisableOptimizations>
+    <ILINK_LibraryPath>$(BDS)\lib\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+    <TASM_Debugging>Full</TASM_Debugging>
+    <BCC_SourceDebuggingOn>true</BCC_SourceDebuggingOn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_2)'!=''">
+    <Defines>NDEBUG;$(Defines)</Defines>
+    <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
+    <IntermediateOutputDir>Release</IntermediateOutputDir>
+    <ILINK_LibraryPath>$(BDS)\lib\release;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+    <TASM_Debugging>None</TASM_Debugging>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>CPlusPlusBuilder.Personality</Borland.Personality>
+    <Borland.ProjectType>CppDynamicLibrary</Borland.ProjectType>
+    <BorlandProject>
+<BorlandProject><CPlusPlusBuilder.Personality><VersionInfo><VersionInfo Name="IncludeVerInfo">True</VersionInfo><VersionInfo Name="AutoIncBuild">False</VersionInfo><VersionInfo Name="MajorVer">1</VersionInfo><VersionInfo Name="MinorVer">0</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">0</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">3081</VersionInfo><VersionInfo Name="CodePage">1252</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName">Scorpio Software</VersionInfoKeys><VersionInfoKeys Name="FileDescription">Image Editor Plugin</VersionInfoKeys><VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="InternalName">ImageEditor.tpi</VersionInfoKeys><VersionInfoKeys Name="LegalCopyright">2004 - 2017 Scorpio Designs</VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename">ImageEditor.tpi</VersionInfoKeys><VersionInfoKeys Name="ProductName">TommyGun</VersionInfoKeys><VersionInfoKeys Name="ProductVersion">1.2.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments">Programmed by Tony Thompson</VersionInfoKeys></VersionInfoKeys><HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Count">7</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item0">$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;$(PROJECTS)\Scorpio;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\Framework;$(PROJECTS)\TommyGun</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item1">$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;..\ImageEditor;..\..\..\Scorpio;..\..\Helpers;..\Common;..\..\Framework;..\..\..\TommyGun</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item2">$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;$(PROJECTS)\TommyGun\Plugins\ImageEditor;$(PROJECTS)\Scorpio;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\Framework;$(PROJECTS)\TommyGun</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item3">$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;$(PROJECTS)\TommyGun\Plugins\ImageEditor;$(PROJECTS)\Scorpio;$(PROJECTS)\FlatStyle;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\Framework;$(PROJECTS)\TommyGun</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item4">$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;$(PROJECTS)\TommyGun\Plugins\ImageEditor;$(PROJECTS)\Scorpio;$(PROJECTS)\FlatStyle;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\TommyGun\Plugins\Common;$(PROJECTS)\TommyGun\Framework</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item5">$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;$(PROJECTS)\TommyGun\Plugins\ImageEditor;$(PROJECTS)\Scorpio;$(PROJECTS)\FlatStyle;$(PROJECTS)\TommyGun\Helpers;$(PROJECTS)\TommyGun\Plugins\Common</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item6">$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl</HistoryLists_hlIncludePath></HistoryLists_hlIncludePath><HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Count">1</HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Item0">$(BDS)\lib\release;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk;$(PROJECTS)\VCL;$(PROJECTS)\TommyGun\Lib</HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Item1">$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk;D:\Projects\CodeGear Rad Studio 2006\TommyGun\Plugins\ImageEditor;..\..\..\VCL</HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Item2">$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk</HistoryLists_hlILINK_LibraryPath></HistoryLists_hlILINK_LibraryPath><HistoryLists_hlDefines><HistoryLists_hlDefines Name="Count">1</HistoryLists_hlDefines><HistoryLists_hlDefines Name="Item0">NDEBUG;NO_STRICT</HistoryLists_hlDefines></HistoryLists_hlDefines><Debugging><Debugging Name="DebugSourceDirs"></Debugging></Debugging><Parameters><Parameters Name="RunParams"></Parameters><Parameters Name="Launcher"></Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="DebugCWD">..\..</Parameters><Parameters Name="HostApplication">..\..\TommyGun.exe</Parameters><Parameters Name="RemoteHost"></Parameters><Parameters Name="RemotePath"></Parameters><Parameters Name="RemoteParams"></Parameters><Parameters Name="RemoteLauncher"></Parameters><Parameters Name="UseRemoteLauncher">False</Parameters><Parameters Name="RemoteCWD"></Parameters><Parameters Name="RemoteDebug">False</Parameters><Parameters Name="Debug Symbols Search Path"></Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\bcbofficexp100.bpl">CodeGear C++Builder Office XP Servers Package</Excluded_Packages>
+    </Excluded_Packages><Linker><Linker Name="LibPrefix"></Linker><Linker Name="LibSuffix"></Linker><Linker Name="LibVersion"></Linker></Linker><ProjectProperties><ProjectProperties Name="AutoShowDeps">False</ProjectProperties><ProjectProperties Name="ManagePaths">True</ProjectProperties><ProjectProperties Name="VerifyPackages">True</ProjectProperties></ProjectProperties><HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Count">1</HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Item0">..\</HistoryLists_hlFinalOutputDir></HistoryLists_hlFinalOutputDir><HistoryLists_hlILINK_BpiLibOutputDir><HistoryLists_hlILINK_BpiLibOutputDir Name="Count">1</HistoryLists_hlILINK_BpiLibOutputDir><HistoryLists_hlILINK_BpiLibOutputDir Name="Item0">..\..\Lib\</HistoryLists_hlILINK_BpiLibOutputDir></HistoryLists_hlILINK_BpiLibOutputDir><HistoryLists_hlBCC_MaxIdentifierLength><HistoryLists_hlBCC_MaxIdentifierLength Name="Count">1</HistoryLists_hlBCC_MaxIdentifierLength><HistoryLists_hlBCC_MaxIdentifierLength Name="Item0">250</HistoryLists_hlBCC_MaxIdentifierLength></HistoryLists_hlBCC_MaxIdentifierLength><HistoryLists_hlILINK_MaxErrors><HistoryLists_hlILINK_MaxErrors Name="Count">1</HistoryLists_hlILINK_MaxErrors><HistoryLists_hlILINK_MaxErrors Name="Item0">0</HistoryLists_hlILINK_MaxErrors></HistoryLists_hlILINK_MaxErrors><HistoryLists_hlILINK_FileAlignment><HistoryLists_hlILINK_FileAlignment Name="Count">1</HistoryLists_hlILINK_FileAlignment><HistoryLists_hlILINK_FileAlignment Name="Item0">0x200</HistoryLists_hlILINK_FileAlignment></HistoryLists_hlILINK_FileAlignment><HistoryLists_hlILINK_ObjectAlignment><HistoryLists_hlILINK_ObjectAlignment Name="Count">1</HistoryLists_hlILINK_ObjectAlignment><HistoryLists_hlILINK_ObjectAlignment Name="Item0">4096</HistoryLists_hlILINK_ObjectAlignment></HistoryLists_hlILINK_ObjectAlignment><HistoryLists_hlILINK_BaseAddress><HistoryLists_hlILINK_BaseAddress Name="Count">1</HistoryLists_hlILINK_BaseAddress><HistoryLists_hlILINK_BaseAddress Name="Item0">0x00400000</HistoryLists_hlILINK_BaseAddress></HistoryLists_hlILINK_BaseAddress><HistoryLists_hlILINK_HeapCommitSize><HistoryLists_hlILINK_HeapCommitSize Name="Count">1</HistoryLists_hlILINK_HeapCommitSize><HistoryLists_hlILINK_HeapCommitSize Name="Item0">0x00001000</HistoryLists_hlILINK_HeapCommitSize></HistoryLists_hlILINK_HeapCommitSize><HistoryLists_hlILINK_HeapReserveSize><HistoryLists_hlILINK_HeapReserveSize Name="Count">1</HistoryLists_hlILINK_HeapReserveSize><HistoryLists_hlILINK_HeapReserveSize Name="Item0">0x00100000</HistoryLists_hlILINK_HeapReserveSize></HistoryLists_hlILINK_HeapReserveSize><HistoryLists_hlILINK_StackCommitSize><HistoryLists_hlILINK_StackCommitSize Name="Count">1</HistoryLists_hlILINK_StackCommitSize><HistoryLists_hlILINK_StackCommitSize Name="Item0">0x00002000</HistoryLists_hlILINK_StackCommitSize></HistoryLists_hlILINK_StackCommitSize><HistoryLists_hlILINK_StackReserveSize><HistoryLists_hlILINK_StackReserveSize Name="Count">1</HistoryLists_hlILINK_StackReserveSize><HistoryLists_hlILINK_StackReserveSize Name="Item0">0x00100000</HistoryLists_hlILINK_StackReserveSize></HistoryLists_hlILINK_StackReserveSize><HistoryLists_hlIntermediateOutputDir><HistoryLists_hlIntermediateOutputDir Name="Count">1</HistoryLists_hlIntermediateOutputDir><HistoryLists_hlIntermediateOutputDir Name="Item0">Release</HistoryLists_hlIntermediateOutputDir></HistoryLists_hlIntermediateOutputDir></CPlusPlusBuilder.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Borland.Cpp.Targets" />
+  <ItemGroup>
+    <LibFiles Include="..\..\Lib\Core_R6.lib">
+      <BuildOrder>0</BuildOrder>
+    </LibFiles>
+    <LibFiles Include="..\..\Lib\ImageLibrary_R6.lib">
+      <BuildOrder>1</BuildOrder>
+    </LibFiles>
+    <LibFiles Include="..\..\Lib\PluginCommon_R6.lib">
+      <BuildOrder>2</BuildOrder>
+    </LibFiles>
+    <ResFiles Include="ImageEditor.res">
+      <BuildOrder>3</BuildOrder>
+    </ResFiles>
+    <CppCompile Include="fImageEditor.cpp">
+      <Form>frmImageEditor</Form>
+      <DependentOn>fImageEditor.h</DependentOn>
+      <BuildOrder>5</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="fImageMask.cpp">
+      <Form>frmImageMask</Form>
+      <DependentOn>fImageMask.h</DependentOn>
+      <BuildOrder>6</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="fImageResize.cpp">
+      <Form>frmImageResize</Form>
+      <DependentOn>fImageResize.h</DependentOn>
+      <BuildOrder>7</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="fPaletteChange.cpp">
+      <Form>frmChangePalette</Form>
+      <DependentOn>fPaletteChange.h</DependentOn>
+      <BuildOrder>8</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImageEditorR6.cpp">
+      <BuildOrder>4</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImagePluginInterface.cpp">
+      <BuildOrder>9</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="uImageEditor.cpp">
+      <BuildOrder>10</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ZXImageEditor.cpp">
+      <DependentOn>ZXImageEditor.h</DependentOn>
+      <BuildOrder>11</BuildOrder>
+    </CppCompile>
+    <None Include="ImageEditor.dcr">
+      <BuildOrder>12</BuildOrder>
+    </None>
+    <FormResources Include="fImageEditor.dfm" />
+    <FormResources Include="fImageMask.dfm" />
+    <FormResources Include="fImageResize.dfm" />
+    <FormResources Include="fPaletteChange.dfm" />
+    <BuildConfiguration Include="Debug">
+      <Key>Cfg_1</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Release">
+      <Key>Cfg_2</Key>
+    </BuildConfiguration>
+  </ItemGroup>
+</Project>
