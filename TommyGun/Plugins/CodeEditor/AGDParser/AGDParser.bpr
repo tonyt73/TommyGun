@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.06.00"/>
+    <PROJECT value="..\..\AGDParser.cpi"/>
+    <OBJFILES value="obj\AGDParserDLL.obj obj\PluginInterface.obj obj\AGDParserPlugin.obj 
+      obj\fAGDParserOptions.obj"/>
+    <RESFILES value="AGDParser.res"/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES) fAGDParserOptions.dfm"/>
+    <LIBFILES value="..\..\..\Lib\LogFiles.lib ..\..\..\Lib\PluginCommon.lib"/>
+    <LIBRARIES value="Scorpio_R6.lib FlatStyle_R6.lib"/>
+    <SPARELIBS value="rtl.lib vcl.lib FlatStyle_R6.lib Scorpio_R6.lib"/>
+    <PACKAGES value="rtl.bpi vcl.bpi vclx.bpi"/>
+    <PATHCPP value=".;"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value="USE_REMOTE_LOGGING2;USE_EVENT_MANAGER;RL_LOG_METHODS;USE_PCH;_DEBUG"/>
+    <SYSDEFINES value="NO_STRICT;_RTLDLL;USEPACKAGES"/>
+    <MAINSOURCE value="AGDParser.bpf"/>
+    <INCLUDEPATH value="$(PROJECTS)\TommyGun\Helpers;$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\Scorpio;$(PROJECTS)\FlatStyle;$(PROJECTS)\SynEdit\Source;$(PROJECTS)\TommyGun\Plugins\Common"/>
+    <LIBPATH value="$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;$(PROJECTS)\FlatStyle;$(PROJECTS)\SynEdit;$(PROJECTS)\Scorpio"/>
+    <WARNINGS value="-w-par"/>
+    <OTHERFILES value=""/>
+  </MACROS>
+  <OPTIONS>
+    <CFLAG1 value="-WD -Od -H=obj\pch.csm -Hh=vcl.h -Hc -Q -Vx -Ve -ff -X- -r- -a8 -6 -b -d 
+      -k -y -v -vi- -tWD -tWM -c"/>
+    <PFLAGS value="-N2obj -N0obj -$Y+ -$W -$O- -$A8 -v -JPHNE -M"/>
+    <RFLAGS value=""/>
+    <AFLAGS value="/mx /w2 /zi"/>
+    <LFLAGS value="-Iobj -D&quot;&quot; -aa -Tpd -x -Gn -v"/>
+    <OTHERFILES value=""/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0d32.obj $(PACKAGES) Memmgr.Lib sysinit.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cp32mti.lib"/>
+    <OTHERFILES value=""/>
+  </LINKER>
+  <FILELIST>
+      <FILE FILENAME="AGDParser.res" FORMNAME="" UNITNAME="AGDParser.res" CONTAINERID="ResTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="AGDParser.bpf" FORMNAME="" UNITNAME="AGDParser" CONTAINERID="BPF" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="AGDParserDLL.cpp" FORMNAME="" UNITNAME="AGDParserDLL" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="PluginInterface.cpp" FORMNAME="" UNITNAME="PluginInterface" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="AGDParserPlugin.cpp" FORMNAME="" UNITNAME="AGDParserPlugin" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="fAGDParserOptions.cpp" FORMNAME="frmAGDParserOptions" UNITNAME="fAGDParserOptions" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\Lib\LogFiles.lib" FORMNAME="" UNITNAME="LogFiles.lib" CONTAINERID="LibTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\Lib\PluginCommon.lib" FORMNAME="" UNITNAME="PluginCommon.lib" CONTAINERID="LibTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+  </FILELIST>
+  <BUILDTOOLS>
+  </BUILDTOOLS>
+
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=1
+AutoIncBuild=1
+MajorVer=0
+MinorVer=1
+Release=0
+Build=21
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=3081
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=KiwiWare
+FileDescription=Code Editor Parser Plugin (Parse AGDs into AGD Table and Screen data)
+FileVersion=0.1.0.21
+InternalName=AGDParser.mpi
+LegalCopyright=2005 KiwiWare
+LegalTrademarks=
+OriginalFilename=AGDParser.mpi
+ProductName=TommyGun
+ProductVersion=1.0.0.0
+Comments=Programmed by Tony Thompson
+
+[Excluded Packages]
+c:\program files\borland\cbuilder6\Bin\dclqrt60.bpl=QuickReport Components
+c:\program files\borland\cbuilder6\Bin\dcltqr60.bpl=TeeChart for QuickReport Components
+c:\program files\borland\cbuilder6\Bin\dclclxdb60.bpl=Borland CLX Database Components
+c:\program files\borland\cbuilder6\Bin\dclclxstd60.bpl=Borland CLX Standard Components
+
+[HistoryLists\hlIncludePath]
+Count=8
+Item0=$(PROJECTS)\TommyGun\Helpers;$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\Scorpio;$(PROJECTS)\FlatStyle;$(PROJECTS)\SynEdit\Source;$(PROJECTS)\TommyGun\Plugins\Common
+Item1=$(PROJECTS)\TommyGun\Helpers;$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\Scorpio;$(PROJECTS)\FlatStyle;$(PROJECTS)\SynEdit\Source;C:\Projects\TommyGun\Plugins\Common
+Item2=$(PROJECTS)\TommyGun\Helpers;$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\Scorpio;$(PROJECTS)\FlatStyle;$(PROJECTS)\SynEdit\Source
+Item3=$(PROJECTS)\TommyGun\Helpers;$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\Scorpio;$(PROJECTS)\FlatStyle;$(PROJECTS)\SynEdit
+Item4=$(PROJECTS)\TommyGun\Helpers;$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\Scorpio;$(PROJECTS)\FlatStyle
+Item5=$(PROJECTS)\TommyGun\Helpers;$(BCB)\include;$(BCB)\include\vcl;$(PROJECTS)\Scorpio
+Item6=$(PROJECTS)\TommyGun\Helpers;$(BCB)\include;$(BCB)\include\vcl
+Item7=C:\Program Files\Borland\CBuilder6\Projects;\Projects\TommyGun\Plugins\ImageEditor\PaintTools;$(BCB)\include;$(BCB)\include\vcl;\Projects\TommyGun\Helpers
+
+[HistoryLists\hlLibraryPath]
+Count=5
+Item0=$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;$(PROJECTS)\FlatStyle;$(PROJECTS)\SynEdit;$(PROJECTS)\Scorpio
+Item1=$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;$(PROJECTS)\FlatStyle;$(PROJECTS)\SynEdit
+Item2=$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;$(PROJECTS)\FlatStyle
+Item3=$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib
+Item4=C:\Program Files\Borland\CBuilder6\Projects;$(BCB)\Projects\Lib;\Projects\TommyGun\Plugins\ImageEditor\PaintTools;$(BCB)\lib\obj;$(BCB)\lib
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=4
+Item0=USE_REMOTE_LOGGING2;USE_EVENT_MANAGER;RL_LOG_METHODS;USE_PCH;_DEBUG
+Item1=USE_REMOTE_LOGGING2;USE_EVENT_MANAGER;RL_LOG_METHODS;USE_PCH
+Item2=USE_REMOTE_LOGGING2;USE_EVENT_MANAGER;RL_LOG_METHODS
+Item3=USE_REMOTE_LOGGING2;USE_EVENT_MANAGER;RL_LOG_METHODS;_DEBUG
+
+[HistoryLists\hlIntOutputDir]
+Count=1
+Item0=obj
+
+[HistoryLists\hlFinalOutputDir]
+Count=7
+Item0=..\..\
+Item1=D:\Projects\TommyGun\Plugins\
+Item2=D:\Projects\TommyGun\Plugins\_ZX Spectrum\
+Item3=D:\Projects\TommyGun\Plugins\_ZX Spectrum
+Item4=$(Projects)\TommyGun\Plugins\
+Item5=$(Projects)\TommyGun\Plugins\_ZX Spectrum\
+Item6=\Projects\TommyGun\Plugins\_ZX Spectrum\
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=
+Launcher=
+UseLauncher=0
+DebugCWD=
+HostApplication=D:\Projects\TommyGun\TommyGun.exe
+RemoteHost=
+RemotePath=
+RemoteLauncher=
+RemoteCWD=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=1
+LinkDebugVcl=0
+LinkCGLIB=0
+
+[Linker]
+LibPrefix=
+LibSuffix=
+LibVersion=
+  </IDEOPTIONS>
+</PROJECT>
