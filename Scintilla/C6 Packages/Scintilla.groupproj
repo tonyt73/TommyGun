@@ -1,0 +1,44 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{d42d716d-c363-4e2d-88da-bb5edbe9ee66}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Projects Include="DScintilla_R6.cbproj" />
+    <Projects Include="Scintilla_R6.cbproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+  <BorlandProject xmlns=""> <Default.Personality> </Default.Personality> </BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Target Name="DScintilla_R6">
+    <MSBuild Projects="DScintilla_R6.cbproj" Targets="" />
+  </Target>
+  <Target Name="DScintilla_R6:Clean">
+    <MSBuild Projects="DScintilla_R6.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="DScintilla_R6:Make">
+    <MSBuild Projects="DScintilla_R6.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="Scintilla_R6">
+    <MSBuild Projects="Scintilla_R6.cbproj" Targets="" />
+  </Target>
+  <Target Name="Scintilla_R6:Clean">
+    <MSBuild Projects="Scintilla_R6.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="Scintilla_R6:Make">
+    <MSBuild Projects="Scintilla_R6.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="Build">
+    <CallTarget Targets="DScintilla_R6;Scintilla_R6" />
+  </Target>
+  <Target Name="Clean">
+    <CallTarget Targets="DScintilla_R6:Clean;Scintilla_R6:Clean" />
+  </Target>
+  <Target Name="Make">
+    <CallTarget Targets="DScintilla_R6:Make;Scintilla_R6:Make" />
+  </Target>
+  <Import Condition="Exists('$(MSBuildBinPath)\Borland.Group.Targets')" Project="$(MSBuildBinPath)\Borland.Group.Targets" />
+</Project>

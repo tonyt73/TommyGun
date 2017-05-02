@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{8fd3fd60-e20a-4c34-aaf9-62ca9549cad9}</ProjectGuid>
+    <ProjectType>CppPackage</ProjectType>
+    <MainSource>DScintilla_R6.cpp</MainSource>
+    <Config Condition="'$(Config)'==''">Release Build</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+    <Base>true</Base>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Debug Build' or '$(Cfg_1)'!=''">
+    <Base>true</Base>
+    <Cfg_1>true</Cfg_1>
+    <CfgParent>Base</CfgParent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Release Build' or '$(Cfg_2)'!=''">
+    <Base>true</Base>
+    <Cfg_2>true</Cfg_2>
+    <CfgParent>Base</CfgParent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Base)'!=''">
+    <OutputExt>bpl</OutputExt>
+    <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
+    <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
+    <ILINK_IntermediateOutputPath>..\b6obj</ILINK_IntermediateOutputPath>
+    <BCC_OutputDir>..\b6obj\</BCC_OutputDir>
+    <DynamicRTL>true</DynamicRTL>
+    <ILINK_GenerateLibFile>true</ILINK_GenerateLibFile>
+    <BCC_InstructionSet>5</BCC_InstructionSet>
+    <BRCC_OutputDir>..\b6obj\</BRCC_OutputDir>
+    <ILINK_AppType>Windows</ILINK_AppType>
+    <DCC_DebugInformation>false</DCC_DebugInformation>
+    <ILINK_GenerateImportLibrary>true</ILINK_GenerateImportLibrary>
+    <UsePackages>true</UsePackages>
+    <ILINK_ObjectSearchPath>..\Source</ILINK_ObjectSearchPath>
+    <DCC_MakeModifiedUnits>true</DCC_MakeModifiedUnits>
+    <BCC_ZeroLengthEmptyMemberFuncs>true</BCC_ZeroLengthEmptyMemberFuncs>
+    <FinalOutputDir>D:\Projects\TommyGun\VCL\</FinalOutputDir>
+    <PackageImports>rtl.bpi;designide.bpi;vcl.bpi</PackageImports>
+    <TASM_AdditionalSwitches> /w2 ..\b6obj\</TASM_AdditionalSwitches>
+    <DCC_UnitSearchPath>.\;$(BDS)\lib;$(BDS)\lib\obj</DCC_UnitSearchPath>
+    <ILINK_Description>Delphi Scintilla Interface Components Designtime</ILINK_Description>
+    <BRCC_UserSuppliedOptions> -I..\source;$(BDS)\include;$(BDS)\include\vcl;$(BDS)\include\dinkumware</BRCC_UserSuppliedOptions>
+    <ILINK_WinAppType>Package</ILINK_WinAppType>
+    <BCC_GenerateMultithreaded>true</BCC_GenerateMultithreaded>
+    <DCC_DcuOutput>..\b6obj\</DCC_DcuOutput>
+    <DCC_UsePackage>designide</DCC_UsePackage>
+    <BCC_PCHCache>true</BCC_PCHCache>
+    <IncludePath>..\Source</IncludePath>
+    <ILINK_BpiLibOutputDir>D:\Projects\TommyGun\VCL\</ILINK_BpiLibOutputDir>
+    <BCC_IntegerSizedEnums>false</BCC_IntegerSizedEnums>
+    <DCC_IncludePath>.\;$(BDS)\lib;$(BDS)\lib\obj</DCC_IncludePath>
+    <BRCC_IncludePath>..\source;$(BDS)\include;$(BDS)\include\vcl;$(BDS)\include\dinkumware</BRCC_IncludePath>
+    <AllPackageLibs>rtl.lib</AllPackageLibs>
+    <TASM_IncludePath>..\source;$(BDS)\include;$(BDS)\include\vcl;$(BDS)\include\dinkumware</TASM_IncludePath>
+    <BCC_IncludePath>..\source;$(BDS)\include;$(BDS)\include\vcl;$(BDS)\include\dinkumware</BCC_IncludePath>
+    <ILINK_LibraryPath>..\source;..\b6obj;..\..\lib;$(BDS)\lib\obj;$(BDS)\lib;$(BDS)\lib\Release;..\..\VCL</ILINK_LibraryPath>
+    <BCC_ZeroLengthEmptyBaseClass>true</BCC_ZeroLengthEmptyBaseClass>
+    <Multithreaded>true</Multithreaded>
+    <TASM_Defines>_RTLDLL;NO_STRICT;USEPACKAGES</TASM_Defines>
+    <BRCC_Defines>_RTLDLL;NO_STRICT;USEPACKAGES</BRCC_Defines>
+    <DCC_ObjOutput>..\b6obj\</DCC_ObjOutput>
+    <BCC_Defines>NO_STRICT</BCC_Defines>
+    <TASM_Debugging>None</TASM_Debugging>
+    <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+    <ILINK_PackageType>Designtime</ILINK_PackageType>
+    <ILINK_PackageBaseName>DScit</ILINK_PackageBaseName>
+    <DCC_SymbolReferenceInfo>2</DCC_SymbolReferenceInfo>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_1)'!=''">
+    <DCC_Optimize>false</DCC_Optimize>
+    <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
+    <ILINK_FullDebugInfo>true</ILINK_FullDebugInfo>
+    <BCC_InlineFunctionExpansion>false</BCC_InlineFunctionExpansion>
+    <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
+    <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+    <DCC_DebugInformation>true</DCC_DebugInformation>
+    <BCC_DebugLineNumbers>true</BCC_DebugLineNumbers>
+    <IntermediateOutputDir>Debug_Build</IntermediateOutputDir>
+    <TASM_DisplaySourceLines>true</TASM_DisplaySourceLines>
+    <BCC_StackFrames>true</BCC_StackFrames>
+    <ILINK_LibraryPath>$(BDS)\lib\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+    <BCC_DisableOptimizations>true</BCC_DisableOptimizations>
+    <BCC_Defines>_DEBUG;$(BCC_Defines)</BCC_Defines>
+    <TASM_Debugging>Full</TASM_Debugging>
+    <BCC_SourceDebuggingOn>true</BCC_SourceDebuggingOn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_2)'!=''">
+    <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
+    <FinalOutputDir>D:\Projects\TommyGun\VCL\</FinalOutputDir>
+    <IntermediateOutputDir>Release_Build</IntermediateOutputDir>
+    <ILINK_BpiLibOutputDir>D:\Projects\TommyGun\VCL\</ILINK_BpiLibOutputDir>
+    <BCC_Defines>NDEBUG;$(BCC_Defines)</BCC_Defines>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>CPlusPlusBuilder.Personality</Borland.Personality>
+    <Borland.ProjectType>CppPackage</Borland.ProjectType>
+    <BorlandProject>
+<BorlandProject><CPlusPlusBuilder.Personality><VersionInfo><VersionInfo Name="IncludeVerInfo">True</VersionInfo><VersionInfo Name="AutoIncBuild">False</VersionInfo><VersionInfo Name="MajorVer">0</VersionInfo><VersionInfo Name="MinorVer">50</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">0</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">1033</VersionInfo><VersionInfo Name="CodePage">1252</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName">Jan Martin Pettersen</VersionInfoKeys><VersionInfoKeys Name="FileDescription">Delphi Scintilla Interface Components Designtime (C++ Builder 6)</VersionInfoKeys><VersionInfoKeys Name="FileVersion">0.50.0.0</VersionInfoKeys><VersionInfoKeys Name="InternalName"></VersionInfoKeys><VersionInfoKeys Name="LegalCopyright">Copyright © 2004-2007, Jan Martin Pettersen</VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys><VersionInfoKeys Name="ProductName">Delphi Scintilla Interface Components Designtime</VersionInfoKeys><VersionInfoKeys Name="ProductVersion">0.50.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments">Released under the LGPL v2.1 license.</VersionInfoKeys></VersionInfoKeys><HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Count">2</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item0">..\Source</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item1">..\source;$(BCB)\include;$(BCB)\include\vcl</HistoryLists_hlIncludePath></HistoryLists_hlIncludePath><HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Count">3</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item0">..\source;..\b6obj;..\..\lib;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\lib\Release</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item1">..\..\lib;..\source;..\b6obj;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\lib\Release</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item2">..\..\lib;..\source;..\b6obj;$(BCB)\lib\obj;$(BCB)\lib</HistoryLists_hlLibraryPath></HistoryLists_hlLibraryPath><HistoryLists_hlDebugSourcePath><HistoryLists_hlDebugSourcePath Name="Count">1</HistoryLists_hlDebugSourcePath><HistoryLists_hlDebugSourcePath Name="Item0">$(BCB)\source\vcl</HistoryLists_hlDebugSourcePath></HistoryLists_hlDebugSourcePath><HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Count">1</HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Item0">_DEBUG</HistoryLists_hlConditionals></HistoryLists_hlConditionals><HistoryLists_hlIntOutputDir><HistoryLists_hlIntOutputDir Name="Count">1</HistoryLists_hlIntOutputDir><HistoryLists_hlIntOutputDir Name="Item0">..\b6obj</HistoryLists_hlIntOutputDir></HistoryLists_hlIntOutputDir><Debugging><Debugging Name="DebugSourceDirs">$(BCB)\source\vcl</Debugging></Debugging><Parameters><Parameters Name="RunParams"></Parameters><Parameters Name="Launcher"></Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="DebugCWD"></Parameters><Parameters Name="HostApplication"></Parameters><Parameters Name="RemoteHost"></Parameters><Parameters Name="RemotePath"></Parameters><Parameters Name="RemoteLauncher"></Parameters><Parameters Name="RemoteCWD"></Parameters><Parameters Name="RemoteDebug">False</Parameters><Parameters Name="RemoteParams"></Parameters><Parameters Name="UseRemoteLauncher">False</Parameters><Parameters Name="Debug Symbols Search Path"></Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><Compiler><Compiler Name="ShowInfoMsgs">0</Compiler><Compiler Name="LinkDebugVcl">0</Compiler><Compiler Name="LinkCGLIB">0</Compiler></Compiler><CORBA><CORBA Name="AddServerUnit">1</CORBA><CORBA Name="AddClientUnit">1</CORBA><CORBA Name="PrecompiledHeaders">1</CORBA></CORBA><Linker><Linker Name="LibPrefix"></Linker><Linker Name="LibSuffix"></Linker><Linker Name="LibVersion"></Linker></Linker><ProjectProperties><ProjectProperties Name="AutoShowDeps">False</ProjectProperties><ProjectProperties Name="ManagePaths">True</ProjectProperties><ProjectProperties Name="VerifyPackages">True</ProjectProperties></ProjectProperties><Source><Source Name="MainSource">DScintilla_R6.cpp</Source></Source><HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Count">3</HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Item0">D:\Projects\TommyGun\VCL\</HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Item1">..\..\VCL\</HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Item2">.</HistoryLists_hlFinalOutputDir></HistoryLists_hlFinalOutputDir><HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Count">1</HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Item0">..\source;..\b6obj;..\..\lib;$(BDS)\lib\obj;$(BDS)\lib;$(BDS)\lib\Release;..\..\VCL</HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Item1">..\source;..\b6obj;..\..\lib;$(BDS)\lib\obj;$(BDS)\lib;$(BDS)\lib\Release;..\..\VCL</HistoryLists_hlILINK_LibraryPath></HistoryLists_hlILINK_LibraryPath><HistoryLists_hlIntermediateOutputDir><HistoryLists_hlIntermediateOutputDir Name="Count">1</HistoryLists_hlIntermediateOutputDir><HistoryLists_hlIntermediateOutputDir Name="Item0">Release_Build</HistoryLists_hlIntermediateOutputDir><HistoryLists_hlIntermediateOutputDir Name="Item1">Release_Build</HistoryLists_hlIntermediateOutputDir></HistoryLists_hlIntermediateOutputDir><HistoryLists_hlILINK_MaxErrors><HistoryLists_hlILINK_MaxErrors Name="Count">1</HistoryLists_hlILINK_MaxErrors><HistoryLists_hlILINK_MaxErrors Name="Item0">0</HistoryLists_hlILINK_MaxErrors></HistoryLists_hlILINK_MaxErrors><HistoryLists_hlILINK_FileAlignment><HistoryLists_hlILINK_FileAlignment Name="Count">1</HistoryLists_hlILINK_FileAlignment><HistoryLists_hlILINK_FileAlignment Name="Item0">0x200</HistoryLists_hlILINK_FileAlignment></HistoryLists_hlILINK_FileAlignment><HistoryLists_hlILINK_ObjectAlignment><HistoryLists_hlILINK_ObjectAlignment Name="Count">1</HistoryLists_hlILINK_ObjectAlignment><HistoryLists_hlILINK_ObjectAlignment Name="Item0">4096</HistoryLists_hlILINK_ObjectAlignment></HistoryLists_hlILINK_ObjectAlignment><HistoryLists_hlBCC_MaxIdentifierLength><HistoryLists_hlBCC_MaxIdentifierLength Name="Count">1</HistoryLists_hlBCC_MaxIdentifierLength><HistoryLists_hlBCC_MaxIdentifierLength Name="Item0">250</HistoryLists_hlBCC_MaxIdentifierLength></HistoryLists_hlBCC_MaxIdentifierLength><Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\bcbie100.bpl">CodeGear C++Builder Internet Explorer 5 Components Package</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclbcbsmp100.bpl">Borland Sample Controls Design Time Package</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\applet100.bpl">CodeGear Control Panel Applet Package</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dcl31w100.bpl">Delphi 1.0 Compatibility Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclstd100.bpl">CodeGear Standard Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclact100.bpl">CodeGear ActionBar Components</Excluded_Packages>
+      <Excluded_Packages Name="C:\Windows\SYSTEM32\vclimg100.bpl">CodeGear Delphi image support library</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclbde100.bpl">CodeGear BDE DB Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dcldb100.bpl">CodeGear Database Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclemacsedit100.bpl">CodeGear Editor Emacs Enhancements</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclmlwiz100.bpl">CodeGear Markup Language Wizards</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclsmpedit100.bpl">CodeGear Editor Script Enhancements</Excluded_Packages>
+    </Excluded_Packages><HistoryLists_hlILINK_BaseAddress><HistoryLists_hlILINK_BaseAddress Name="Count">1</HistoryLists_hlILINK_BaseAddress><HistoryLists_hlILINK_BaseAddress Name="Item0">0x00400000</HistoryLists_hlILINK_BaseAddress></HistoryLists_hlILINK_BaseAddress><HistoryLists_hlILINK_HeapCommitSize><HistoryLists_hlILINK_HeapCommitSize Name="Count">1</HistoryLists_hlILINK_HeapCommitSize><HistoryLists_hlILINK_HeapCommitSize Name="Item0">0x00001000</HistoryLists_hlILINK_HeapCommitSize></HistoryLists_hlILINK_HeapCommitSize><HistoryLists_hlILINK_HeapReserveSize><HistoryLists_hlILINK_HeapReserveSize Name="Count">1</HistoryLists_hlILINK_HeapReserveSize><HistoryLists_hlILINK_HeapReserveSize Name="Item0">0x00100000</HistoryLists_hlILINK_HeapReserveSize></HistoryLists_hlILINK_HeapReserveSize><HistoryLists_hlILINK_StackCommitSize><HistoryLists_hlILINK_StackCommitSize Name="Count">1</HistoryLists_hlILINK_StackCommitSize><HistoryLists_hlILINK_StackCommitSize Name="Item0">0x00002000</HistoryLists_hlILINK_StackCommitSize></HistoryLists_hlILINK_StackCommitSize><HistoryLists_hlILINK_StackReserveSize><HistoryLists_hlILINK_StackReserveSize Name="Count">1</HistoryLists_hlILINK_StackReserveSize><HistoryLists_hlILINK_StackReserveSize Name="Item0">0x00100000</HistoryLists_hlILINK_StackReserveSize></HistoryLists_hlILINK_StackReserveSize><HistoryLists_hlILINK_IntermediateOutputPath><HistoryLists_hlILINK_IntermediateOutputPath Name="Count">1</HistoryLists_hlILINK_IntermediateOutputPath><HistoryLists_hlILINK_IntermediateOutputPath Name="Item0">..\b6obj</HistoryLists_hlILINK_IntermediateOutputPath></HistoryLists_hlILINK_IntermediateOutputPath><HistoryLists_hlBCC_IncludePath><HistoryLists_hlBCC_IncludePath Name="Count">1</HistoryLists_hlBCC_IncludePath><HistoryLists_hlBCC_IncludePath Name="Item0">..\source;$(BDS)\include;$(BDS)\include\vcl;$(BDS)\include\dinkumware</HistoryLists_hlBCC_IncludePath></HistoryLists_hlBCC_IncludePath><HistoryLists_hlBCC_Defines><HistoryLists_hlBCC_Defines Name="Count">1</HistoryLists_hlBCC_Defines><HistoryLists_hlBCC_Defines Name="Item0">NDEBUG;NO_STRICT</HistoryLists_hlBCC_Defines></HistoryLists_hlBCC_Defines><HistoryLists_hlBCC_OutputDir><HistoryLists_hlBCC_OutputDir Name="Count">1</HistoryLists_hlBCC_OutputDir><HistoryLists_hlBCC_OutputDir Name="Item0">..\b6obj\</HistoryLists_hlBCC_OutputDir></HistoryLists_hlBCC_OutputDir><HistoryLists_hlDCC_IncludePath><HistoryLists_hlDCC_IncludePath Name="Count">1</HistoryLists_hlDCC_IncludePath><HistoryLists_hlDCC_IncludePath Name="Item0">.\;$(BDS)\lib;$(BDS)\lib\obj</HistoryLists_hlDCC_IncludePath></HistoryLists_hlDCC_IncludePath><HistoryLists_hlDCC_ObjOutput><HistoryLists_hlDCC_ObjOutput Name="Count">1</HistoryLists_hlDCC_ObjOutput><HistoryLists_hlDCC_ObjOutput Name="Item0">..\b6obj\</HistoryLists_hlDCC_ObjOutput></HistoryLists_hlDCC_ObjOutput><HistoryLists_hlDCC_CodePage><HistoryLists_hlDCC_CodePage Name="Count">1</HistoryLists_hlDCC_CodePage><HistoryLists_hlDCC_CodePage Name="Item0">0</HistoryLists_hlDCC_CodePage></HistoryLists_hlDCC_CodePage><HistoryLists_hlDCC_UsePackage><HistoryLists_hlDCC_UsePackage Name="Count">1</HistoryLists_hlDCC_UsePackage><HistoryLists_hlDCC_UsePackage Name="Item0">designide</HistoryLists_hlDCC_UsePackage></HistoryLists_hlDCC_UsePackage><HistoryLists_hlBRCC_IncludePath><HistoryLists_hlBRCC_IncludePath Name="Count">1</HistoryLists_hlBRCC_IncludePath><HistoryLists_hlBRCC_IncludePath Name="Item0">..\source;$(BDS)\include;$(BDS)\include\vcl;$(BDS)\include\dinkumware</HistoryLists_hlBRCC_IncludePath></HistoryLists_hlBRCC_IncludePath><HistoryLists_hlBRCC_Defines><HistoryLists_hlBRCC_Defines Name="Count">1</HistoryLists_hlBRCC_Defines><HistoryLists_hlBRCC_Defines Name="Item0">_RTLDLL;NO_STRICT;USEPACKAGES</HistoryLists_hlBRCC_Defines></HistoryLists_hlBRCC_Defines><HistoryLists_hlBRCC_OutputDir><HistoryLists_hlBRCC_OutputDir Name="Count">1</HistoryLists_hlBRCC_OutputDir><HistoryLists_hlBRCC_OutputDir Name="Item0">..\b6obj\</HistoryLists_hlBRCC_OutputDir></HistoryLists_hlBRCC_OutputDir><HistoryLists_hlTASM_IncludePath><HistoryLists_hlTASM_IncludePath Name="Count">1</HistoryLists_hlTASM_IncludePath><HistoryLists_hlTASM_IncludePath Name="Item0">..\source;$(BDS)\include;$(BDS)\include\vcl;$(BDS)\include\dinkumware</HistoryLists_hlTASM_IncludePath></HistoryLists_hlTASM_IncludePath><HistoryLists_hlTASM_Defines><HistoryLists_hlTASM_Defines Name="Count">1</HistoryLists_hlTASM_Defines><HistoryLists_hlTASM_Defines Name="Item0">_RTLDLL;NO_STRICT;USEPACKAGES</HistoryLists_hlTASM_Defines></HistoryLists_hlTASM_Defines><HistoryLists_hlTASM_HashTableCapacity><HistoryLists_hlTASM_HashTableCapacity Name="Count">1</HistoryLists_hlTASM_HashTableCapacity><HistoryLists_hlTASM_HashTableCapacity Name="Item0">8192</HistoryLists_hlTASM_HashTableCapacity></HistoryLists_hlTASM_HashTableCapacity><HistoryLists_hlTASM_MaxSymbolLength><HistoryLists_hlTASM_MaxSymbolLength Name="Count">1</HistoryLists_hlTASM_MaxSymbolLength><HistoryLists_hlTASM_MaxSymbolLength Name="Item0">12</HistoryLists_hlTASM_MaxSymbolLength></HistoryLists_hlTASM_MaxSymbolLength><HistoryLists_hlTASM_Passes><HistoryLists_hlTASM_Passes Name="Count">1</HistoryLists_hlTASM_Passes><HistoryLists_hlTASM_Passes Name="Item0">1</HistoryLists_hlTASM_Passes></HistoryLists_hlTASM_Passes><HistoryLists_hlTASM_VersionId><HistoryLists_hlTASM_VersionId Name="Count">1</HistoryLists_hlTASM_VersionId><HistoryLists_hlTASM_VersionId Name="Item0">0</HistoryLists_hlTASM_VersionId></HistoryLists_hlTASM_VersionId><HistoryLists_hlILINK_BpiLibOutputDir><HistoryLists_hlILINK_BpiLibOutputDir Name="Count">1</HistoryLists_hlILINK_BpiLibOutputDir><HistoryLists_hlILINK_BpiLibOutputDir Name="Item0">D:\Projects\TommyGun\VCL\</HistoryLists_hlILINK_BpiLibOutputDir></HistoryLists_hlILINK_BpiLibOutputDir></CPlusPlusBuilder.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Borland.Cpp.Targets" />
+  <ItemGroup>
+    <PackageImport Include="designide.bpi">
+      <BuildOrder>0</BuildOrder>
+    </PackageImport>
+    <PackageImport Include="rtl.bpi">
+      <BuildOrder>1</BuildOrder>
+    </PackageImport>
+    <PackageImport Include="Scintilla_R6.bpi">
+      <BuildOrder>2</BuildOrder>
+    </PackageImport>
+    <PackageImport Include="vcl.bpi">
+      <BuildOrder>3</BuildOrder>
+    </PackageImport>
+    <DelphiCompile Include="..\source\SciActionsRes.pas">
+      <BuildOrder>6</BuildOrder>
+    </DelphiCompile>
+    <DelphiCompile Include="..\source\SciResLangDcl.pas">
+      <BuildOrder>5</BuildOrder>
+    </DelphiCompile>
+    <DelphiCompile Include="..\Source\SciScintillaReg.pas">
+      <BuildOrder>8</BuildOrder>
+    </DelphiCompile>
+    <DelphiCompile Include="..\source\SciStyleLoader.pas">
+      <BuildOrder>7</BuildOrder>
+    </DelphiCompile>
+    <DelphiCompile Include="..\source\SciWhatToFillUnit.pas">
+      <Form>TSciWhatToFillForm</Form>
+      <BuildOrder>4</BuildOrder>
+    </DelphiCompile>
+    <DelphiCompile Include="..\Source\SciWhatToFillUnitLng.pas">
+      <Form>TSciWhatToFillFormLng</Form>
+      <BuildOrder>10</BuildOrder>
+    </DelphiCompile>
+    <None Include="..\Source\SciScintillaReg.dcr">
+      <BuildOrder>9</BuildOrder>
+    </None>
+    <CppCompile Include="DScintilla_R6.cpp">
+      <BuildOrder>11</BuildOrder>
+    </CppCompile>
+    <ResFiles Include="DScintilla_R6.res">
+      <BuildOrder>12</BuildOrder>
+    </ResFiles>
+    <FormResources Include="..\source\SciWhatToFillUnit.dfm" />
+    <FormResources Include="..\Source\SciWhatToFillUnitLng.dfm" />
+    <BuildConfiguration Include="Debug Build">
+      <Key>Cfg_1</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Release Build">
+      <Key>Cfg_2</Key>
+    </BuildConfiguration>
+  </ItemGroup>
+</Project>
