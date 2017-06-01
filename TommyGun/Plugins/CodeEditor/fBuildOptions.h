@@ -34,14 +34,21 @@
 #include "cspin.h"
 #include "KSpinEdit.h"
 #include "KRegistry.h"
+#include "SciLanguageManager.hpp"
+#include "SciScintilla.hpp"
+#include "SciScintillaBase.hpp"
+#include "SciScintillaMemo.hpp"
+#include "SciFileExtensionsManager.hpp"
+#include "SciDocTabCtrl.hpp"
+#include <vector>
 //---------------------------------------------------------------------------
 class TfrmBuildOptions : public TForm
 {
 __published:	// IDE-managed Components
     TPanel *Panel1;
     TButton *cmdClose;
-    TPanel *Panel2;
-    TPageControl *pgcProperties;
+	TPanel *Panel2;
+	TPageControl *pgcProperties;
     TTabSheet *tabGeneral;
     TTabSheet *tabHelp;
     TOpenDialog *dlgFindApp;
@@ -56,7 +63,7 @@ __published:	// IDE-managed Components
     TTabSheet *tabBuilders;
     TTabSheet *tabEmulator;
     KIconButton *btnEditor;
-    TTabSheet *TabSheet1;
+	TTabSheet *tabEditor;
     KRegistry *regScorpio;
     TImage *Image2;
     TPanel *Panel3;
@@ -72,7 +79,7 @@ __published:	// IDE-managed Components
     TGroupBox *GroupBox3;
     TMemo *Memo1;
     TGroupBox *GroupBox8;
-    TMemo *Memo2;
+	TMemo *Memo2;
     TPanel *Panel5;
     TImage *Image3;
     TImage *Image8;
@@ -87,7 +94,7 @@ __published:	// IDE-managed Components
     TLabel *Label27;
     TRadioButton *chkOptionsCodeEditorResourceOverwrite;
     TRadioButton *chkOptionsCodeEditorResourceSkip;
-    TRadioButton *chkOptionsCodeEditorResourceAsk;
+	TRadioButton *chkOptionsCodeEditorResourceAsk;
     TGroupBox *GroupBox7;
     TLabel *Label7;
     TComboBox *cmbTargetFile;
@@ -118,7 +125,7 @@ __published:	// IDE-managed Components
     TLabel *lblTool3Defaults;
     TEdit *edtParameters3;
     TComboBox *cmbTool3;
-    TCheckBox *chkTool3;
+	TCheckBox *chkTool3;
     TPanel *Panel7;
     TImage *Image10;
     TGroupBox *GroupBox1;
@@ -133,7 +140,7 @@ __published:	// IDE-managed Components
     TImage *Image1;
     TImage *imgDisplayFontAttr;
     TGroupBox *GroupBox4;
-    TLabel *Label4;
+	TLabel *Label4;
     TRadioButton *radTabsUse;
     TRadioButton *radTabUseSpaces;
     TCSpinEdit *edtTabWidth;
@@ -164,7 +171,7 @@ __published:	// IDE-managed Components
     TSpeedButton *btnToolAdd;
     TSpeedButton *btnToolUpdate;
     TSpeedButton *btnToolRemove;
-    TSpeedButton *btnClear;
+	TSpeedButton *btnClear;
     TSpeedButton *btnFindExecutable;
     TLabel *Label1;
     TLabel *Label3;
@@ -179,18 +186,40 @@ __published:	// IDE-managed Components
     TEdit *edtPrefixFile;
     TEdit *edtPrefixLineNo;
     TEdit *edtExtensions;
-    TEdit *edtDefaultParameters;
-    TCheckBox *chkAcceptsMultipleFiles;
-    TGroupBox *grpTools;
-    TListView *lstTools;
-    void __fastcall btnGeneralClick(TObject *Sender);
-    void __fastcall cmbTypeChange(TObject *Sender);
-    void __fastcall frmBuildChange(TObject *Sender);
-    void __fastcall frmBuildEnter(TObject *Sender);
-    void __fastcall frmBuildExit(TObject *Sender);
-    void __fastcall btnToolAddClick(TObject *Sender);
-    void __fastcall lstToolsSelectItem(TObject *Sender, TListItem *Item,
-          bool Selected);
+	TEdit *edtDefaultParameters;
+	TCheckBox *chkAcceptsMultipleFiles;
+	TGroupBox *grpTools;
+	TListView *lstTools;
+	KIconButton *KIconButton1;
+	TTabSheet *tabColour;
+	TImage *Image6;
+	TGroupBox *GroupBox9;
+	TComboBox *cmbLanguage;
+	TLabel *Label18;
+	TListBox *lstAttributes;
+	TLabel *Label19;
+	TLabel *Label20;
+	TLabel *lblBack;
+	TSciLanguageManager *sciLangManager;
+	TColorBox *clrBackGlobal;
+	TColorBox *clrBack;
+	TColorBox *clrFore;
+	TSciDocumentTabControl *sciTabControl;
+	TScintilla *sciEditor;
+	TMemo *txtZ80;
+	TMemo *txtText;
+	TMemo *txtZXBasic;
+	TMemo *txtCpp;
+	TButton *btnReset;
+	TButton *btnApply;
+	TLabel *Label21;
+	void __fastcall btnGeneralClick(TObject *Sender);
+	void __fastcall cmbTypeChange(TObject *Sender);
+	void __fastcall frmBuildChange(TObject *Sender);
+	void __fastcall frmBuildEnter(TObject *Sender);
+	void __fastcall frmBuildExit(TObject *Sender);
+	void __fastcall btnToolAddClick(TObject *Sender);
+	void __fastcall lstToolsSelectItem(TObject *Sender, TListItem *Item, bool Selected);
     void __fastcall btnToolUpdateClick(TObject *Sender);
     void __fastcall btnToolRemoveClick(TObject *Sender);
     void __fastcall btnClearClick(TObject *Sender);
@@ -209,7 +238,7 @@ __published:	// IDE-managed Components
     void __fastcall lblTool1DefaultsClick(TObject *Sender);
     void __fastcall lblTool2DefaultsClick(TObject *Sender);
     void __fastcall lblTool3DefaultsClick(TObject *Sender);
-    void __fastcall chkTool3Click(TObject *Sender);
+	void __fastcall chkTool3Click(TObject *Sender);
     void __fastcall cmbTool2Change(TObject *Sender);
     void __fastcall FormShow(TObject *Sender);
     void __fastcall tabBuildersEnter(TObject *Sender);
@@ -217,18 +246,36 @@ __published:	// IDE-managed Components
     void __fastcall cmbDisplayFontsChange(TObject *Sender);
     void __fastcall chkDisplayFixedFontsOnlyClick(TObject *Sender);
     void __fastcall cmdCloseClick(TObject *Sender);
+	void __fastcall cmbLanguageChange(TObject *Sender);
+	void __fastcall lstAttributesClick(TObject *Sender);
+	void __fastcall FormCreate(TObject *Sender);
+	void __fastcall clrForeChange(TObject *Sender);
+	void __fastcall clrBackChange(TObject *Sender);
+	void __fastcall clrBackGlobalChange(TObject *Sender);
+	void __fastcall btnApplyClick(TObject *Sender);
+	void __fastcall btnResetClick(TObject *Sender);
 private:	// User declarations
-    TCustomEdit*        m_Edit;
-    bool                m_bDirty;
-    int                 m_currentToolDefinition;
-    ZXToolDefinitions   m_ToolDefinitions;
+
+	TCustomEdit*        m_Edit;
+	bool                m_bDirty;
+	int                 m_currentToolDefinition;
+	ZXToolDefinitions   m_ToolDefinitions;
+	bool				m_bChanging;
+
+	int					m_LanguageIndex;
+	String				m_Language;
+	TExtensionMapper*   m_ExtMapper;
+	TSciLangItem*		m_sciLang;
+	std::vector<int>	m_AttributeMap;
 
     void    __fastcall  RefreshToolDefinitions();
     String  __fastcall  GUID();
     void    __fastcall  SaveIfDirty();
     void    __fastcall  GetFonts();
     void    __fastcall  Select(TComboBox* pComboBox, String sText);
-    void    __fastcall  SetEditorOptions();
+	void    __fastcall  SetEditorOptions();
+	void	__fastcall	FillStyles();
+	int 	__fastcall 	GetLanguageIndex();
 
 public:		// User declarations
             __fastcall  TfrmBuildOptions(TComponent* Owner);
@@ -249,8 +296,10 @@ public:		// User declarations
     String  __fastcall  GetBuilderParameters(int tool);
     String  __fastcall  GetTargetFile();
     bool    __fastcall  DoesToolSupportExtension(int tool, String ext);
-    bool    __fastcall  HasEmulator(void)   {   return GetEmulator().Trim() != ""; }
-    void    __fastcall  GetPrefixes(int tool, String& error, String& file, String& lineNo);
+	bool    __fastcall  HasEmulator(void)   {   return GetEmulator().Trim() != ""; }
+	void    __fastcall  GetPrefixes(int tool, String& error, String& file, String& lineNo);
+
+	__property String Language = { read = m_Language, write = m_Language };
  };
 //---------------------------------------------------------------------------
 extern PACKAGE TfrmBuildOptions *frmBuildOptions;

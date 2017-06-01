@@ -62,6 +62,26 @@ void __fastcall ZXEditorSettings::Write(void)
     WriteDisplay();
 }
 //---------------------------------------------------------------------------
+void __fastcall ZXEditorSettings::Write(TSciLanguageManager* LanguageManager)
+{
+	// copy the styles from the lang mgr
+    if (SAFE_PTR(m_regScorpio))
+	{
+		for (int l = 0; l < LanguageManager->LanguageList->Count; l++)
+		{
+			for (int s = 0; s < LanguageManager->LanguageList->Items[l]->Styles->Count; s++)
+			{
+				String style = IntToStr(LanguageManager->LanguageList->Items[l]->Styles->Items[s]->StyleNumber);
+				TColor fore = LanguageManager->LanguageList->Items[l]->Styles->Items[s]->ForeColor;
+				TColor back = LanguageManager->LanguageList->Items[l]->Styles->Items[s]->BackColor;
+				String key = "CodeEditor\\SciStyles\\" + LanguageManager->LanguageList->Items[l]->Name;
+				m_regScorpio->Write(key, style + ".fore", fore);
+				m_regScorpio->Write(key, style + ".back", back);
+			}
+		}
+	}
+}
+//---------------------------------------------------------------------------
 void __fastcall ZXEditorSettings::Apply(TScintillaMemo* Editor)
 {
     Editor->AutoCloseBraces = m_AutoCloseBraces;
@@ -72,7 +92,40 @@ void __fastcall ZXEditorSettings::Apply(TScintillaMemo* Editor)
     Editor->Font->Charset   = ANSI_CHARSET;
     Editor->Font->Pitch     = fpFixed;
     Editor->OtherOptions->ViewWSpace = (sciWSMode)m_Whitespace;
-    ((TScintilla*)Editor)->SelectedLanguage = ((TScintilla*)Editor)->SelectedLanguage;
+	((TScintilla*)Editor)->SelectedLanguage = ((TScintilla*)Editor)->SelectedLanguage;
+	// apply available styles
+	if (SAFE_PTR(m_regScorpio))
+	{
+		TSciLanguageManager* LanguageManager = ((TScintilla*)Editor)->LanguageManager;
+		for (int l = 0; l < LanguageManager->LanguageList->Count; l++)
+		{
+			for (int s = 0; s < LanguageManager->LanguageList->Items[l]->Styles->Count; s++)
+			{
+				int styleNo = LanguageManager->LanguageList->Items[l]->Styles->Items[s]->StyleNumber;
+				AnsiString style = IntToStr(styleNo);
+				TColor fore = LanguageManager->LanguageList->Items[l]->Styles->Items[s]->ForeColor;
+				TColor back = LanguageManager->LanguageList->Items[l]->Styles->Items[s]->BackColor;
+				AnsiString key = "CodeEditor\\SciStyles\\" + LanguageManager->LanguageList->Items[l]->Name;
+				TColor color;
+				if (m_regScorpio->ValueExists(key, style + ".fore"))
+				{
+					if (m_regScorpio->Read(key, style + ".fore", color))
+					{
+						LanguageManager->LanguageList->Items[l]->Styles->GetStyle(styleNo)->ForeColor = color;
+					}
+				}
+				if (m_regScorpio->ValueExists(key, style + ".back"))
+				{
+					if (m_regScorpio->Read(key, style + ".back", color))
+					{
+						LanguageManager->LanguageList->Items[l]->Styles->GetStyle(styleNo)->BackColor = color;
+					}
+				}
+			}
+		}
+		((TScintilla*)Editor)->Color = FindBackColor(LanguageManager, ((TScintilla*)Editor)->SelectedLanguage);
+		ApplyStylesTo(LanguageManager, Editor, ((TScintilla*)Editor)->SelectedLanguage);
+	}
 }
 //---------------------------------------------------------------------------
 void __fastcall ZXEditorSettings::Apply(TSciDoc* Document)
@@ -136,16 +189,37 @@ void __fastcall ZXEditorSettings::ReadDisplay(void)
 //---------------------------------------------------------------------------
 void __fastcall ZXEditorSettings::Reset(void)
 {
-    m_TabsToSpaces          = true;
-    m_TabWidth              = 4;
-    m_GuideWidth            = 4;
-    m_ShowGuides            = false;
-    m_LineNumbers           = true;
-    m_Font                  = "Courier New";
-    m_FontSize              = 10;
-    m_AutoCloseBraces       = true;
-    m_AutoCloseQuotes       = true;
-    m_Whitespace            = 0;
+	m_TabsToSpaces          = true;
+	m_TabWidth              = 4;
+	m_GuideWidth            = 4;
+	m_ShowGuides            = false;
+	m_LineNumbers           = true;
+	m_Font                  = "Courier New";
+	m_FontSize              = 10;
+	m_AutoCloseBraces       = true;
+	m_AutoCloseQuotes       = true;
+	m_Whitespace            = 0;
+}
+//---------------------------------------------------------------------------
+TColor __fastcall ZXEditorSettings::FindBackColor(TSciLanguageManager* langMgr, const String& Language)
+{
+	TSciLangItem* lang = langMgr->LanguageList->Find(Language);
+	TColor back = clBlack;
+	if (lang)
+	{
+		int max = 0;
+		std::map<TColor, int> colorCounts;
+		for (int i = 0; i < lang->Styles->Count; i++)
+		{
+			colorCounts[lang->Styles->Items[i]->BackColor]++;
+			if (colorCounts[lang->Styles->Items[i]->BackColor] > max)
+			{
+				max = colorCounts[lang->Styles->Items[i]->BackColor];
+				back = lang->Styles->Items[i]->BackColor;
+			}
+		}
+	}
+	return back;
 }
 //---------------------------------------------------------------------------
 

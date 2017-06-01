@@ -1,17 +1,17 @@
 /*---------------------------------------------------------------------------
 
-    (c) 2004 Scorpio Software
-        19 Wittama Drive
-        Glenmore Park
-        Sydney NSW 2745
-        Australia
+	(c) 2004 Scorpio Software
+		19 Wittama Drive
+		Glenmore Park
+		Sydney NSW 2745
+		Australia
 
 -----------------------------------------------------------------------------
 
-    $Workfile::                                                           $
-    $Revision::                                                           $
-        $Date::                                                           $
-      $Author::                                                           $
+	$Workfile::                                                           $
+	$Revision::                                                           $
+		$Date::                                                           $
+	  $Author::                                                           $
 
 ---------------------------------------------------------------------------*/
 //---------------------------------------------------------------------------
@@ -24,6 +24,11 @@
 #pragma link "cspin"
 #pragma link "KSpinEdit"
 #pragma link "KRegistry"
+#pragma link "SciLanguageManager"
+#pragma link "SciScintilla"
+#pragma link "SciScintillaBase"
+#pragma link "SciScintillaMemo"
+#pragma link "SciDocTabCtrl"
 #pragma resource "*.dfm"
 //---------------------------------------------------------------------------
 TfrmBuildOptions *frmBuildOptions = NULL;
@@ -32,11 +37,25 @@ __fastcall TfrmBuildOptions::TfrmBuildOptions(TComponent* Owner)
 : TForm(Owner)
 , m_currentToolDefinition(-1)
 , m_bDirty(false)
+, m_bChanging(false)
+, m_LanguageIndex(7)	// Z80
+, m_Language("Z80")
+, m_ExtMapper(new TExtensionMapper())
 {
 }
 //---------------------------------------------------------------------------
 __fastcall TfrmBuildOptions::~TfrmBuildOptions()
 {
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmBuildOptions::FormCreate(TObject *Sender)
+{
+	sciEditor->StreamClass = __classid(TSciStreamDefault);
+	m_ExtMapper->Add(".c;.h;.cpp;.cxx;.hpp", "C++/C");
+	m_ExtMapper->Add(".bas", "ZX Basic");
+	m_ExtMapper->Add(".asm;.z80;.inc", "Z80");
+	g_EditorSettings.Apply(sciEditor);
+	cmbLanguageChange(NULL);
 }
 //---------------------------------------------------------------------------
 void __fastcall  TfrmBuildOptions::Load(void)
@@ -660,8 +679,8 @@ bool __fastcall TfrmBuildOptions::DoesToolSupportExtension(int tool, String ext)
 //---------------------------------------------------------------------------
 void __fastcall TfrmBuildOptions::FormShow(TObject *Sender)
 {
-    GetFonts();
-    SetEditorOptions();
+	GetFonts();
+	SetEditorOptions();
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmBuildOptions::tabBuildersEnter(TObject *Sender)
@@ -800,39 +819,172 @@ void __fastcall TfrmBuildOptions::cmdCloseClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TfrmBuildOptions::SetEditorOptions()
 {
-    chkAutoCloseBraces->Checked = g_EditorSettings.AutoCloseBraces;
-    chkAutoCloseQuotes->Checked = g_EditorSettings.AutoCloseQuotes;
-    if (g_EditorSettings.TabsToSpaces) radTabUseSpaces->Checked = true; else radTabsUse->Checked = true;
-    edtTabWidth->Value = g_EditorSettings.TabWidth;
-    chkAlignmentShow->Checked = g_EditorSettings.ShowGuides;
-    edtGuideWidth->Value = g_EditorSettings.GuideWidth;
-    chkShowLineNumbers->Checked = g_EditorSettings.LineNumbers;
-    cmbDisplayFonts->Text = g_EditorSettings.Font;
-    edtDisplayFontSize->Value = g_EditorSettings.FontSize;
-    if (g_EditorSettings.Whitespace == 0)
-        radWhitespaceNever->Checked = true;
-    else if (g_EditorSettings.Whitespace == 1)
-        radWhitespaceAlways->Checked = true;
-    else
-        radWhitespaceAfterIndent->Checked = true;
+	chkAutoCloseBraces->Checked = g_EditorSettings.AutoCloseBraces;
+	chkAutoCloseQuotes->Checked = g_EditorSettings.AutoCloseQuotes;
+	if (g_EditorSettings.TabsToSpaces) radTabUseSpaces->Checked = true; else radTabsUse->Checked = true;
+	edtTabWidth->Value = g_EditorSettings.TabWidth;
+	chkAlignmentShow->Checked = g_EditorSettings.ShowGuides;
+	edtGuideWidth->Value = g_EditorSettings.GuideWidth;
+	chkShowLineNumbers->Checked = g_EditorSettings.LineNumbers;
+	cmbDisplayFonts->Text = g_EditorSettings.Font;
+	edtDisplayFontSize->Value = g_EditorSettings.FontSize;
+	if (g_EditorSettings.Whitespace == 0)
+		radWhitespaceNever->Checked = true;
+	else if (g_EditorSettings.Whitespace == 1)
+		radWhitespaceAlways->Checked = true;
+	else
+		radWhitespaceAfterIndent->Checked = true;
+	g_EditorSettings.Apply(sciEditor);
+	cmbLanguage->ItemIndex = GetLanguageIndex();
+	cmbLanguageChange(NULL);
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmBuildOptions::SetTargetFile(String file)
 {
-    for (int i = 0; i < cmbTargetFile->Items->Count; i++)
-    {
-        if (cmbTargetFile->Items->Strings[i].LowerCase() == file.LowerCase())
-        {
-            cmbTargetFile->ItemIndex = i;
-            return;
-        }
-    }
-    cmbTargetFile->ItemIndex = cmbTargetFile->Items->Count > 0 ? 0 : -1;
+	for (int i = 0; i < cmbTargetFile->Items->Count; i++)
+	{
+		if (cmbTargetFile->Items->Strings[i].LowerCase() == file.LowerCase())
+		{
+			cmbTargetFile->ItemIndex = i;
+			return;
+		}
+	}
+	cmbTargetFile->ItemIndex = cmbTargetFile->Items->Count > 0 ? 0 : -1;
 }
 //---------------------------------------------------------------------------
 String __fastcall TfrmBuildOptions::GetTargetFile()
 {
-    return cmbTargetFile->Items->Strings[cmbTargetFile->ItemIndex];
+	return cmbTargetFile->Items->Strings[cmbTargetFile->ItemIndex];
+}
+//---------------------------------------------------------------------------
+int __fastcall TfrmBuildOptions::GetLanguageIndex()
+{
+	for (int i = 0; i < cmbLanguage->Items->Count; i++)
+	{
+		if (cmbLanguage->Items->Strings[i] == m_Language)
+		{
+			return i;
+		}
+	}
+	return 0;
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmBuildOptions::cmbLanguageChange(TObject *Sender)
+{
+	sciTabControl->Activate(sciTabControl->NewDocument());
+	sciTabControl->Close(0, false);
+	switch (cmbLanguage->ItemIndex)
+	{
+		case 1: // ZX Basic
+			m_LanguageIndex = 3;
+			m_Language = "ZX Basic";
+			sciTabControl->ActiveDocument->TabName = m_Language;
+			((TScintilla*)(sciTabControl->Editor))->Lines->Assign(txtZXBasic->Lines);
+			break;
+		case 2: // C/C++
+			m_LanguageIndex = 4;
+			m_Language = "C++/C";
+			sciTabControl->ActiveDocument->TabName = "C/C++";
+			((TScintilla*)(sciTabControl->Editor))->Lines->Assign(txtCpp->Lines);
+			break;
+		case 3: // Z80
+			m_LanguageIndex = 7;
+			m_Language = "Z80";
+			sciTabControl->ActiveDocument->TabName = "Z80";
+			((TScintilla*)(sciTabControl->Editor))->Lines->Assign(txtZ80->Lines);
+			break;
+		case 0: // Text
+		default:
+			m_LanguageIndex = 0;
+			m_Language = "null";
+			sciTabControl->ActiveDocument->TabName = "Text";
+			((TScintilla*)(sciTabControl->Editor))->Lines->Assign(txtText->Lines);
+			break;
+	}
+
+	m_sciLang = sciLangManager->LanguageList->Find(m_Language);
+	m_bChanging = true;
+	clrBackGlobal->Selected = g_EditorSettings.FindBackColor(sciLangManager, m_Language);
+	sciEditor->Color = clrBackGlobal->Selected;
+	m_bChanging = false;
+	FillStyles();
+	lstAttributes->ItemIndex = 0;
+	lstAttributesClick(NULL);
+	ApplyStylesTo(sciLangManager, sciTabControl->Editor, m_Language);
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmBuildOptions::lstAttributesClick(TObject *Sender)
+{
+	if (m_sciLang->Styles->HasStyle(m_AttributeMap[lstAttributes->ItemIndex]))
+	{
+		clrFore->Selected = m_sciLang->Styles->GetStyle(m_AttributeMap[lstAttributes->ItemIndex])->ForeColor;
+		clrBack->Selected = m_sciLang->Styles->GetStyle(m_AttributeMap[lstAttributes->ItemIndex])->BackColor;
+	}
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmBuildOptions::clrForeChange(TObject *Sender)
+{
+	if (m_sciLang->Styles->HasStyle(m_AttributeMap[lstAttributes->ItemIndex]))
+	{
+		m_sciLang->Styles->GetStyle(m_AttributeMap[lstAttributes->ItemIndex])->ForeColor = clrFore->Selected;
+	}
+	ApplyStylesTo(sciLangManager, sciTabControl->Editor, m_Language);
+	m_sciLang = sciLangManager->LanguageList->Find(m_Language);
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmBuildOptions::clrBackChange(TObject *Sender)
+{
+	if (m_sciLang->Styles->HasStyle(m_AttributeMap[lstAttributes->ItemIndex]))
+	{
+		m_sciLang->Styles->GetStyle(m_AttributeMap[lstAttributes->ItemIndex])->BackColor = clrBack->Selected;
+	}
+	ApplyStylesTo(sciLangManager, sciTabControl->Editor, m_Language);
+	m_sciLang = sciLangManager->LanguageList->Find(m_Language);
+	m_bChanging = true;
+	clrBackGlobal->Selected = g_EditorSettings.FindBackColor(sciLangManager, m_Language);
+	sciEditor->Color = clrBackGlobal->Selected;
+	m_bChanging = false;
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmBuildOptions::clrBackGlobalChange(TObject *Sender)
+{
+	if (!m_bChanging)
+	{
+		for (int i = 0; i < m_AttributeMap.size(); i++)
+		{
+			if (m_sciLang->Styles->HasStyle(m_AttributeMap[i]))
+			{
+				m_sciLang->Styles->GetStyle(m_AttributeMap[i])->BackColor  = clrBackGlobal->Selected;
+			}
+		}
+		sciEditor->Color = clrBackGlobal->Selected;
+		ApplyStylesTo(sciLangManager, sciTabControl->Editor, m_Language);
+		m_sciLang = sciLangManager->LanguageList->Find(m_Language);
+		lstAttributesClick(NULL);
+	}
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmBuildOptions::FillStyles()
+{
+	m_AttributeMap.clear();
+	m_sciLang = sciLangManager->LanguageList->Find(m_Language);
+	lstAttributes->Items->Clear();
+	for (int i = 0; i < m_sciLang->Styles->Count; i++)
+	{
+		m_AttributeMap.push_back(m_sciLang->Styles->Items[i]->StyleNumber);
+		lstAttributes->Items->Add(m_sciLang->Styles->Items[i]->Name);
+	}
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmBuildOptions::btnApplyClick(TObject *Sender)
+{
+	g_EditorSettings.Write(sciLangManager);
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmBuildOptions::btnResetClick(TObject *Sender)
+{
+	g_EditorSettings.Apply(sciEditor);
+	cmbLanguageChange(NULL);
 }
 //---------------------------------------------------------------------------
 

@@ -23,6 +23,7 @@
 #include "ZXFileManager.h"
 #include "ZXColorSettings.h"
 #include "SciScintillaMemo.hpp"
+#include "SciLanguageManager.hpp"
 //---------------------------------------------------------------------------
 using namespace Scorpio;
 //---------------------------------------------------------------------------
@@ -51,17 +52,22 @@ private:
     bool                m_ShowGuides;
     int                 m_GuideWidth;
 
-    void    __fastcall  WriteDisplay(void);
-    void    __fastcall  ReadDisplay(void);
+	void    __fastcall  WriteDisplay(void);
+	void    __fastcall  ReadDisplay(void);
+
+	void    __fastcall  ReadStyles(void);
 
 public:
             __fastcall  ZXEditorSettings();
             __fastcall ~ZXEditorSettings();
 
     void    __fastcall  Write(void);
-    void    __fastcall  Apply(TScintillaMemo* Editor);
+    void    __fastcall  Write(TSciLanguageManager* LanguageManager);
+	void    __fastcall  Apply(TScintillaMemo* Editor);
     void    __fastcall  Apply(TSciDoc* Document);
     void    __fastcall  Reset(void);
+
+	TColor __fastcall 	FindBackColor(TSciLanguageManager* langMgr, const String& Language);
 
     // tabs
     __property  bool    TabsToSpaces        = { read = m_TabsToSpaces       , write = m_TabsToSpaces        };

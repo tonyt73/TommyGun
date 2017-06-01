@@ -150,7 +150,7 @@ void __fastcall TfrmCodeEditor::FormShow(TObject *Sender)
     m_BookMarker->MarkerType = sciMFullRect;
     m_BreakpointHighlighter->ForeColor = clBlack;   // white
     m_BreakpointHighlighter->BackColor = clNavy;  // red
-    m_BreakpointHighlighter->MarkerType = sciMBackground;
+	m_BreakpointHighlighter->MarkerType = sciMBackground;
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::cmdFileLoadClick(TObject *Sender)
@@ -1453,11 +1453,12 @@ void __fastcall TfrmCodeEditor::popConsoleClearClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::actBuildSettingsExecute(TObject *Sender)
 {
-    frmBuildOptions->ShowModal();
-    if (m_FileManager.HasOpenDocument())
-    {
-        g_EditorSettings.Apply(sciTabControl->ActiveDocument);
-        g_EditorSettings.Apply((TScintillaMemo*)sciEditor);
+	frmBuildOptions->Language = sciEditor->SelectedLanguage;
+	frmBuildOptions->ShowModal();
+	if (m_FileManager.HasOpenDocument())
+	{
+		g_EditorSettings.Apply(sciTabControl->ActiveDocument);
+		g_EditorSettings.Apply((TScintillaMemo*)sciEditor);
     }
     UpdateControls();
 }
