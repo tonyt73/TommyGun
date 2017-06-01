@@ -223,8 +223,8 @@ bool WriteValue(const String& sKey, const String& sName, T& Value)
 
 // private members
 private:
-	AnsiString              m_sSection;
-    AnsiString              m_sRootKeyString;
+	String                  m_sSection;
+    String                  m_sRootKeyString;
 	KSuperRegistry*         m_Registry;
     KRootKey                m_Root;
 
