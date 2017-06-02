@@ -1,23 +1,27 @@
 
-
         Welcome to TommyGun
-           Version 1.1.0
+           Version 1.3
   (c) copyright 2004-2017 Tony Thompson
-  
 
-Thanks for trying TommyGun and thanks for reading this file :-)
-
-TommyGun is a retro development environment for creating software to run
-on old 8 and 16 bit machines.
-
+TommyGun is a retro development environment for creating ZX Spectrum games.
 
 Contact Me:
 ===========
-I would love to hear any about any BUGS, and your comments and suggestions.
-Even if you would like to just say that you dowloaded it, and nothing else, please tell me.
-I would love to know how many people find TommyGun useful enough to use it seriously.
-Please email me on TommyGun.IDE@gmail.com
-Thanks!
+tommygun.ide@gmail.com
+My name is TONY; not Tommy and not TommyGun.
+TommyGun is the name of the application.
+
+
+Pasmo Z80 Assembler
+===================
+http://pasmo.speccy.org/
+Pasmo is used with permission from Julián Albo
+Please see the Pasmo folder for open source licencing information
+
+Portable Z80 emulator
+=====================
+(c) 2007 Marat Fayzullin
+http://fms.komkon.org/EMUL8/
 
 
 Quick Start Guide
@@ -25,52 +29,293 @@ Quick Start Guide
 Want to see what TommyGun can do but without having to write any code or draw any artwork?
 Then please read the Getting Started Guide.doc for how to run the SabreWulf project.
 
-
-Component Status
-================
-This section describes the components of TommyGun and their status of completion.
-The completion status is for the features of the component and does not include
-any bugs that are present.
-
-Component                   Completion
-TommyGun Core                 100%
-Game Editor                   100%
-Image Editor                  100%
-    Sprite Editor             100%
-    Tile Editor               100%
-    Screen Editor             100%
-    Font Editor               100%
-    UDG Editor                100%
-    Paint Tools               100%
-    Image Tools               100%
-    Image Import              100%
-Map Editor                    100%
-String Editor                 100%
-Code Editor                   100%
-    Map Parser                100%
-    Palette Parser            100%
-    ZX Image Parser           100%
-    ZX Table Parser           100%
-    SevenuP Parser            100%
-    Tiled Level Parser        100%
-    ZX Spectrum Beep Parser     0%    not started
-    ZX Spectrum AY Parser       0%    not started
-Music Composer                 10%    incomplete
-    ZX Spectrum Beep Player     0%    not started
-    ZX Spectrum AY Player       0%    not started
-Memory Editor                  30%    incomplete
-
-
-
 Whats New?
 ==========
-
-1.1.0
-Minor release
-Removed AGD Arcade Games Designer
+1.3.8 (June 2017)
+* Scorpio VCL Components
+  o Removed all unusued components and their references from all plugins
+* Core
+  o Fixed dialog color
+  o Changed folder dialog to use Windows Select Folder dialog
+* Image Editor
+  o Added ZX Spectrum Next 256 color palette support
+  o Added check to not load duplicate palette plugins
 * Code Editor
-  o Fixed a really annoying bug with the Build button where it would build every ASM file and not just the one in the emulator parameters
+  o Added Scintilla syntax highligher colour editor
+  o Added Move to other view for side by side editing like Notepad++
+  
 
+1.3.7 (January 2017)
+Minor Release Revision
+* Core
+  o Removed registration due to continued issues with a DLL
+
+1.3.6 (January 2017)
+Minor Release Revision
+* Core
+  o Fixed a bad DLL issue where Google Drive was reporting a virus in the installer.
+    Was an old version of the DLL. Replaced with up to date version.
+
+1.3.5 (January 2017)
+Minor Release Revision
+* Core
+  o Added Silent Registration
+
+1.3.4 (January 2017)
+Minor Release Revision
+* Core
+  o Minor About box code change
+* Code Editor
+  o Fixed Settings dialog not using white parent background
+  o Added a Palette Parser to output palette data table
+* Image Editor
+  o Minor UDG panel change
+  o Added ZX Spectrum Next palette support
+
+1.3.3 (November 2016)
+Minor Release Revision
+* Image Editor
+  o Added a ZX Spectrum Hi Colour palette (aka. Timex Hi Color Mode 8x1)
+    Use the Palette Based Image parser to output graphics data
+  o Added HiColour test project
+
+1.3.2 (July 2016)
+Minor Release Revision
+* Core
+  o Changed main toolbar play button icon to be the same as the Code Editor play icon
+  o Reformatted About Box
+  o Fixed incorrect hint in About Box
+* Code Editor
+  o Changed the replay/time lapse buttons to green
+
+1.3.1 (July 2016)
+Minor Release Revision
+* Installer
+  o Added missing cc3280mt.dll to Pasmo folder
+* Core
+  o Adjusted labels on About box
+* Code Editor
+  o Fixed bug with adding a new file to a new project
+  o Fixed Snapshots memory leak
+  o Fixed the Debug (Run, Pause, Stop) buttons
+  o Fixed Timelapse/replay buttons
+  o Fixed OSB view buffer indexing issue
+  o Fixed Step-Over function
+  o Made c, nc, nz, pe highlight as registers to fix silly syntax highlighting
+
+1.3 (July 2016)
+Major Release Revision
+* Scorpio Components
+  o Fixed an issue with data entry into spin edit controls
+* Installer
+  o Added Install as Admin
+  o Added Big Sprites Demo project
+  o Added the "Library\debugstring.asm"
+* Project
+  o Added all source to my local Git server (no not GitHub)
+  o Added missing code references
+  o Developing on Windows 10 to help with finding bugs
+  o Fixed project file reference errors
+  o Fixed incremental linking issue with C++ Builder 2007 on Windows 10
+  o Fixed all project files to have the same version information
+  o Re-Added (missing) Boriel ZX Basic demo with all the example files
+    Also added a %Ask% dialog so you can choose the demo to run
+* Core
+  o Changed the toolbar to a white background
+  o Changed all clWindows to clWhite
+  o Changed all clBtnFace to clWhite
+  o Fixed the tool button rendering
+  o Fixed the display of project name in the title
+  o Fixed the missing icon for the application
+  o Added Pasmo to about box
+  o Added Portable Z80 emulator to about box
+* Code Editor
+  o Added internal Emulator (Portable Z80 emulator)
+    Uses Z80 core only
+	All ZX Spectrum functions added by myself
+  o Added Display View
+  o Added Off Screen Buffer View
+    Can display multiple buffers at a time
+  o Added internal Debugger
+    Added support for .map files
+    Added support for .dbg files
+    Added functions
+      Hard Reset
+      Run
+      Pause 
+      Stop
+      Step Over
+      Step In
+      Step Out
+      Trace
+  o Added Replay 
+    You can go back and forth in time, up to 5 minutes.
+	If you go over 5 minutes; then you keep the last 5 minutes of play.
+    Snapshot Rewind
+	Snapshot Forward
+	Single frame stepping with
+	  Alt+Left  - back 1 frame
+	  Alt+Right - forward 1 frame
+  o Added Breakpoints
+      Supports Pass Counts
+      Persisted to project file
+  o Added Debug string support
+    Uses rst 0 redirection
+	Need to:
+	  Add "debugstring.asm" from Libary to your project. It will get copied
+	  Include "debugstring.asm" in your source files.
+  o Added Assembler (pasmo)
+    Added support for .dbg files
+    Added support for .sna files
+  o Added Bookmarks
+    Not persisted to project file
+    Not persisted if file is closed in editor and then reopened
+  o Added new toolbar for debug tools, display windows
+  o Fixed Goto Line dialog
+  o Fixed Build chain system (AGAIN!)
+  o Common Tabs
+    Added Breakpoint list
+      Delete, Delete All, Enable/Disable (checkbox), Enable All, Disable All, Properties
+    Added custom tab drawing
+    Move tabs to bottom
+    Made all font sizes the same in all tabs
+  o Added %ask% as a substitution variable; so you can choose a target file for a builder.
+* Image Editor
+  o Fixed the different font size on all image type tabs
+  o Changed everything to white background
+  o Added a bar at the top of the active tab
+* Map Editor
+  o Changed everything to white background 
+  o Added a bar at the top of the active tab
+
+1.2.1 (April 2016)
+Minor Release Revision
+* Core
+  o Removed the big Play button
+    Looked ugly
+  o Added a small normal tool button (F9 still works)
+  o All dialogs now have white backgrounds (not windows gray)
+* Code Editor
+  o Added an Editor settings page to Settings dialog
+  o Improved support for finding only monospace fonts (Damn you Consolas)
+
+1.2.0 (April 2016)
+Major Release Revision
+Spit and Polish release
+  Probably more spit than polish ;-)
+  Nicer splash, better brand colours/icons/images/fonts, bigger toolbar buttons, tabs and some fonts.
+  Better support for modern OS's (Windows 8+)
+  Future versions will all be ZX Spectrum ONLY!
+  NO MORE MULTI-MACHINE SUPPORT
+* Installer
+  o Moved all projects to the My Documents\TommyGun\ folder
+  o Installer will only overwrite the example projects if the new files are newer
+    If you make changes to the examples files you could lose those changes
+    Clone the project and make changes to that copy
+* Projects
+  o Convert all projects to the new Build system
+  o Set all emulators to ZX Spin 0.7s; as it is more reliable on Win7/8/10 than ZX Spin 0.666
+  o Added a Boriel ZX Basic demo with all the example files
+  o SabreWulf (fixed again)
+  o Moved all projects to the My Documents\TommyGun\ folder
+* Core
+  o Added a RUN button to the main page
+    Can use F9 to run
+  o Moved the Log files to %APPDATA%\TommyGun
+  o Fixed some log file handling
+  o Updated the Splash screen
+  o Updated the About box
+    Updated the Titlebar image
+    Removed AGD reference
+    Removed SynEdit reference
+    Added Scintilla reference
+    Removed Easter Eggs
+  o Fixed the Open a project form buttons
+  o Added group boxes to project screen
+  o Increased the size of all main plugin titles and their buttons
+  o Increased the size of ALL toolbar buttons for bigger screens (bye year 2000; hello 2016)
+  o Added stencil font used by application to installer
+  o Fixed writing exception log to %APPDATA%
+* Code Editor
+  o Handle new event to update/build/run game
+  o Replaced the Old SynEdit code editor with Scintilla
+    Always hated the Borland style SynEdit editor
+    Scintilla has a much more Visual Studio feel to it
+    Scintilla DLL is also smaller than SynEdit (1646Kb to 432kb)
+  o Fixed the Find/Search/Replace functions
+    Consolidated search project files/find into a single dialog
+    Simplified find/replace
+  o Removed the editor options
+  o Added addition Boriel ZX Basic keywords to the syntax highlighter in the Code Editor
+  o Removed the Tools Save button. All operations save the Tool definitions
+  o Added Default parameter definition to Tool definition
+  o Added Accepts Multiple Input Files to Tool definition
+  o Added Accepts Multiple Input Files support to the build pipeline
+  o You can now use %pfolder% in a Tools executable path. Probably only effective for project batch build file stored in the project file.
+  o Added the Boriel ZX Basic Compiler as a build tool
+  o If you make changes to a build tool and change to a new tool; you are asked if you want to save the changes
+    Because I always forget to click update
+  o Fixed an issue where the installer would make the projects folders read-only and it wouldn't build the project
+  o Fixed a Z80 lexer issue
+* Image Editor
+  o Fixed up the UDG editor to be similar to the character editor changes
+    Easier to select a character
+    Added magnification
+
+1.1.0 (April 2016)
+Major Release Revision
+* Installer
+  o Fixed installer to remove of TommyGun files after uninstall
+  o New installs won't overwrite your Tools.xml settings file
+* Projects
+  o Added more projects to try
+    SabreWulf (fixed)
+    Space Invaders (90% complete)
+    Gems (90% complete)
+    Noughts and Crosses (from the Getting Started Guide)
+    Buddy (a hacky demo)
+    Z88DK - a working Z88DK "Hello world" demo
+        see main.c for ZCC setup parameters
+* Core
+  o Changed the Machine name to show the project folder path
+  o Removed the Tips dialog
+  o Enter key works in the project list to load a project
+* AGD Game Editor
+  o Removed AGD Arcade Games Designer 
+    There is a dedicated AGD editor in development
+* Code Editor
+  o Changed the Build system to use a "Tools" system
+    Each tool has to be defined
+    Each project specifies the tools it uses
+    If a tool is not setup; then it is added and the user needs to define the location of the tool
+    A tool is any application that is used outside of TommyGun
+        e.g. Pasmo to compile assembly, Z88DK ZCC to compile C code, ZX Spin to run the project output
+    You define whether a tool is a Builder or an Emulator
+        Builders are used to compile the code
+        Emulators are used to run the code
+    The new Tools system will convert the old settings over the new system
+    Once you have setup your tools; you shouldn't have to change them
+  o Fixed a really annoying bug with the Build button where it would build every ASM file and not just the one in the emulator parameters
+    You can supply any number of file names or use a wildcard (*.asm, *.c etc)
+    And now not needed because I rewrote the build system
+  o Removed the Build Selected and Stop buttons (I never use them, not sure they even work)
+  o Added an Editor Options toolbar button. I wonder how long that has been missing?
+  o Play button now does it all; Saves, Updates Resources, Builds and Runs the game (simples)
+  o Fixed load compiler/emulator settings issue
+  o Fixed issue where double clicking to goto an error line open a non existent file. If there was not a valid file on the line.
+  o Fixed issue with Parameter substitution.
+    Can now use %game% to get the game project name.
+    For example: %game%.tap %game%.map to produce "My Game.tap" and "My Game.map" from pasmo.
+  o Added bigger switch buttons to the Editor/Build Options dialogs
+  o Fixed some keyboard handling issues
+  o Fixed an issue where the application would crash while opening another project when files were opened in the code editor
+  o Removed %infile% build variable
+  o Updated %PFolder% and %game% build variables to work better
+* Image Editor
+  o Improved the Font selection panel
+    Fixed all the control alignment issues
+    Made it easier to select a character
+    Shows the selected character in the preview window
 
 1.0.0
 Full version release
@@ -363,7 +608,7 @@ Release Revision
   o Fixed the Generate Mask tool to generate masks for all frames of an image
   o Fixed a bug in creating masks when the image width is not a multiple of 8
   o Added a Set Hot Spot marker (and a toggle button to show/hide it)
-    WTF is a Hot Spot? Well best of not be using it then eh! :)
+    WTF is a Hot Spot? Well best off not to be using it then eh! :)
   o Fixed a bug where the Animation Frame Helper would freeze on Frame 0
 
 0.9.20 (4th June 2007)
@@ -389,7 +634,7 @@ Release Revision (EP64/128)
 * Code Editor:
   o Fixed Sam Coupe Mode 3 & 4 parser output
 * Image Editor
-  o Fixed Enterprise 64/128 16/Attribute palettes
+  o Fixed SpectrumNext256 64/128 16/Attribute palettes
   o Fixed images limited to 512 pixels wide.
   o Limited magnification of images to 2048x2048 pixels
     (due to memory and Win32 resource limitations)
@@ -400,7 +645,7 @@ Release Revision (EP64/128)
 0.9.17 (20 February 2007)
 Release Revision
 * Machines
-  o Added new machine - Enterprise 64/128
+  o Added new machine - SpectrumNext256 64/128
 * Map Editor:
   o Fixed a Home/End key conflict with the code editor
   o Fixed some settings components
@@ -411,9 +656,9 @@ Release Revision
   o Fixed F3 jumping bug
   o Fixed Spectrum Image Parser always producing attributes
   o Changed Spectrum Image Parser to be a generic Attribute parser
-    - works for ZX Spectrum, Sam Coupe, Enterprise 64 etc
+    - works for ZX Spectrum, Sam Coupe, SpectrumNext256 64 etc
 * Image Editor
-  o Added Enterprise 64/128 - 2/4/16/256 colour palettes
+  o Added SpectrumNext256 64/128 - 2/4/16/256 colour palettes
   o Fixed Sam Coupe Mode palettes
     - fixed incorrect colour orientation (Mode 3&4)
     - fixed incorrect attribute information (Mode 2)
@@ -448,7 +693,7 @@ Release Revision
   o Added Save Map as Bitmap (in Map menu)
     Saves the map at the current scale
   o Add Multiple selection
-    Changed the way add tiles works (very so slightly)
+    Changed the way add tiles works (ever so slightly)
     - Do rectangle select by selecting an empty area first then click and drag
     - Can add to selection with Ctrl - sorry no removal at the moment
     - click a blank area to clear the selection
@@ -821,52 +1066,9 @@ Major revisions
 
 
 
-Whats Next?
-===========
-
-upto 1.0
-* Complete Map Editor
-  o Add an Isometric 3D mode
-    * Needs HotSpot position in images (change to Image editor)
-    * Need to save/load map type
-    * Need to change meaning of tiling values under settings
-  o Add an object behaviours tab.
-    This will allow you to set standard movement behaviours to objects
-    eg:
-        1. movement left and right or up and down etc
-        2. crumble
-        3. elevator
-  o Add grouped objects
-  o Add a comment feature - where the user can leave comments like sticky notes on items or maps
-
-
-0.9.x
-* Documentation
-  o I will explain how to create the resources in the Code Editor.
-* Testing
-  o This version will get more testing and most revision releases will be mostly bug fix releases
-
-1.0 And Beyond
-* Image Editor:
-  o Add proportional font size support to the Font image type
-  o Able to change the palette used by an image
-* Map Editor:
-  o Add layered objects
-  o Trigger zones - either rectanglar or circular
-  o Pathed objects - allow the user to input a path for an object
-    Standard path patterns such as Up/Down - Left/Right path
-    Predefined paths
-* Add a Code Tips browser
-  o Implement a browser to allow saving code snips with comments and usage examples
-* Add an Action Editor
-  o Implement an editor to allow for editing tile and sprite reactions
-* More Machines
-  o Memotech 500/512
-
-
 Legal stuff.
 ============
-TommyGun is freeware and is (c) copyright 2004-2008 Tony Thompson.
+TommyGun is freeware and is (c) copyright 2004-2016 Tony Thompson.
 You cannot distribute TommyGun without my permission and without giving me credit.
 And you MOST certainly cannot charge for TommyGun.
 Anything you make with TommyGun is all yours of course.
