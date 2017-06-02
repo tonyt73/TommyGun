@@ -52,6 +52,7 @@ object frmInsertResource: TfrmInsertResource
       Anchors = [akRight, akBottom]
       Caption = 'Insert'
       Enabled = False
+      ModalResult = 1
       TabOrder = 0
     end
     object cmdClose: TButton

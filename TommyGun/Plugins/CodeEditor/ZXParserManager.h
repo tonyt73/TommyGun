@@ -32,6 +32,7 @@ private:
     TStrings*                   m_SourceCode;
     String                      m_CommentL;
     String                      m_CommentR;
+    bool                        m_ResourceInserted;
 
     void    __fastcall  OnResourceParserChange(TObject* Sender);
     void    __fastcall  OnResourceTypeChange(TObject* Sender);

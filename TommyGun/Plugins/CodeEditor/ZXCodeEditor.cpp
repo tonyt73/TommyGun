@@ -30,7 +30,6 @@ const String    g_sSignature    = "CodeEditor";
 ZXPluginManager g_MiniPluginManager(".cpi");
 //- GLOBAL LOG FILE ---------------------------------------------------------
 ZXLogFile g_LogFile;
-//bool g_AddAgdGameEngineFile = false;
 //---------------------------------------------------------------------------
 // NewPluginClass
 /**

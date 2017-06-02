@@ -86,3 +86,4 @@ void __fastcall TfrmInsertResource::cmbResourceTypeChange(TObject *Sender)
 //---------------------------------------------------------------------------
 
 
+

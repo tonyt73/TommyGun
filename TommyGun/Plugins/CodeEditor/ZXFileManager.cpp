@@ -62,6 +62,7 @@ void __fastcall ZXFileManager::sciEditorModified(TObject *Sender, const int posi
             m_vFiles[index].pLines = new TStringList();
         }
         m_vFiles[index].pLines->Assign(((TScintilla*)(m_Documents->Editor))->Lines);
+        m_Documents->ActiveDocument->Modified = false;
     }
 }
 //---------------------------------------------------------------------------
@@ -153,7 +154,7 @@ void __fastcall ZXFileManager::Remove(int iIndex)
 		Close(iIndex);
 		m_vFiles.erase(m_vFiles.begin() + iIndex);
 		m_bDirty = true;
-        RenumberTabs(wasOtherView);
+        RenumberTabs();
     }
 }
 //---------------------------------------------------------------------------
@@ -178,7 +179,7 @@ int __fastcall ZXFileManager::Rename(int iIndex, const String& sNewName)
         {
             RenameFile(sOldFile, sNewFile);
         }
-        RenumberTabs(m_vFiles[iIndex].bOtherView);
+        RenumberTabs();
     }
     return iIndex;
 }
@@ -260,6 +261,7 @@ int __fastcall ZXFileManager::LoadFile(int iIndex, bool inOtherView = false)
 		PostNotifyEvent(NULL, TZX_QUERY_PROJECT_FOLDER, (LPDATA)&sFolder, 0, 0);
 		String sProjectFile = sFolder + ExtractFileName(sFile);
 		m_vFiles[iIndex].bDirty = false;
+		m_vFiles[iIndex].bOtherView = inOtherView;
 		//if (FileExists(sProjectFile))
 		{
 			/*if (m_Documents->Open(sProjectFile))
@@ -323,13 +325,14 @@ int __fastcall ZXFileManager::LoadFile(int iIndex, bool inOtherView = false)
                     }
                 }
             }
-            RenumberTabs(inOtherView);
-			if (documents != NULL)
-			{
-				documents->Visible = documents->Count > 1 || !documents->ActiveDocument->IsUntitled();
-				frmCodeEditor->splOtherView->Left = 0;
-				frmCodeEditor->splOtherView->Visible = frmCodeEditor->sciEditorOther;
-			}
+            RenumberTabs();
+            bool wasVisible = frmCodeEditor->sciTabControl->Visible;
+            frmCodeEditor->sciTabControl->Visible = frmCodeEditor->sciTabControl->Count > 0 && !frmCodeEditor->sciTabControl->ActiveDocument->IsUntitled();
+            frmCodeEditor->sciTabControlOther->Visible = frmCodeEditor->sciTabControlOther->Count > 0 && !frmCodeEditor->sciTabControlOther->ActiveDocument->IsUntitled();
+            frmCodeEditor->splOtherView->Left = 0;
+            frmCodeEditor->splOtherView->Visible = frmCodeEditor->sciTabControl->Visible && frmCodeEditor->sciTabControlOther->Visible;
+            frmCodeEditor->sciTabControlOther->Align = frmCodeEditor->sciTabControl->Visible ? alRight : alClient;
+            frmCodeEditor->sciTabControlOther->Left = frmCodeEditor->sciTabControl->Width + 100;
 		}
 	}
 	m_bOpeningFile = false;
@@ -357,7 +360,7 @@ bool __fastcall ZXFileManager::Close(int iIndex)
 				m_DocumentsOther->Close(m_vFiles[iIndex].iDocumentIndex, true);
 			}
 			m_vFiles[iIndex].iDocumentIndex = -1;
-			RenumberTabs(wasInOtherView);
+			RenumberTabs();
 			return true;
         }
     }
@@ -418,34 +421,13 @@ void __fastcall ZXFileManager::Save(void)
 {
     // save the documents
 	int activeDocIndex = m_Documents->ActiveDocument->Index;
-	for (int i = 0; i < m_Documents->Count; ++i)
+    for (int i = 0; i < (int)m_vFiles.size(); i++)
     {
-        if (m_Documents->Document[i]->Modified)
+        if (m_vFiles[i].bDirty)
         {
-            m_Documents->Activate(i);
-            m_Documents->Editor->SaveToFile(m_Documents->Document[i]->FileName);
-            m_Documents->Document[i]->Modified = false;
+            m_vFiles[i].pLines->SaveToFile(m_vFiles[i].sFile);
+            m_vFiles[i].bDirty = false;
         }
-    }
-	m_Documents->Activate(activeDocIndex);
-	// save the documents
-	if (m_DocumentsOther->Count > 0)
-	{
-		activeDocIndex = m_DocumentsOther->ActiveDocument->Index;
-		for (int i = 0; i < m_DocumentsOther->Count; ++i)
-		{
-			if (m_DocumentsOther->Document[i]->Modified)
-			{
-				m_DocumentsOther->Activate(i);
-				m_DocumentsOther->Editor->SaveToFile(m_Documents->Document[i]->FileName);
-				m_DocumentsOther->Document[i]->Modified = false;
-			}
-		}
-		m_DocumentsOther->Activate(activeDocIndex);
-	}
-	for (int i = 0; i < (int)m_vFiles.size(); i++)
-    {
-        m_vFiles[i].bDirty = false;
     }
     m_bDirty = false;
 }
@@ -550,24 +532,31 @@ void __fastcall ZXFileManager::PutLines(int iIndex,  TStrings* pLines)
 //---------------------------------------------------------------------------
 void __fastcall ZXFileManager::AdjustTabIndexes(int index)
 {
-    for (int i = 0; i < (int)m_vFiles.size(); ++i)
-    {
-        if (m_vFiles[i].iDocumentIndex > index)
-        {
-            m_vFiles[i].iDocumentIndex = m_vFiles[i].iDocumentIndex - 1;
-        }
-    }
+    RenumberTabs();
 }
 //---------------------------------------------------------------------------
-void __fastcall ZXFileManager::RenumberTabs(bool bOtherView)
+void __fastcall ZXFileManager::RenumberTabs()
 {
-	TSciDocumentTabControl* documents = !bOtherView ? m_Documents : m_DocumentsOther;
-	if (documents != NULL)
+	if (m_Documents != NULL && m_Documents->Count > 0)
 	{
-		for (int i = 0; i < documents->Tabs->Count; ++i)
+		for (int i = 0; i < m_Documents->Tabs->Count; ++i)
 		{
-			String title = ExtractFileName(documents->Document[i]->FileName);
-			documents->Tabs->Strings[i] = IntToStr(i + 1) + " " + title;
+            int iIndex = FindFile(m_Documents->Document[i]->FileName);
+            m_vFiles[iIndex].iDocumentIndex = i;
+            m_vFiles[iIndex].bOtherView = false;
+			String title = ExtractFileName(m_Documents->Document[i]->FileName);
+			m_Documents->Tabs->Strings[i] = IntToStr(i + 1) + " " + title;
+		}
+	}
+	if (m_DocumentsOther != NULL && m_DocumentsOther->Count > 0)
+	{
+		for (int i = 0; i < m_DocumentsOther->Tabs->Count; ++i)
+		{
+            int iIndex = FindFile(m_DocumentsOther->Document[i]->FileName);
+            m_vFiles[iIndex].iDocumentIndex = i;
+            m_vFiles[iIndex].bOtherView = true;
+			String title = ExtractFileName(m_DocumentsOther->Document[i]->FileName);
+			m_DocumentsOther->Tabs->Strings[i] = IntToStr(i + 1) + " " + title;
 		}
 	}
 }
@@ -642,30 +631,18 @@ void __fastcall ZXFileManager::SelectFile(int iIndex)
 	}
 }
 //---------------------------------------------------------------------------
-bool __fastcall ZXFileManager::ActiveDocument(String& File, int& Line)
+bool __fastcall ZXFileManager::ActiveDocument(TSciDocumentTabControl* Documents, String& File, int& Line)
 {
-	if (m_Documents->ActiveDocument != NULL)
+	if (Documents->ActiveDocument != NULL)
 	{
-		int iDocIndex = m_Documents->ActiveDocument->Index;
+        bool inOther = Documents == m_DocumentsOther;
+		int iDocIndex = Documents->ActiveDocument->Index;
 		for (int i = 0; i < (int)m_vFiles.size(); i++)
 		{
-			if (m_vFiles[i].iDocumentIndex == iDocIndex)
-            {
-                File = m_vFiles[i].sFile;
-                Line = m_Documents->Editor->GetCurrentLineNumber();
-                return true;
-            }
-        }
-    }
-	if (m_DocumentsOther->ActiveDocument != NULL)
-	{
-		int iDocIndex = m_DocumentsOther->ActiveDocument->Index;
-		for (int i = 0; i < (int)m_vFiles.size(); i++)
-		{
-			if (m_vFiles[i].iDocumentIndex == iDocIndex)
+			if (m_vFiles[i].iDocumentIndex == iDocIndex && m_vFiles[i].bOtherView == inOther)
 			{
 				File = m_vFiles[i].sFile;
-				Line = m_DocumentsOther->Editor->GetCurrentLineNumber();
+				Line = Documents->Editor->GetCurrentLineNumber();
 				return true;
 			}
 		}
@@ -673,31 +650,39 @@ bool __fastcall ZXFileManager::ActiveDocument(String& File, int& Line)
 	return false;
 }
 //---------------------------------------------------------------------------
-bool __fastcall ZXFileManager::IsActiveDocument(const String& File)
+bool __fastcall ZXFileManager::IsActiveDocument(TSciDocumentTabControl* Documents, const String& File)
 {
-    if (m_Documents->ActiveDocument != NULL)
+    if (Documents->ActiveDocument != NULL)
     {
-        int iDocIndex = m_Documents->ActiveDocument->Index;
+        bool inOther = Documents == m_DocumentsOther;
+        int iDocIndex = Documents->ActiveDocument->Index;
         for (int i = 0; i < (int)m_vFiles.size(); i++)
         {
-            if (m_vFiles[i].iDocumentIndex == iDocIndex)
+            if (m_vFiles[i].iDocumentIndex == iDocIndex && m_vFiles[i].bOtherView == inOther)
             {
                 return File == m_vFiles[i].sFile;
             }
         }
     }
-	if (m_DocumentsOther->ActiveDocument != NULL)
-	{
-		int iDocIndex = m_DocumentsOther->ActiveDocument->Index;
-		for (int i = 0; i < (int)m_vFiles.size(); i++)
-		{
-			if (m_vFiles[i].iDocumentIndex == iDocIndex)
-			{
-				return File == m_vFiles[i].sFile;
-			}
-		}
-	}
 	return false;
+}
+//---------------------------------------------------------------------------
+int __fastcall ZXFileManager::OpenedDocuments()
+{
+    int opened = 0;
+    for (int i = 0; i < m_vFiles.size(); i++)
+    {
+        if (m_vFiles[i].iDocumentIndex != -1)
+        {
+            opened++;
+        }
+    }
+    return opened;
+}
+//---------------------------------------------------------------------------
+bool __fastcall ZXFileManager::InOtherView(int iIndex)
+{
+    return m_vFiles[iIndex].bOtherView;    
 }
 //---------------------------------------------------------------------------
 

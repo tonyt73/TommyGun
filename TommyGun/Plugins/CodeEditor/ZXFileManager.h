@@ -53,6 +53,7 @@ private:
 
     int         __fastcall  LoadFile(int iIndex, bool inOtherView);
     bool        __fastcall  GetDirty(void);
+    void        __fastcall  RenumberTabs();
 
 public:
                 __fastcall  ZXFileManager();
@@ -83,13 +84,14 @@ public:
     bool        __fastcall  GetLines(int iIndex, TStrings* pLines);
     void        __fastcall  PutLines(int iIndex, TStrings* pLines);
     void        __fastcall  AdjustTabIndexes(int index);
-    void        __fastcall  RenumberTabs(bool bOtherView);
     void        __fastcall  ChangeDirectoryAttribute(TCHAR* m_szFdPath);
     bool        __fastcall  HasOpenDocument();
     bool        __fastcall  IsFileOpen(int iIndex);
     void        __fastcall  SelectFile(int iIndex);
-    bool        __fastcall  ActiveDocument(String& File, int& Line);
-    bool        __fastcall  IsActiveDocument(const String& File);
+    bool        __fastcall  ActiveDocument(TSciDocumentTabControl* Documents, String& File, int& Line);
+    bool        __fastcall  IsActiveDocument(TSciDocumentTabControl* Documents, const String& File);
+    int         __fastcall  OpenedDocuments();
+    bool        __fastcall  InOtherView(int iIndex);
 
     HRESULT     __fastcall  Load(KXmlInfo& xmlInfo);
     HRESULT     __fastcall  Save(KXmlInfo& xmlInfo);

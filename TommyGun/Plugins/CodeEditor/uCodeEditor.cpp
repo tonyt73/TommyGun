@@ -278,9 +278,9 @@ void __fastcall TfrmCodeEditor::LoadSettings(void)
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::DeleteKey(void)
 {
-    if (m_bEditting && true == SAFE_PTR(sciEditor))
+    if (m_bEditting && true == SAFE_PTR(m_ActiveEditor->Editor))
     {
-        SendMessage(sciEditor->Handle, WM_KEYDOWN, VK_DELETE, 0);
+        SendMessage(m_ActiveEditor->Editor->Handle, WM_KEYDOWN, VK_DELETE, 0);
     }
     else
     {
@@ -297,9 +297,9 @@ void __fastcall TfrmCodeEditor::DeleteKey(void)
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::EditCopy(void)
 {
-    if (m_bEditting && true == SAFE_PTR(sciEditor))
+    if (m_bEditting && true == SAFE_PTR(m_ActiveEditor->Editor))
     {
-        SendMessage(sciEditor->Handle, WM_COPY, 0, 0);
+        SendMessage(m_ActiveEditor->Editor->Handle, WM_COPY, 0, 0);
     }
     else
     {
@@ -312,9 +312,9 @@ void __fastcall TfrmCodeEditor::EditCopy(void)
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::EditCut(void)
 {
-    if (m_bEditting && true == SAFE_PTR(sciEditor))
+    if (m_bEditting && true == SAFE_PTR(m_ActiveEditor->Editor))
     {
-        SendMessage(sciEditor->Handle, WM_CUT, 0, 0);
+        SendMessage(m_ActiveEditor->Editor->Handle, WM_CUT, 0, 0);
     }
     else
     {
@@ -327,9 +327,9 @@ void __fastcall TfrmCodeEditor::EditCut(void)
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::EditPaste(void)
 {
-    if (m_bEditting && true == SAFE_PTR(sciEditor))
+    if (m_bEditting && true == SAFE_PTR(m_ActiveEditor->Editor))
     {
-        SendMessage(sciEditor->Handle, WM_PASTE, 0, 0);
+        SendMessage(m_ActiveEditor->Editor->Handle, WM_PASTE, 0, 0);
     }
     else
     {
@@ -594,12 +594,12 @@ bool __fastcall TfrmCodeEditor::FindErrorInfo(bool bLoadFile)
     if (bErrorFound && frmBuildOptions->chkJumpToError->Checked && bLoadFile)
     {
         // jump to the error
-        if (LoadFile(m_FileManager.FindFile(m_sErrorFile)) && sciTabControl->Visible)
+        if (LoadFile(m_FileManager.FindFile(m_sErrorFile)) && m_ActiveEditor->Visible)
         {
             // TODO: Set caret
-            sciEditor->SetFocus();
-            sciEditor->GotoLineEnsureVisible(m_iErrorLine - 1);
-            sciEditor->GotoPos(sciEditor->PositionFromLine(m_iErrorLine - 1));
+            m_ActiveEditor->Editor->SetFocus();
+            m_ActiveEditor->Editor->GotoLineEnsureVisible(m_iErrorLine - 1);
+            m_ActiveEditor->Editor->GotoPos(m_ActiveEditor->Editor->PositionFromLine(m_iErrorLine - 1));
         }
     }
     return bErrorFound;
@@ -619,7 +619,7 @@ String __fastcall TfrmCodeEditor::Subst(const String& sString, char cFind, char 
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::FindText(void)
 {
-    if (!sciTabControl->Visible)
+    if (!m_ActiveEditor->Visible)
         return;
     // TODO: Find text
     SetStatusSlot(m_PluginHandle, "", 2);
@@ -659,8 +659,8 @@ void __fastcall TfrmCodeEditor::FindText(void)
     }
     if (sciSearchReplace->FoundText == sFindText && !sciSearchReplace->SearchBackwards)
     {
-        int pos = sciEditor->GetCurrentPos();
-        sciEditor->GotoPos(pos + sFindText.Length());
+        int pos = m_ActiveEditor->Editor->GetCurrentPos();
+        m_ActiveEditor->Editor->GotoPos(pos + sFindText.Length());
     }
     sciSearchReplace->SearchText = sFindText;
     sciSearchReplace->ReplaceText = sReplaceText;

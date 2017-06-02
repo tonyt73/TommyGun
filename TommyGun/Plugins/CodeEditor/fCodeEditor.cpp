@@ -23,15 +23,14 @@
 #include "ZXDebugger.h"
 #include "Pasmo.h"
 //---------------------------------------------------------------------------
-#pragma package(smart_init)     352
+#pragma link "DosCommand"
+#pragma link "KSlider"
+#pragma link "KRegistry"
 #pragma link "SciDocTabCtrl"
 #pragma link "SciLanguageManager"
 #pragma link "SciScintilla"
 #pragma link "SciScintillaBase"
 #pragma link "SciScintillaMemo"
-#pragma link "KSlider"
-#pragma link "KRegistry"
-#pragma link "DosCommand"
 #pragma link "SciSearchReplace"
 #pragma link "SciSearchReplaceBase"
 #pragma link "SciDocTabCtrl"
@@ -83,6 +82,7 @@ __fastcall TfrmCodeEditor::TfrmCodeEditor(TComponent* Owner, ZXFileManager& File
 , m_BookMarker(NULL)
 , m_DebugMode(dmStopped)
 , m_TimelapseMode(tmStopped)
+, m_ActiveEditor(NULL)
 {
     RL_METHOD
     // setup the editor defaults
@@ -138,6 +138,10 @@ void __fastcall TfrmCodeEditor::FormCreate(TObject *Sender)
     m_BreakpointMarker = new TSciMarker(sciEditor, DEBUG_BREAKPOINT, sciMCircle);
     m_BreakpointHighlighter = new TSciMarker(sciEditor, DEBUG_HIGHLIGHTER_MARKER, sciMBackground);
     m_BookMarker = new TSciMarker(sciEditor, BOOKMARKER, sciMFullRect);
+    m_BreakpointMarkerOther = new TSciMarker(sciEditorOther, DEBUG_BREAKPOINT, sciMCircle);
+    m_BreakpointHighlighterOther = new TSciMarker(sciEditorOther, DEBUG_HIGHLIGHTER_MARKER, sciMBackground);
+    m_BookMarkerOther = new TSciMarker(sciEditorOther, BOOKMARKER, sciMFullRect);
+    m_ActiveEditor = sciTabControl;
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::FormShow(TObject *Sender)
@@ -150,7 +154,17 @@ void __fastcall TfrmCodeEditor::FormShow(TObject *Sender)
     m_BookMarker->MarkerType = sciMFullRect;
     m_BreakpointHighlighter->ForeColor = clBlack;   // white
     m_BreakpointHighlighter->BackColor = clNavy;  // red
-	m_BreakpointHighlighter->MarkerType = sciMBackground;
+	m_BreakpointHighlighterOther->MarkerType = sciMBackground;
+    
+    m_BreakpointMarkerOther->ForeColor = clWhite;
+    m_BreakpointMarkerOther->BackColor = clRed;
+    m_BreakpointMarkerOther->MarkerType = sciMCircle;
+    m_BookMarkerOther->ForeColor = clAqua;
+    m_BookMarkerOther->BackColor = clBlue;
+    m_BookMarkerOther->MarkerType = sciMFullRect;
+    m_BreakpointHighlighterOther->ForeColor = clBlack;   // white
+    m_BreakpointHighlighterOther->BackColor = clNavy;  // red
+	m_BreakpointHighlighterOther->MarkerType = sciMBackground;
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::cmdFileLoadClick(TObject *Sender)
@@ -340,41 +354,41 @@ void __fastcall TfrmCodeEditor::UpdateEditor(void)
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::popCutClick(TObject *Sender)
 {
-    sciEditor->Cut();
+    m_ActiveEditor->Editor->Cut();
     UpdateEditorSlots();
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::popCopyClick(TObject *Sender)
 {
-    sciEditor->Copy();
+    m_ActiveEditor->Editor->Copy();
     UpdateEditorSlots();
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::popPasteClick(TObject *Sender)
 {
-    sciEditor->Paste();
+    m_ActiveEditor->Editor->Paste();
     UpdateEditorSlots();
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::popUndoClick(TObject *Sender)
 {
-    sciEditor->Undo();
+    m_ActiveEditor->Editor->Undo();
     UpdateEditorSlots();
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::popRedoClick(TObject *Sender)
 {
-    sciEditor->Redo();
+    m_ActiveEditor->Editor->Redo();
     UpdateEditorSlots();
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::actFindExecute(TObject *Sender)
 {
-    if (sciEditor->SelText == "")
+    if (m_ActiveEditor->Editor->SelText == "")
     {
-        sciEditor->SelectWordAtCaret();
+        m_ActiveEditor->Editor->SelectWordAtCaret();
     }
-    frmSearch->cmbFindText->Text = sciEditor->SelText;
+    frmSearch->cmbFindText->Text = m_ActiveEditor->Editor->SelText;
     if (true == frmSearch->Execute())
     {
         if (!frmSearch->ProjectFiles)
@@ -394,11 +408,11 @@ void __fastcall TfrmCodeEditor::actFindExecute(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::actReplaceExecute(TObject *Sender)
 {
-    if (sciEditor->SelText == "")
+    if (m_ActiveEditor->Editor->SelText == "")
     {
-        sciEditor->SelectWordAtCaret();
+        m_ActiveEditor->Editor->SelectWordAtCaret();
     }
-    frmReplace->cmbFindText->Text = sciEditor->SelText;
+    frmReplace->cmbFindText->Text = m_ActiveEditor->Editor->SelText;
 
     if (true == frmReplace->Execute())
     {
@@ -419,18 +433,19 @@ void __fastcall TfrmCodeEditor::UpdateEditorSlots(void)
     if (!m_FileManager.IsOpeningFile)
     {
         sciTabControl->Visible = sciTabControl->Count > 0 && !sciTabControl->ActiveDocument->IsUntitled();
-        String sMsg = IntToStr(sciEditor->GetCaretInLine() + 1) + ": " + IntToStr(sciEditor->GetCurrentLineNumber() + 1);
+        sciTabControlOther->Visible = sciTabControlOther->Count > 0 && !sciTabControlOther->ActiveDocument->IsUntitled();
+        String sMsg = IntToStr(m_ActiveEditor->Editor->GetCaretInLine() + 1) + ": " + IntToStr(m_ActiveEditor->Editor->GetCurrentLineNumber() + 1);
         SetStatusSlot(m_PluginHandle, sMsg, 0);
-        sMsg = sciEditor->GetOvertype() ? "Overwrite" : "Insert";
+        sMsg = m_ActiveEditor->Editor->GetOvertype() ? "Overwrite" : "Insert";
         SetStatusSlot(m_PluginHandle, sMsg, 1);
         lblFileLines->Caption = "?";
         lblFileCharacters->Caption = "?";
-        if (SAFE_PTR(sciEditor->Lines))
+        if (SAFE_PTR(((TScintilla*)m_ActiveEditor->Editor)->Lines))
         {
-            lblFileLines->Caption = IntToStr(sciEditor->GetLineCount());
-            lblFileCharacters->Caption = IntToStr(sciEditor->GetLength());
+            lblFileLines->Caption = IntToStr(m_ActiveEditor->Editor->GetLineCount());
+            lblFileCharacters->Caption = IntToStr(m_ActiveEditor->Editor->GetLength());
         }
-        lblFileDirty->Caption = sciEditor->Modified ? String("Yes") : String("No");
+        lblFileDirty->Caption = m_ActiveEditor->Editor->Modified ? String("Yes") : String("No");
     }
 }
 //---------------------------------------------------------------------------
@@ -569,14 +584,16 @@ void __fastcall TfrmCodeEditor::Clear(void)
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::actInsertItemExecute(TObject *Sender)
 {
-    int index = m_FileManager.FindFile(sciTabControl->ActiveDocument->FileName);
+    int index = m_FileManager.FindFile(m_ActiveEditor->ActiveDocument->FileName);
     if (index != -1)
     {
         TStrings* pLines = new TStringList();
         if (m_FileManager.GetLines(index, pLines))
         {
-            m_ParserManager.Execute(pLines, m_FileManager.IsCFile(index));
-            m_FileManager.PutLines(index, pLines);
+            if (m_ParserManager.Execute(pLines, m_FileManager.IsCFile(index)))
+            {
+                m_FileManager.PutLines(index, pLines);
+            }
         }
         SAFE_DELETE(pLines);
     }
@@ -623,6 +640,7 @@ void __fastcall TfrmCodeEditor::actUpdateAllResourcesExecute(TObject *Sender)
 void __fastcall TfrmCodeEditor::actToggleSpecialExecute(TObject *Sender)
 {
     g_EditorSettings.Apply(sciEditor);
+    g_EditorSettings.Apply(sciEditorOther);
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::cmdTextMaximizeClick(TObject *Sender)
@@ -1037,7 +1055,7 @@ void __fastcall TfrmCodeEditor::actGotoLineExecute(TObject *Sender)
         if (iLine >= 0)
         {
             // goto the new line
-            sciEditor->GotoLineEnsureVisible(iLine - 1);
+            m_ActiveEditor->Editor->GotoLineEnsureVisible(iLine - 1);
         }
         SAFE_DELETE(frmGotoLine);
     }
@@ -1336,19 +1354,19 @@ void __fastcall TfrmCodeEditor::cmdFileMoveDownClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::actFileNextExecute(TObject *Sender)
 {
-    if (sciTabControl->TabIndex != -1)
+    if (m_ActiveEditor->TabIndex != -1)
     {
-        int index = (sciTabControl->TabIndex + 1) % sciTabControl->Count;
-        sciTabControl->Activate(index);
+        int index = (m_ActiveEditor->TabIndex + 1) % m_ActiveEditor->Count;
+        m_ActiveEditor->Activate(index);
     }
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::actFilePreviousExecute(TObject *Sender)
 {
-    if (sciTabControl->TabIndex != -1)
+    if (m_ActiveEditor->TabIndex != -1)
     {
-        int index = (sciTabControl->Count + sciTabControl->TabIndex - 1) % sciTabControl->Count;
-        sciTabControl->Activate(index);
+        int index = (m_ActiveEditor->Count + m_ActiveEditor->TabIndex - 1) % m_ActiveEditor->Count;
+        m_ActiveEditor->Activate(index);
     }
 }
 //---------------------------------------------------------------------------
@@ -1415,7 +1433,7 @@ void __fastcall TfrmCodeEditor::memoConsoleDblClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::actClosePageExecute(TObject *Sender)
 {
-	if (sciTabControl->ActiveDocument->Modified)
+	if (m_ActiveEditor->ActiveDocument->Modified)
 	{
 		int iAnswer = 0;
 		Message
@@ -1435,8 +1453,8 @@ void __fastcall TfrmCodeEditor::actClosePageExecute(TObject *Sender)
 			m_FileManager.Save();
 		}
 	}
-	m_FileManager.Close(sciTabControl->ActiveDocument->FileName);
-	cmdTextClose->Enabled = sciEditor->Visible;
+	m_FileManager.Close(m_ActiveEditor->ActiveDocument->FileName);
+	cmdTextClose->Enabled = m_FileManager.OpenedDocuments() > 0;
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::popConsoleClearClick(TObject *Sender)
@@ -1453,12 +1471,14 @@ void __fastcall TfrmCodeEditor::popConsoleClearClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::actBuildSettingsExecute(TObject *Sender)
 {
-	frmBuildOptions->Language = sciEditor->SelectedLanguage;
+	frmBuildOptions->Language = ((TScintilla*)m_ActiveEditor->Editor)->SelectedLanguage;
 	frmBuildOptions->ShowModal();
 	if (m_FileManager.HasOpenDocument())
 	{
 		g_EditorSettings.Apply(sciTabControl->ActiveDocument);
 		g_EditorSettings.Apply((TScintillaMemo*)sciEditor);
+		g_EditorSettings.Apply(sciTabControlOther->ActiveDocument);
+		g_EditorSettings.Apply((TScintillaMemo*)sciEditorOther);
     }
     UpdateControls();
 }
@@ -1571,12 +1591,12 @@ void __fastcall TfrmCodeEditor::lstSearchResultsDblClick(TObject *Sender)
             m_FileManager.Add(sFile, true);
         }
         UpdateList();
-        sciEditor->SetFocus();
-        sciEditor->GotoLineEnsureVisible(iLine - 1);
-        sciEditor->GotoLine(iLine - 1);
-        int pos = sciEditor->GetCurrentPos();
-        sciEditor->SetCurrentPos(pos + iPos - 1);
-        sciEditor->SetAnchor(pos + iPos - 1);
+        m_ActiveEditor->Editor->SetFocus();
+        m_ActiveEditor->Editor->GotoLineEnsureVisible(iLine - 1);
+        m_ActiveEditor->Editor->GotoLine(iLine - 1);
+        int pos = m_ActiveEditor->Editor->GetCurrentPos();
+        m_ActiveEditor->Editor->SetCurrentPos(pos + iPos - 1);
+        m_ActiveEditor->Editor->SetAnchor(pos + iPos - 1);
         Update();
     }
 }
@@ -1667,6 +1687,9 @@ void __fastcall TfrmCodeEditor::sciTabControlMouseDown(TObject *Sender, TMouseBu
 void __fastcall TfrmCodeEditor::sciEditorEnter(TObject *Sender)
 {
     m_bEditting = true;
+	TScintilla* editor = (TScintilla*)Sender;
+    m_ActiveEditor = sciTabControl->Editor == editor ? sciTabControl : sciTabControlOther;
+    sciSearchReplace->Editor = editor;
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::sciEditorExit(TObject *Sender)
@@ -1679,10 +1702,12 @@ void __fastcall TfrmCodeEditor::sciEditorModified(TObject *Sender, const int pos
 	if (Sender == sciEditor && !sciEditor->ReadOnly)
 	{
 		m_FileManager.sciEditorModified(Sender, position, modificationType, text, len, linesAdded, line, foldLevelNow, foldLevelPrev);
+        sciEditor->Modified = false;
 	}
 	if (Sender == sciEditorOther && !sciEditorOther->ReadOnly)
 	{
 		m_FileManager.sciEditorModifiedOther(Sender, position, modificationType, text, len, linesAdded, line, foldLevelNow, foldLevelPrev);
+        sciEditorOther->Modified = false;
 	}
 	UpdateEditorSlots();
 }
@@ -1707,14 +1732,14 @@ void __fastcall TfrmCodeEditor::sciSearchReplaceTextNotFound(TObject *Sender)
     {
         if (!m_bSearchBackwards)
         {
-            sciTabControl->Activate((sciTabControl->TabIndex + 1) % sciTabControl->Count);
-            sciEditor->GotoLineEnsureVisible(0);
+            m_ActiveEditor->Activate((m_ActiveEditor->TabIndex + 1) % sciTabControl->Count);
+            sciSearchReplace->Editor->GotoLineEnsureVisible(0);
             sciSearchReplace->DoSearchReplaceText(m_bSearchReplace, m_bSearchBackwards, m_SearchReplaceConfirmation);
         }
         else
         {
-            sciTabControl->Activate((sciTabControl->Count + sciTabControl->TabIndex - 1) % sciTabControl->Count);
-            sciEditor->GotoLineEnsureVisible(sciEditor->Lines->Count - 1);
+            m_ActiveEditor->Activate((m_ActiveEditor->Count + m_ActiveEditor->TabIndex - 1) % m_ActiveEditor->Count);
+            m_ActiveEditor->Editor->GotoLineEnsureVisible(((TScintilla*)m_ActiveEditor->Editor)->Lines->Count - 1);
             sciSearchReplace->DoSearchReplaceText(m_bSearchReplace, m_bSearchBackwards, m_SearchReplaceConfirmation);
         }
     }
@@ -1818,17 +1843,18 @@ void __fastcall TfrmCodeEditor::actDebugToggleBreakpointExecute(TObject *Sender)
 {
     String File;
     int Line;
-    if (m_FileManager.ActiveDocument(File, Line))
+    TSciMarker* marker = m_ActiveEditor == sciTabControl ? m_BreakpointMarker : m_BreakpointMarkerOther;
+    if (m_FileManager.ActiveDocument(m_ActiveEditor, File, Line))
     {
-        if (m_BreakpointMarker->Present(Line))
+        if (marker->Present(Line))
         {
             g_Debugger->Breakpoints.Remove(File, Line + 1);
-            m_BreakpointMarker->Delete(Line);
+            marker->Delete(Line);
         }
         else
         {
             g_Debugger->Breakpoints.Add(File, Line + 1);
-            m_BreakpointMarker->Add(Line);
+            marker->Add(Line);
         }
         UpdateBreakpoints();
     }
@@ -1862,6 +1888,8 @@ void __fastcall TfrmCodeEditor::HighlightLine(const String& File, int Line)
     int iFile = m_FileManager.FindFile(ExtractFileName(File));
     if (iFile != -1)
     {
+        TScintilla* editor = m_FileManager.InOtherView(iFile) ? sciEditorOther : sciEditor;
+
         if (!m_FileManager.IsFileOpen(iFile))
         {
             m_FileManager.Open(iFile, false);
@@ -1870,14 +1898,14 @@ void __fastcall TfrmCodeEditor::HighlightLine(const String& File, int Line)
         {
             m_FileManager.SelectFile(iFile);
         }
-        sciEditor->MarkerDeleteAll(DEBUG_HIGHLIGHTER_MARKER);
-        if (sciEditor->ReadOnly)
+        editor->MarkerDeleteAll(DEBUG_HIGHLIGHTER_MARKER);
+        if (editor->ReadOnly)
         {
-            sciEditor->MarkerAdd(Line - 1, DEBUG_HIGHLIGHTER_MARKER);
+            editor->MarkerAdd(Line - 1, DEBUG_HIGHLIGHTER_MARKER);
         }
-        sciEditor->GotoLineEnsureVisible(Line - 1);
+        editor->GotoLineEnsureVisible(Line - 1);
         UpdateControls();
-        sciEditor->Update();
+        editor->Update();
     }
 }
 //---------------------------------------------------------------------------
@@ -2046,7 +2074,7 @@ void __fastcall TfrmCodeEditor::tabBreakpointsShow(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::UpdateBreakpoints()
 {
-    if (m_BreakpointMarker == NULL || !sciEditor->Visible)
+    if (m_BreakpointMarker == NULL || m_BreakpointMarkerOther == NULL)
         return;
     try
     {
@@ -2057,6 +2085,7 @@ void __fastcall TfrmCodeEditor::UpdateBreakpoints()
         {
             lstBreakpoints->Items->Clear();
             m_BreakpointMarker->ClearAll();
+            m_BreakpointMarkerOther->ClearAll();
             for (TBreakpointListIt it = breakpoints.begin(); it != breakpoints.end(); ++it)
             {
                 TListItem* lvi = lstBreakpoints->Items->Add();
@@ -2064,9 +2093,13 @@ void __fastcall TfrmCodeEditor::UpdateBreakpoints()
                 lvi->SubItems->Add(it->file);
                 lvi->SubItems->Add(IntToStr(it->line));
                 lvi->SubItems->Add(IntToStr(it->passCountReset));
-                if (it->enabled && m_FileManager.IsActiveDocument(it->file))
+                if (it->enabled && m_FileManager.IsActiveDocument(sciTabControl, it->file))
                 {
                     m_BreakpointMarker->Add(it->line - 1);
+                }
+                if (it->enabled && m_FileManager.IsActiveDocument(sciTabControlOther, it->file))
+                {
+                    m_BreakpointMarkerOther->Add(it->line - 1);
                 }
             }
             lstBreakpoints->Update();
@@ -2076,6 +2109,7 @@ void __fastcall TfrmCodeEditor::UpdateBreakpoints()
             // update the items already there
             int i = 0;
             m_BreakpointMarker->ClearAll();
+            m_BreakpointMarkerOther->ClearAll();
             for (TBreakpointListIt it = breakpoints.begin(); it != breakpoints.end(); ++it, ++i)
             {
                 TListItem* lvi = lstBreakpoints->Items->Item[i];
@@ -2083,9 +2117,12 @@ void __fastcall TfrmCodeEditor::UpdateBreakpoints()
                 lvi->SubItems->Strings[0] = it->file;
                 lvi->SubItems->Strings[1] = IntToStr(it->line);
                 lvi->SubItems->Strings[2] = IntToStr(it->passCountReset);
-                if (it->enabled && m_FileManager.IsActiveDocument(it->file))
+                if (it->enabled)
                 {
-                    m_BreakpointMarker->Add(it->line - 1);
+                    if (m_FileManager.IsActiveDocument(sciTabControl, it->file))
+                        m_BreakpointMarker->Add(it->line - 1);
+                    if (m_FileManager.IsActiveDocument(sciTabControlOther, it->file))
+                        m_BreakpointMarkerOther->Add(it->line - 1);
                 }
             }
             lstBreakpoints->Update();
@@ -2124,12 +2161,13 @@ void __fastcall TfrmCodeEditor::lstBreakpointsChange(TObject *Sender, TListItem 
         {
             g_Debugger->Breakpoints.Disable(file, line);
         }
-        if (m_FileManager.IsActiveDocument(file))
+        if (m_FileManager.IsActiveDocument(m_ActiveEditor, file))
         {
-            m_BreakpointMarker->Delete(line - 1);
+            TSciMarker* marker = m_ActiveEditor == sciTabControl ? m_BreakpointMarker : m_BreakpointMarkerOther;
+            marker->Delete(line - 1);
             if (enabled)
             {
-                m_BreakpointMarker->Add(line - 1);
+                marker->Add(line - 1);
             }
         }
     }
@@ -2153,32 +2191,36 @@ void __fastcall TfrmCodeEditor::actBookmarkToggleExecute(TObject *Sender)
 {
     String File;
     int Line;
-    if (m_FileManager.ActiveDocument(File, Line))
+    TSciMarker* bookMarker = m_ActiveEditor == sciTabControl ? m_BookMarker : m_BookMarkerOther;
+    if (m_FileManager.ActiveDocument(m_ActiveEditor, File, Line))
     {
-        if (m_BookMarker->Present(Line))
+        if (bookMarker->Present(Line))
         {
-            m_BookMarker->Delete(Line);
+            bookMarker->Delete(Line);
         }
         else
         {
-            m_BookMarker->Add(Line);
+            bookMarker->Add(Line);
         }
     }
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::actBookmarkNextExecute(TObject *Sender)
 {
-    m_BookMarker->Next();
+    TSciMarker* bookMarker = m_ActiveEditor == sciTabControl ? m_BookMarker : m_BookMarkerOther;
+    bookMarker->Next();
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::actBookmarkPreviousExecute(TObject *Sender)
 {
-    m_BookMarker->Next(false);
+    TSciMarker* bookMarker = m_ActiveEditor == sciTabControl ? m_BookMarker : m_BookMarkerOther;
+    bookMarker->Next(false);
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::actBookmarkClearExecute(TObject *Sender)
 {
     m_BookMarker->ClearAll();
+    m_BookMarkerOther->ClearAll();
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::sciEditorMarginClick(TObject *Sender, const int modifiers, const int position, const int margin)
@@ -2246,18 +2288,19 @@ void __fastcall TfrmCodeEditor::actRewindStopExecute(TObject *Sender)
     HighlightCurrentLine();
 }
 //---------------------------------------------------------------------------
-void __fastcall TfrmCodeEditor::actCloneViewExecute(TObject *Sender)
-{
-	//String file = sciTabControl->ActiveDocument->FileName;
-	//m_FileManager.Open(m_FileManager.FindFile(file), true);
-}
-//---------------------------------------------------------------------------
 void __fastcall TfrmCodeEditor::actMoveViewExecute(TObject *Sender)
 {
-	String file = sciTabControl->ActiveDocument->FileName;
+	String file = m_ActiveEditor->ActiveDocument->FileName;
 	m_FileManager.Save();
 	m_FileManager.Close(file);
-	m_FileManager.Open(m_FileManager.FindFile(file), true);
+	m_FileManager.Open(m_FileManager.FindFile(file), m_ActiveEditor == sciTabControl);
+    UpdateBreakpoints();
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmCodeEditor::popCodeEditorPopup(TObject *Sender)
+{
+    actMoveView->Enabled = m_FileManager.OpenedDocuments() >= 2;
+    m_ActiveEditor = popCodeEditor->PopupComponent == sciEditor ? sciTabControl : sciTabControlOther;
 }
 //---------------------------------------------------------------------------
 

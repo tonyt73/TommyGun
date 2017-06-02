@@ -46,7 +46,7 @@ bool __fastcall ZXParserManager::Execute(TStrings*& Lines, bool bIsCFile)
     PostNotifyEvent(NULL, TZX_QUERY_PROJECT_FOLDER, (LPDATA)&sFolder, 0, 0);
     ChDir(sFolder);
 
-    bool bUpdateEditor = false;
+    m_ResourceInserted = false;
     m_SourceCode = Lines;
     m_CommentL = ";";
     m_CommentR = "";
@@ -71,7 +71,6 @@ bool __fastcall ZXParserManager::Execute(TStrings*& Lines, bool bIsCFile)
             LoadParsers();
             // request the XML objects
             m_frmInsertResource->ShowModal();
-            bUpdateEditor = true;//m_frmInsertResource->chkCreateInEditor->Checked;
         }
         else
         {
@@ -91,7 +90,7 @@ bool __fastcall ZXParserManager::Execute(TStrings*& Lines, bool bIsCFile)
         }
     }
     ChDir(sCurDir);
-    return bUpdateEditor;
+    return m_ResourceInserted;
 }
 //---------------------------------------------------------------------------
 bool __fastcall ZXParserManager::Update(TStrings*& Lines, const String& Filename, bool bIsCFile)
@@ -276,6 +275,7 @@ void __fastcall ZXParserManager::OnResourceInsert(TObject* Sender)
 {
     // parse the resource and insert it into the current file
     bool bCreateInEditor = true;//m_frmInsertResource->chkCreateInEditor->Checked;
+    m_ResourceInserted = true;
     TStrings* pSourceCode = NULL;
     if (bCreateInEditor)
     {

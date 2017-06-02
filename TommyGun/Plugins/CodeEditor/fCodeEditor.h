@@ -405,8 +405,8 @@ __published:	// IDE-managed Components
     void __fastcall actRewinderExecute(TObject *Sender);
     void __fastcall actForwarderExecute(TObject *Sender);
     void __fastcall actRewindStopExecute(TObject *Sender);
-	void __fastcall actCloneViewExecute(TObject *Sender);
 	void __fastcall actMoveViewExecute(TObject *Sender);
+    void __fastcall popCodeEditorPopup(TObject *Sender);
 private:	// User declarations
 
     enum eBuildTypes    { btBuildMakefile, btBuildAll };
@@ -438,8 +438,12 @@ private:	// User declarations
     TSciMarker*         m_BreakpointMarker;
     TSciMarker*         m_BreakpointHighlighter;
     TSciMarker*         m_BookMarker;
+    TSciMarker*         m_BreakpointMarkerOther;
+    TSciMarker*         m_BreakpointHighlighterOther;
+    TSciMarker*         m_BookMarkerOther;
     eDebugMode          m_DebugMode;
     eTimelapseMode      m_TimelapseMode;
+    TSciDocumentTabControl* m_ActiveEditor;
 
     TMenuItem*          m_CodeTools;
     TMenuItem*          m_mnuBuild;

@@ -142,4 +142,3 @@ void __fastcall TfrmDisplayView::popBlackOnWhiteClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-
