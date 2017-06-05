@@ -136,18 +136,32 @@ void __fastcall TfrmSpriteType::cmdSpriteAddClick(TObject *Sender)
     if (true == SAFE_PTR(m_pImageManager))
     {
         int iMinWidth = 8;
+        int iIncWidth = 8;
+        int iMinHeight = 8;
+        int iIncHeight = 8;
         ZXPalette* pPalette = m_pImageManager->GetPalette(cmbSpriteFormat->Items->Strings[cmbSpriteFormat->ItemIndex]);
         if (SAFE_PTR(pPalette))
         {
-            iMinWidth = pPalette->PixelsPerByte;
+            iMinWidth = pPalette->DefaultSpriteWidth;
+            iIncWidth = pPalette->IncSpriteWidth;
+            iMinHeight = pPalette->DefaultSpriteHeight;
+            iIncHeight = pPalette->IncSpriteHeight;
         }
-        if (edtSpriteWidth->Value % iMinWidth)
+        if (edtSpriteWidth->Value % iIncWidth)
         {
-            edtSpriteWidth->Value = (edtSpriteWidth->Value + iMinWidth) - (edtSpriteWidth->Value % iMinWidth);
+            edtSpriteWidth->Value = (edtSpriteWidth->Value + iIncWidth) - (edtSpriteWidth->Value % iIncWidth);
         }
-        if (edtSpriteHeight->Value % m_iPixelsHigh)
+        if (edtSpriteWidth->Value < iMinWidth)
+        {
+            edtSpriteWidth->Value = iMinWidth;
+        }
+        if (edtSpriteHeight->Value % iIncHeight)
         {
             edtSpriteHeight->Value = (edtSpriteHeight->Value + m_iPixelsHigh) - (edtSpriteHeight->Value % m_iPixelsHigh);
+        }
+        if (edtSpriteHeight->Value < iMinHeight)
+        {
+            edtSpriteHeight->Value = iMinHeight;
         }
         int iIndex = m_pImageManager->AddImage(g_sTypeSignature,
                                                m_vPaletteSignatures[cmbSpriteFormat->ItemIndex],
@@ -602,8 +616,10 @@ void __fastcall TfrmSpriteType::cmbSpriteFormatChange(TObject *Sender)
     ZXPalette* pPalette = m_pImageManager->GetPalette(cmbSpriteFormat->Items->Strings[cmbSpriteFormat->ItemIndex]);
     if (true == SAFE_PTR(pPalette))
     {
-        m_iPixelsHigh = pPalette->PixelsHighPerAttribute;
-        edtSpriteHeight->Step = m_iPixelsHigh;
+        edtSpriteWidth->Value = pPalette->DefaultSpriteWidth;
+        edtSpriteHeight->Value = pPalette->DefaultSpriteHeight;
+        edtSpriteWidth->Step = pPalette->IncSpriteWidth;
+        edtSpriteHeight->Step = pPalette->IncSpriteHeight;
     }
 }
 //---------------------------------------------------------------------------

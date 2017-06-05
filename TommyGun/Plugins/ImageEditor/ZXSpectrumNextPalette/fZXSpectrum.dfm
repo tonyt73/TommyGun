@@ -1,7 +1,7 @@
 object frmZXSpectrum: TfrmZXSpectrum
   Left = 1133
   Top = 129
-  ClientHeight = 136
+  ClientHeight = 202
   ClientWidth = 605
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
@@ -10,6 +10,7 @@ object frmZXSpectrum: TfrmZXSpectrum
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -17,7 +18,7 @@ object frmZXSpectrum: TfrmZXSpectrum
     Left = 0
     Top = 0
     Width = 605
-    Height = 136
+    Height = 202
     Align = alClient
     BevelOuter = bvNone
     Color = clWhite
@@ -29,9 +30,11 @@ object frmZXSpectrum: TfrmZXSpectrum
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
+    OnResize = FormResize
+    ExplicitHeight = 152
     DesignSize = (
       605
-      136)
+      202)
     object imgLogo: TImage
       Left = 8
       Top = 6
@@ -239,21 +242,85 @@ object frmZXSpectrum: TfrmZXSpectrum
       Enabled = False
       Visible = False
     end
+    object lblPenRGB: TLabel
+      Left = 8
+      Top = 78
+      Width = 66
+      Height = 13
+      Alignment = taCenter
+      AutoSize = False
+      Caption = '0,0,0'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+      ParentFont = False
+      Layout = tlCenter
+    end
+    object lblPenIndex: TLabel
+      Left = 11
+      Top = 97
+      Width = 66
+      Height = 13
+      Alignment = taCenter
+      AutoSize = False
+      Caption = '0'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+      ParentFont = False
+      Layout = tlCenter
+    end
+    object lblBrushRGB: TLabel
+      Left = 8
+      Top = 154
+      Width = 66
+      Height = 13
+      Alignment = taCenter
+      AutoSize = False
+      Caption = '0,0,0'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+      ParentFont = False
+      Layout = tlCenter
+    end
+    object lblBrushIndex: TLabel
+      Left = 8
+      Top = 173
+      Width = 66
+      Height = 13
+      Alignment = taCenter
+      AutoSize = False
+      Caption = '0'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+      ParentFont = False
+      Layout = tlCenter
+    end
     object Panel2: TPanel
       Left = 80
       Top = 40
       Width = 520
-      Height = 88
+      Height = 154
       Anchors = [akLeft, akTop, akRight, akBottom]
       BevelOuter = bvNone
       BorderStyle = bsSingle
       TabOrder = 0
-      OnResize = Panel2Resize
+      ExplicitHeight = 104
       object imgColourPicker: TImage
         Left = 0
         Top = 0
         Width = 516
-        Height = 84
+        Height = 150
         Margins.Left = 0
         Margins.Top = 0
         Margins.Right = 0
@@ -261,10 +328,9 @@ object frmZXSpectrum: TfrmZXSpectrum
         Align = alClient
         OnMouseDown = imgColourPickerMouseDown
         OnMouseMove = imgColourPickerMouseMove
-        ExplicitLeft = -4
+        ExplicitLeft = -3
         ExplicitTop = -3
-        ExplicitWidth = 418
-        ExplicitHeight = 76
+        ExplicitHeight = 100
       end
     end
     object cmbPalettes: TComboBox
@@ -274,7 +340,7 @@ object frmZXSpectrum: TfrmZXSpectrum
       Height = 21
       Style = csDropDownList
       Enabled = False
-      ItemHeight = 0
+      ItemHeight = 13
       ItemIndex = 0
       TabOrder = 1
       Text = 'Image'
@@ -289,7 +355,7 @@ object frmZXSpectrum: TfrmZXSpectrum
       Left = 8
       Top = 40
       Width = 66
-      Height = 41
+      Height = 32
       BevelKind = bkFlat
       BevelOuter = bvNone
       Caption = 'Pen'
@@ -299,9 +365,9 @@ object frmZXSpectrum: TfrmZXSpectrum
     end
     object panBrush: TPanel
       Left = 8
-      Top = 87
+      Top = 116
       Width = 66
-      Height = 41
+      Height = 32
       BevelKind = bkFlat
       BevelOuter = bvNone
       Caption = 'Brush'

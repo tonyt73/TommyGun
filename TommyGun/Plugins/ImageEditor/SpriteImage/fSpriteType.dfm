@@ -140,7 +140,7 @@ object frmSpriteType: TfrmSpriteType
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
-        ItemHeight = 0
+        ItemHeight = 13
         ParentFont = False
         TabOrder = 1
         OnChange = cmbSpriteFormatChange
@@ -323,7 +323,7 @@ object frmSpriteType: TfrmSpriteType
           object tbnSpriteFrames: TToolBar
             Left = 0
             Top = 113
-            Width = 248
+            Width = 246
             Height = 22
             AutoSize = True
             Caption = 'tbnSpriteFrames'
@@ -332,7 +332,6 @@ object frmSpriteType: TfrmSpriteType
             GradientEndColor = clWhite
             Images = imgIcons
             TabOrder = 0
-            ExplicitWidth = 246
             object tbnFramesFirst: TToolButton
               Left = 0
               Top = 0
@@ -679,7 +678,7 @@ object frmSpriteType: TfrmSpriteType
     Left = 8
     Top = 100
     Bitmap = {
-      494C01010B000E00880010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B000E008C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

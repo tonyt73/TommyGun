@@ -571,7 +571,8 @@ ZXPalette* __fastcall ZXImageManager::FindPalette(const String& sSignature) cons
     ZXPalette* pPalette = NULL;
     for (unsigned int i = 0; i < m_vPalettes.size() && NULL == pPalette; i++)
     {
-        if (sSignature == m_vPalettes[i]->Signature)
+        String sig = m_vPalettes[i]->Signature;
+        if (sSignature == sig)
         {
             pPalette = m_vPalettes[i];
         }

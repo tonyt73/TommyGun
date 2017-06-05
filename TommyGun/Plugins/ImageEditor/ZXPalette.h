@@ -30,6 +30,52 @@
 class ZXImage;
 typedef void __fastcall (__closure *TEventUpdatePalette)(void);
 //---------------------------------------------------------------------------
+class TRgb {
+public:
+    double r;       // a fraction between 0 and 1
+    double g;       // a fraction between 0 and 1
+    double b;       // a fraction between 0 and 1
+
+    TRgb(TColor color)
+    {
+        r = (color & 0x000000FF);
+        g = (color & 0x0000FF00) >> 8;
+        b = (color & 0x00FF0000) >> 16;
+    }
+
+    TRgb(double ir, double ig, double ib)
+    : r(ir)
+    , g(ig)
+    , b(ib)
+    {
+    }
+
+    TRgb()
+    : r(0)
+    , g(0)
+    , b(0)
+    {
+    }
+};
+//---------------------------------------------------------------------------
+typedef struct {
+    double h;       // angle in degrees
+    double s;       // a fraction between 0 and 1
+    double b;       // a fraction between 0 and 1
+} THsb;
+//---------------------------------------------------------------------------
+typedef struct {
+    double h;       // angle in degrees
+    double s;       // a fraction between 0 and 1
+    double v;       // a fraction between 0 and 1
+} THsv;
+//---------------------------------------------------------------------------
+typedef struct {
+    double h;       // angle in degrees
+    double s;       // a fraction between 0 and 1
+    double l;       // a fraction between 0 and 1
+} THsl;
+//---------------------------------------------------------------------------
 __declspec( dllexport ) class ZXPalette
 {
 private:
@@ -38,10 +84,9 @@ private:
     std::vector<TColor>         m_ConvertColors;            // a table used during the bitmap conversion process
 
     TEventUpdatePalette         FOnUpdatePalette;
-    int         __fastcall      ColorDifference(TColor C1, TColor C2);
-    int         __fastcall      ConvertFindColor(int x, int y, Graphics::TBitmap* Bitmap);
-    void        __fastcall      ConvertPalettized(ZXImage* Image, Graphics::TBitmap* Bitmap);
-    void        __fastcall      BuildConvertColors(Graphics::TBitmap* Bitmap);
+    unsigned int    __fastcall  ConvertFindColor(int x, int y, Graphics::TBitmap* Bitmap);
+    void            __fastcall  ConvertPalettized(ZXImage* Image, Graphics::TBitmap* Bitmap);
+    void            __fastcall  BuildConvertColors(Graphics::TBitmap* Bitmap);
 
     __fastcall                  ZXPalette();                // don't allow creation of a blank palette
 
@@ -54,6 +99,10 @@ protected:
     unsigned int                m_iPixelsHighPerAttribute;  // the number of pixels high an attribute represents
     unsigned int                m_iDefaultScreenWidth;      // the default width of the screen for this palette
     unsigned int                m_iDefaultScreenHeight;     // the default height of the screen for this palette
+    unsigned int                m_iDefaultSpriteWidth;      // the default width of a sprite for this palette
+    unsigned int                m_iDefaultSpriteHeight;     // the default height of a sprite for this palette
+    unsigned int                m_iIncSpriteWidth;          // the width that the palette can increment a sprites width
+    unsigned int                m_iIncSpriteHeight;         // the height that the palette can increment a sprites height
     float                       m_fScalarX;                 // scaling factor for width
     float                       m_fScalarY;                 // scaling factor for height
     float                       m_fPixelsPerByte;           // the number of pixels per bytes
@@ -88,6 +137,10 @@ public:
 
             void    __fastcall  SetColor(unsigned int iColorIndex, TColor Color);
             TColor  __fastcall  GetColor(unsigned int iColorIndex);
+            int     __fastcall  GetColor(TColor Color);
+    unsigned int    __fastcall  GetClosestColor(TColor Color);
+    unsigned int    __fastcall  GetClosestColor(THsb hsb, const double wHue = 0.8, const double wSat = 0.1, const double wVal = 0.5);
+    unsigned int    __fastcall  GetClosestColor(THsl hsl);
     virtual String  __fastcall  GetColorAsString(ZXImage& Image, int X, int Y);
     virtual void    __fastcall  SetColorAt(ZXImage& Image, int X, int Y);
     virtual void    __fastcall  GetColorAt(ZXImage& Image, int X, int Y);
@@ -110,6 +163,17 @@ public:
             void    __fastcall  ApplyFix(const String& sVersion, ZXImage* pImage);
 
     static  DWORD   __fastcall  Luminance(TColor Color);
+    static  TRgb    __fastcall  HsbToRgb(THsb hsb);
+    static  THsb    __fastcall  RgbToHsb(TRgb rgb);
+    static  TRgb    __fastcall  HsvToRgb(THsv hsv);
+    static  THsv    __fastcall  RgbToHsv(TRgb rgb);
+    static  THsl    __fastcall  RgbToHsl(TRgb rgb);
+    static  TRgb    __fastcall  HslToRgb(THsl hsl);
+    static  double  __fastcall  Hue2Rgb(double p, double q, double t);
+    static  int     __fastcall  Difference(TColor C1, TColor C2);
+    static  int     __fastcall  Distance(TColor color1, TColor color2);
+            double  __fastcall  HsbDistance(int c1, int c2);
+    static  double  __fastcall  Lerp(double a, double b, double f);
             bool    __fastcall  IsImageTypeSupported(ZXImageTypes imageType) const;
 
             // write a pixel into the image's buffers using the specialized Palette's knowledge of the Images buffer format.
@@ -124,6 +188,10 @@ public:
     __property  unsigned int    PixelsHighPerAttribute  = { read = m_iPixelsHighPerAttribute                    };
     __property  unsigned int    DefaultScreenWidth      = { read = m_iDefaultScreenWidth                        };
     __property  unsigned int    DefaultScreenHeight     = { read = m_iDefaultScreenHeight                       };
+    __property  unsigned int    DefaultSpriteWidth      = { read = m_iDefaultSpriteWidth                        };
+    __property  unsigned int    DefaultSpriteHeight     = { read = m_iDefaultSpriteHeight                       };
+    __property  unsigned int    IncSpriteWidth          = { read = m_iIncSpriteWidth                            };
+    __property  unsigned int    IncSpriteHeight         = { read = m_iIncSpriteHeight                           };
     __property  float           ScalarX                 = { read = m_fScalarX                                   };
     __property  float           ScalarY                 = { read = m_fScalarY                                   };
     __property  bool            SupportsPixelsOnly      = { read = m_bSupportsPixelsOnly                        };

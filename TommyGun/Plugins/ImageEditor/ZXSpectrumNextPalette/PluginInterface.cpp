@@ -80,7 +80,7 @@ HRESULT WINAPI PalSignature(String& sSignature)
     RL_METHOD
     RL_HRESULT(S_OK)
     // we are an ImageEditor Mini-Plugin
-    sSignature = "ZX Spectrum Next 256";
+    sSignature = "Spectrum Next (256 Color)";
     return hResult;
 }
 //---------------------------------------------------------------------------

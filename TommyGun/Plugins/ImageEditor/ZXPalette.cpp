@@ -20,6 +20,10 @@
 #include "..\..\SafeMacros.h"
 #include "ZXPalette.h"
 #include "ZXImage.h"
+#include <map>
+#include <math.h>
+#include <iostream>
+#include <fstream>
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 //---------------------------------------------------------------------------
@@ -37,6 +41,10 @@ __fastcall ZXPalette::ZXPalette(unsigned int iColors, unsigned int iScreenWidth,
   m_ColorBrush(clBlack),
   m_iDefaultScreenWidth(iScreenWidth),
   m_iDefaultScreenHeight(iScreenHeight),
+  m_iDefaultSpriteWidth(16),
+  m_iDefaultSpriteHeight(16),
+  m_iIncSpriteWidth(8),
+  m_iIncSpriteHeight(1),
   m_fScalarX(1.f),
   m_fScalarY(1.f),
   m_SupportedImageTypes(itAny),
@@ -121,6 +129,92 @@ TColor __fastcall ZXPalette::GetColor(unsigned int iColorIndex)
     return Color;
 }
 //---------------------------------------------------------------------------
+int __fastcall ZXPalette::GetColor(TColor Color)
+{
+    for (unsigned int i = 0; i < m_iColorsInTable; i++)
+    {
+        if (m_pColorTable[i] == Color)
+            return i;
+    }
+    return clBlack;//GetClosestColor(Color);
+}
+//---------------------------------------------------------------------------
+double __fastcall ZXPalette::HsbDistance(int c1, int c2)
+{
+    const double wHue = 0.8;
+    const double wSat = 0.1;
+    const double wVal = 0.5;
+
+    TRgb sRgb(m_pColorTable[c1]);
+    THsb hsb = RgbToHsb(sRgb);
+
+    TRgb cRgb(m_pColorTable[c2]);
+    THsb cHSB = RgbToHsb(cRgb);
+
+    double dH = cHSB.h - hsb.h;
+    double dS = cHSB.s - hsb.s;
+    double dV = cHSB.b - hsb.b;
+
+    return sqrt(wHue * pow(dH, 2) + wSat * pow(dS, 2) + wVal * pow(dV, 2));
+}
+//---------------------------------------------------------------------------
+unsigned int __fastcall ZXPalette::GetClosestColor(THsb hsb, const double wHue, const double wSat, const double wVal)
+{
+    double minDistance = 1000000000.0;
+    int minIndex = 0;
+
+    for (unsigned int i = 0; i < m_iColorsInTable; i++)
+    {
+        int idx = i;//m_iColorsInTable - i - 1;
+        TRgb rgb(m_pColorTable[idx]);
+        THsb cHSB = RgbToHsb(rgb);
+
+        double dH = cHSB.h - hsb.h;
+        double dS = cHSB.s - hsb.s;
+        double dV = cHSB.b - hsb.b;
+
+        double distance = wHue * pow(dH, 2) + wSat * pow(dS, 2) + wVal * pow(dV, 2);
+        if (distance < minDistance)
+        {
+            minDistance = distance;
+            minIndex = idx;
+        }
+    }
+    return minIndex;
+}
+//---------------------------------------------------------------------------
+unsigned int __fastcall ZXPalette::GetClosestColor(THsl hsl)
+{
+    const double wHue = 0.5;
+    const double wSat = 0.1;
+    const double wVal = 0.8;
+    double minDistance = 1000000000.0;
+    int minIndex = 0;
+
+    for (unsigned int i = 0; i < m_iColorsInTable; i++)
+    {
+        int idx = i;//m_iColorsInTable - i - 1;
+        THsl cHSL = RgbToHsl(m_pColorTable[idx]);
+
+        double dH = cHSL.h - hsl.h;
+        double dS = cHSL.s - hsl.s;
+        double dV = cHSL.l - hsl.l;
+
+        double distance = sqrt(wHue * pow(dH, 2) + wSat * pow(dS, 2) + wVal * pow(dV, 2));
+        if (distance < minDistance)
+        {
+            minDistance = distance;
+            minIndex = idx;
+        }
+    }
+    return minIndex;
+}
+//---------------------------------------------------------------------------
+unsigned int __fastcall ZXPalette::GetClosestColor(TColor Color)
+{
+    return GetClosestColor(RgbToHsl(Color));
+}
+//---------------------------------------------------------------------------
 void __fastcall ZXPalette::SetColorAt(ZXImage& Image, int X, int Y)
 {
     // default function for the derived classes to override
@@ -158,61 +252,21 @@ void __fastcall ZXPalette::SetColor(unsigned char iColor)
 {
 }
 //---------------------------------------------------------------------------
-inline int __fastcall ZXPalette::ColorDifference(TColor C1, TColor C2)
+int __fastcall ZXPalette::Distance(TColor color1, TColor color2)
 {
-    int iDifference  = abs(( C1        & 0xFF) - ( C2        & 0xFF));
-        iDifference += abs(((C1 >>  8) & 0xFF) - ((C2 >>  8) & 0xFF));
-        iDifference += abs(((C1 >> 16) & 0xFF) - ((C2 >> 16) & 0xFF));
-    return iDifference;
+    return 0;//Difference(RgbToHsv(color1), RgbToHsv(color2));
 }
 //---------------------------------------------------------------------------
-int __fastcall ZXPalette::ConvertFindColor(int x, int y, Graphics::TBitmap* Bitmap)
+inline int __fastcall ZXPalette::Difference(TColor C1, TColor C2)
 {
-    // by default use the first ink/pen color
-    int iColorIndex = -1;
-    // get the bitmaps pixel color
-    TColor Color = Bitmap->Canvas->Pixels[x][y];
-    iColorIndex = 1;
-    int iClosestDifference = ColorDifference(Color, m_pColorTable[1]);
-    // search the color table for the closest matching color entry
-    for (unsigned int i = 0; i < m_iColorsInTable && iClosestDifference; ++i)
-    {
-        int iDifference = ColorDifference(Color, m_pColorTable[i]);
-        if (iDifference < iClosestDifference)
-        {
-            iClosestDifference = iDifference;
-            iColorIndex = i;
-        }
-    }
-    if (iClosestDifference > 32)
-    {
-        iColorIndex = -1;
-        // use the convert colour table
-        for (unsigned int i = 0; i < m_ConvertColors.size(); i++)
-        {
-            if (Color == m_ConvertColors[i])
-            {
-                iColorIndex = i;
-                break;
-            }
-        }
-        if (iColorIndex == -1)
-        {
-            iColorIndex = 0;
-            int iClosestDifference = ColorDifference(Color, m_ConvertColors[0]);
-            // search the color table for the closest matching color entry
-            for (unsigned int i = 1; i < m_iColorsInTable && iClosestDifference; ++i)
-            {
-                int iDifference = ColorDifference(Color, m_ConvertColors[i]);
-                if (iDifference < iClosestDifference)
-                {
-                    iClosestDifference = iDifference;
-                    iColorIndex = i;
-                }
-            }
-        }
-    }
-    return iColorIndex;
+    return abs(( C1        & 0xFF) - ( C2        & 0xFF)) +
+           abs(((C1 >>  8) & 0xFF) - ((C2 >>  8) & 0xFF)) +
+           abs(((C1 >> 16) & 0xFF) - ((C2 >> 16) & 0xFF));
+}
+//---------------------------------------------------------------------------
+unsigned int __fastcall ZXPalette::ConvertFindColor(int x, int y, Graphics::TBitmap* Bitmap)
+{
+    return GetClosestColor(Bitmap->Canvas->Pixels[x][y]);
 }
 //---------------------------------------------------------------------------
 void __fastcall ZXPalette::BuildConvertColors(Graphics::TBitmap* Bitmap)
@@ -301,9 +355,9 @@ bool __fastcall ZXPalette::ConvertBitmap(ZXImage* Image, Graphics::TBitmap* Bitm
 //---------------------------------------------------------------------------
 unsigned int __fastcall ZXPalette::CalculateStride(unsigned int iWidth) const
 {
-    float fStride = (float)iWidth / PixelsPerByte;
+    double fStride = (double)iWidth / PixelsPerByte;
     int   iStride = fStride;
-    if ((float)iStride != fStride)
+    if ((double)iStride != fStride)
         iStride++;
     //iStride += (iWidth % 8) ? 1 : 0;
     return iStride;
@@ -316,15 +370,15 @@ unsigned int __fastcall ZXPalette::CalculatePixelBufferSize(unsigned int iWidth,
 //---------------------------------------------------------------------------
 unsigned int __fastcall ZXPalette::CalculateAttributeBufferSize(unsigned int iWidth, unsigned int iHeight) const
 {
-    float fStride = (float)iWidth / PixelsPerByte;
+    double fStride = (double)iWidth / PixelsPerByte;
     int   iStride = fStride;
-    if ((float)iStride != fStride)
+    if ((double)iStride != fStride)
         iStride++;
     //int iStride = iWidth / m_iPixelsWidePerAttribute;
     //iStride += (iWidth % 8) ? 1 : 0;
-    float fStryde = (float)iHeight / (float)m_iPixelsHighPerAttribute;
+    double fStryde = (double)iHeight / (double)m_iPixelsHighPerAttribute;
     int   iStryde = fStryde;
-    if ((float)iStryde != fStryde)
+    if ((double)iStryde != fStryde)
         iStryde++;
     //int iStryde = iHeight / m_iPixelsHighPerAttribute;
     //iStryde += (iHeight % 8) ? 1 : 0;
@@ -477,7 +531,7 @@ DWORD __fastcall ZXPalette::Luminance(TColor Color)
     DWORD dwRed       = (Color & 0x000000FF) >>  0;
     DWORD dwGreen     = (Color & 0x0000FF00) >>  8;
     DWORD dwBlue      = (Color & 0x00FF0000) >> 16;
-    DWORD dwLuminance = (0.299f * (float)dwRed + 0.587f * (float)dwGreen + 0.114f * (float)dwBlue);
+    DWORD dwLuminance = (0.299f * (double)dwRed + 0.587f * (double)dwGreen + 0.114f * (double)dwBlue);
     return dwLuminance;
 }
 //---------------------------------------------------------------------------
@@ -489,6 +543,271 @@ bool __fastcall ZXPalette::IsImageTypeSupported(ZXImageTypes imageType) const
         supported = (m_SupportedImageTypes & imageType) != 0;
     }
     return supported;
+}
+//---------------------------------------------------------------------------
+TRgb __fastcall ZXPalette::HsbToRgb(THsb hsb)
+{
+    TRgb rgb;
+    return rgb;
+}
+//---------------------------------------------------------------------------
+THsb __fastcall ZXPalette::RgbToHsb(TRgb rgb)
+{
+#if 1
+    // normalize red, green and blue values
+    double r = (rgb.r / 255.0);
+    double g = (rgb.g / 255.0);
+    double b = (rgb.b / 255.0);
+    // conversion start
+    double max = std::max(r, std::max(g, b));
+    double min = std::min(r, std::min(g, b));
+    double h = 0.0;
+    if (max == min)
+    {
+        h = 0.0;
+    }
+    else if (max == r && g >= b)
+    {
+        h = 60.0 * (g - b) / (max - min);
+    }
+    else if (max == r && g < b)
+    {
+        h = 60.0 * (g - b) / (max - min) + 360.0;
+    }
+    else if (max == g)
+    {
+        h = 60.0 * (b - r) / (max - min) + 120.0;
+    }
+    else if (max == b)
+    {
+        h = 60.0 * (r - g) / (max - min) + 240.0;
+    }
+    double s = (max == 0) ? 0.0 : (1.0 - (min / max));
+    THsb hsb = { h, s, max };
+    return hsb;
+#else
+    double r = rgb.r / 255.0;
+    double g = rgb.g / 255.0;
+    double b = rgb.b / 255.0;
+    double max = std::max(std::max(r, g), b);
+    double min = std::min(std::min(r, g), b);
+    double delta = max - min;
+    THsb hsb;
+
+    if (delta != 0.0)
+    {
+        double hue;
+        if (r == max)
+        {
+            hue = (g - b) / delta;
+        }
+        else
+        {
+            if (g == max)
+            {
+                hue = 2.0 + (b - r) / delta;
+            }
+            else
+            {
+                hue = 4.0 + (r - g) / delta;
+            }
+        }
+        hue *= 60.0;
+        if (hue < 0.0) hue += 360.0;
+        hsb.h = hue;
+    }
+    else
+    {
+        hsb.h = 0.0;
+    }
+    hsb.s = max == 0 ? 0 : (max - min) / max;
+    hsb.b = max;
+    return hsb;
+#endif
+}
+//---------------------------------------------------------------------------
+// RGB = TColor => xBGR
+// HSV = TColor => xVSH
+THsv __fastcall ZXPalette::RgbToHsv(TRgb in)
+{
+    THsv        out;
+    double      min, max, delta;
+
+    min = in.r < in.g ? in.r : in.g;
+    min = min  < in.b ? min  : in.b;
+
+    max = in.r > in.g ? in.r : in.g;
+    max = max  > in.b ? max  : in.b;
+
+    out.v = max;                                // v
+    delta = max - min;
+    if (delta < 0.00001)
+    {
+        out.s = 0;
+        out.h = 0; // undefined, maybe nan?
+        return out;
+    }
+    if( max > 0.0 ) { // NOTE: if Max is == 0, this divide would cause a crash
+        out.s = (delta / max);                  // s
+    } else {
+        // if max is 0, then r = g = b = 0              
+        // s = 0, v is undefined
+        out.s = 0.0;
+        out.h = 0.0;                            // its now undefined
+        return out;
+    }
+    if( in.r >= max )                           // > is bogus, just keeps compilor happy
+        out.h = ( in.g - in.b ) / delta;        // between yellow & magenta
+    else
+    if( in.g >= max )
+        out.h = 2.0 + ( in.b - in.r ) / delta;  // between cyan & yellow
+    else
+        out.h = 4.0 + ( in.r - in.g ) / delta;  // between magenta & cyan
+
+    out.h *= 60.0;                              // degrees
+
+    if( out.h < 0.0 )
+        out.h += 360.0;
+
+    return out;
+}
+//---------------------------------------------------------------------------
+// RGB = TColor => xBGR
+// HSV = TColor => xVSH
+TRgb __fastcall ZXPalette::HsvToRgb(THsv in)
+{
+    double      hh, p, q, t, ff;
+    long        i;
+    TRgb        out;
+
+    if(in.s <= 0.0) {       // < is bogus, just shuts up warnings
+        out.r = in.v;
+        out.g = in.v;
+        out.b = in.v;
+        return out;
+    }
+    hh = in.h;
+    if(hh >= 360.0) hh = 0.0;
+    hh /= 60.0;
+    i = (long)hh;
+    ff = hh - i;
+    p = in.v * (1.0 - in.s);
+    q = in.v * (1.0 - (in.s * ff));
+    t = in.v * (1.0 - (in.s * (1.0 - ff)));
+
+    switch(i) {
+    case 0:
+        out.r = in.v;
+        out.g = t;
+        out.b = p;
+        break;
+    case 1:
+        out.r = q;
+        out.g = in.v;
+        out.b = p;
+        break;
+    case 2:
+        out.r = p;
+        out.g = in.v;
+        out.b = t;
+        break;
+
+    case 3:
+        out.r = p;
+        out.g = q;
+        out.b = in.v;
+        break;
+    case 4:
+        out.r = t;
+        out.g = p;
+        out.b = in.v;
+        break;
+    case 5:
+    default:
+        out.r = in.v;
+        out.g = p;
+        out.b = q;
+        break;
+    }
+    return out;
+}
+//---------------------------------------------------------------------------
+THsl __fastcall ZXPalette::RgbToHsl(TRgb rgb)
+{
+    THsl hsl;
+    // R, G, B input  range = 0 ÷ 255
+    // H, S, L output range = 0 ÷ 1.0
+
+    double R = rgb.r / 255.0;
+    double G = rgb.g / 255.0;
+    double B = rgb.b / 255.0;
+
+    double Min = std::min( R, std::min(G, B ));      // Min. value of RGB
+    double Max = std::max( R, std::max(G, B ));      // Max. value of RGB
+    double dMax = Max - Min;                         // Delta RGB value
+
+    hsl.l = (Max + Min) / 2.0;
+
+    if (dMax == 0.0)                                // This is a gray, no chroma...
+        hsl.s = hsl.h = 0.0;
+    else                                            // Chromatic data...
+    {
+        if (hsl.l < 0.5)
+            hsl.s = dMax / ( Max + Min );
+        else
+            hsl.s = dMax / ( 2.0 - Max - Min );
+
+        double dR = (((Max - R ) / 6.0) + (dMax / 2.0)) / dMax;
+        double dG = (((Max - G ) / 6.0) + (dMax / 2.0)) / dMax;
+        double dB = (((Max - B ) / 6.0) + (dMax / 2.0)) / dMax;
+
+        if      ( R == Max ) hsl.h = dB - dG;
+        else if ( G == Max ) hsl.h = ( 1.0 / 3.0 ) + dR - dB;
+        else if ( B == Max ) hsl.h = ( 2.0 / 3.0 ) + dG - dR;
+
+        if ( hsl.h < 0.0 ) hsl.h += 1.0;
+        if ( hsl.h > 1.0 ) hsl.h -= 1.0;
+    }
+    return hsl;
+}
+//---------------------------------------------------------------------------
+TRgb __fastcall ZXPalette::HslToRgb(THsl hsl)
+{
+    double r, g, b;
+
+    if(hsl.s == 0.0)
+    {
+        r = g = b = hsl.l; // achromatic
+    }
+    else
+    {
+        double q = hsl.l < 0.5 ? hsl.l * (1.0 + hsl.s) : (hsl.l + hsl.s) - (hsl.l * hsl.s);
+        double p = 2.0 * hsl.l - q;
+        r = Hue2Rgb(p, q, hsl.h + 1.0/3.0);
+        g = Hue2Rgb(p, q, hsl.h);
+        b = Hue2Rgb(p, q, hsl.h - 1.0/3.0);
+    }
+
+    TRgb rgb;
+    rgb.r = r * 255.0;
+    rgb.g = g * 255.0;
+    rgb.b = b * 255.0;
+    return rgb;
+}
+//---------------------------------------------------------------------------
+double __fastcall ZXPalette::Hue2Rgb(double p, double q, double t)
+{
+    if (t < 0.0) t += 1.0;
+    if (t > 1.0) t -= 1.0;
+    if (t < 1.0/6.0) return p + (q - p) * 6.0 * t;
+    if (t < 1.0/2.0) return q;
+    if (t < 2.0/3.0) return p + (q - p) * (2.0/3.0 - t) * 6.0;
+    return p;
+}
+//---------------------------------------------------------------------------
+double __fastcall ZXPalette::Lerp(double a, double b, double f)
+{
+     return a + f * (b - a);
 }
 //---------------------------------------------------------------------------
 

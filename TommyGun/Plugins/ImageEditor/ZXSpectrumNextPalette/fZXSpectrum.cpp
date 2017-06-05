@@ -17,6 +17,7 @@
 //---------------------------------------------------------------------------
 #include "pch.h"
 #pragma hdrstop
+#include <math.h>
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -30,6 +31,7 @@ __fastcall TfrmZXSpectrum::TfrmZXSpectrum(TComponent* Owner)
 : TForm(Owner)
 , m_SelectionIsInk(true)
 , m_ChangingPalettes(false)
+, m_ColorPicker(new Graphics::TBitmap())
 {
 }
 //---------------------------------------------------------------------------
@@ -39,13 +41,11 @@ HRESULT __fastcall TfrmZXSpectrum::Initialize(TZX_HPLUGIN PluginHandle, HINSTANC
     m_PluginHandle = PluginHandle;
     m_ImageEditor.GetInterfaces(hParentInstance);
     m_Palette.OnUpdatePaletteGUI = OnUpdatePaletteGUI;
-//    imgPalette->Picture->Bitmap = new Graphics::TBitmap();
-//    if (true == SAFE_PTR(imgPalette->Picture))
-//    {
-//        imgPalette->Picture->Bitmap->Width = imgPalette->Width;
-//        imgPalette->Picture->Bitmap->Height = imgPalette->Height;
-//        imgPalette->Picture->Bitmap->PixelFormat = pf32bit;
-//    }
+    m_ColorPicker = new Graphics::TBitmap();
+    m_ColorPicker->Width = 132;  // 2 + 384. 384 / 6 = 64
+    m_ColorPicker->Height = 100;
+    m_ColorPicker->PixelFormat = pf32bit;
+    DrawColorPicker();    
 	return hResult;
 }
 //---------------------------------------------------------------------------
@@ -72,12 +72,6 @@ void __fastcall TfrmZXSpectrum::OnUpdatePaletteGUI(void)
     UpdatePaletteImage();
 }
 //---------------------------------------------------------------------------
-void __fastcall TfrmZXSpectrum::Panel1Resize(TObject *Sender)
-{
-    UpdatePaletteImage();
-    m_ImageEditor.SystemRefreshView(m_PluginHandle);
-}
-//---------------------------------------------------------------------------
 void __fastcall TfrmZXSpectrum::FormShow(TObject *Sender)
 {
     // redraw the palette image
@@ -88,8 +82,12 @@ void __fastcall TfrmZXSpectrum::UpdatePaletteImage()
 {
 	panPen->Color = m_Palette.ZXPalette::GetColor(m_Palette.Pen);
 	panPen->Font->Color = (ZXPalette::Luminance(panPen->Color) < 128) ? clWhite : clBlack;
+    lblPenRGB->Caption = IntToHex(panPen->Color & 0x000000FF,2) + "," + IntToHex((panPen->Color & 0x0000FF00)>>8,2) + "," +IntToHex((panPen->Color & 0x00FF0000)>>16,2);
+    lblPenIndex->Caption = IntToStr(m_Palette.Pen) + " (" + IntToHex(m_Palette.Pen,2) + ")";
 	panBrush->Color = m_Palette.ZXPalette::GetColor(m_Palette.Brush);
 	panBrush->Font->Color = (ZXPalette::Luminance(panBrush->Color) < 128) ? clWhite : clBlack;
+    lblBrushRGB->Caption = IntToHex(panBrush->Color & 0x000000FF,2) + "," + IntToHex((panBrush->Color & 0x0000FF00)>>8,2) + "," +IntToHex((panBrush->Color & 0x00FF0000)>>16,2);
+    lblBrushIndex->Caption = IntToStr(m_Palette.Brush) + " (" + IntToHex(m_Palette.Brush,2) + ")";
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmZXSpectrum::UpdatePalettes()
@@ -120,42 +118,12 @@ void __fastcall TfrmZXSpectrum::cmbPalettesChange(TObject *Sender)
     m_ChangingPalettes = false;
 }
 //---------------------------------------------------------------------------
-void __fastcall TfrmZXSpectrum::Panel2Resize(TObject *Sender)
-{
-    imgColourPicker->Picture->Bitmap->Width = imgColourPicker->Width;
-    imgColourPicker->Picture->Bitmap->Height = imgColourPicker->Height;
-    imgColourPicker->Picture->Bitmap->PixelFormat = pf32bit;
-    imgColourPicker->Picture->Bitmap->Canvas->Brush->Color = clBlack;
-    imgColourPicker->Picture->Bitmap->Canvas->FillRect(imgColourPicker->ClientRect);
-
-    int dX = std::max(8, (int)(imgColourPicker->Width / 64));
-    int dY = imgColourPicker->Height / 4;
-    for (int y = 0; y < 4; y++)
-    {
-        for (int x = 0; x < 64; x++)
-        {
-			imgColourPicker->Picture->Bitmap->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(y * 64 + x);
-			imgColourPicker->Picture->Bitmap->Canvas->FillRect(Rect((x * dX) + 1, (y * dY) + 1, (x * dX) + (dX - 2), (y * dY) + (dY - 2)));
-        }
-	}
-	UpdatePaletteImage();
-}
-//---------------------------------------------------------------------------
 void __fastcall TfrmZXSpectrum::imgColourPickerMouseMove(TObject *Sender, TShiftState Shift, int X, int Y)
 {
-    unsigned int dX = std::max(8, (int)(imgColourPicker->Width / 64));
-    unsigned int dY = imgColourPicker->Height / 4;
-    unsigned int x = X / dX;
-    unsigned int y = Y / dY;
+    m_ColorCursor.x = X;
+    m_ColorCursor.y = Y;
 
-    Panel2Resize(NULL);
-
-    if (x < 64 && y < 4)
-    {
-        imgColourPicker->Picture->Bitmap->Canvas->Brush->Color = clSilver;
-        imgColourPicker->Picture->Bitmap->Canvas->FrameRect(Rect((x * dX), (y * dY), (x * dX) + (dX - 1), (y * dY) + (dY - 1)));
-        imgColourPicker->Picture->Bitmap->Canvas->FrameRect(Rect((x * dX) - 1, (y * dY) - 1, (x * dX) + (dX), (y * dY) + (dY)));
-    }
+    FormResize(NULL);
 
 	if (Shift.Contains(ssLeft))
 	{
@@ -170,28 +138,78 @@ void __fastcall TfrmZXSpectrum::imgColourPickerMouseMove(TObject *Sender, TShift
 //---------------------------------------------------------------------------
 void __fastcall TfrmZXSpectrum::imgColourPickerMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
 {
-	unsigned int dX = std::max(8, (int)(imgColourPicker->Width / 64));
-	unsigned int dY = imgColourPicker->Height / 4;
-	unsigned int x = X / dX;
-	unsigned int y = Y / dY;
+    TColor color = imgColourPicker->Picture->Bitmap->Canvas->Pixels[X][Y];
+    if (Button == mbLeft)
+    {
+        // set Pen
+        m_Palette.Pen = m_Palette.ZXPalette::GetColor(color);
+    }
+    else if (Button == mbRight)
+    {
+        // set Brush
+        m_Palette.Brush = m_Palette.ZXPalette::GetColor(color);
+    }
 
-	if (x < 64 && y < 4)
-	{
-		unsigned char index = y * 64 + x;
-		if (Button == mbLeft)
-		{
-			// set Pen
-			m_Palette.Pen = index;
-		}
-		else if (Button == mbRight)
-		{
-			// set Brush
-			m_Palette.Brush = index;
-		}
+    UpdatePaletteImage();
+    m_ImageEditor.SystemRefreshView(m_PluginHandle);
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmZXSpectrum::DrawColorPicker()
+{
+    int greyWidth = 4;
+    m_ColorPicker->Canvas->Brush->Color = clBlack;
+    m_ColorPicker->Canvas->FillRect(Rect(0, 0, imgColourPicker->Picture->Bitmap->Width, imgColourPicker->Picture->Bitmap->Height));
+    // draw the greys on the left
+    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(0xff);
+    m_ColorPicker->Canvas->FillRect(Rect(0, 0, greyWidth, 20));
+    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(0x92);
+    m_ColorPicker->Canvas->FillRect(Rect(0, 20, greyWidth, 40));
+    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(0x49);
+    m_ColorPicker->Canvas->FillRect(Rect(0, 40, greyWidth, 60));
+    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(0x00);
+    m_ColorPicker->Canvas->FillRect(Rect(0, 60, greyWidth, 80));
+    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(m_Palette.ZXPalette::GetClosestColor(clFuchsia));
+    m_ColorPicker->Canvas->FillRect(Rect(0, 80, greyWidth, 100));
 
-		UpdatePaletteImage();
-		m_ImageEditor.SystemRefreshView(m_PluginHandle);
-	}
+    float w = m_ColorPicker->Width - greyWidth;
+    THsl hsl;
+    float h = m_ColorPicker->Height;
+    for (int y = 0; y < m_ColorPicker->Height; y++)
+    {
+        for (int x = 0; x < w; x++)
+        {
+            hsl.h = ((float)x / w);
+            hsl.s = 1.0f;
+            hsl.l = 1.0f - ((float)y / h);
+            m_ColorPicker->Canvas->Pixels[greyWidth + x][y] = m_Palette.ZXPalette::GetColor(m_Palette.ZXPalette::GetClosestColor(hsl));
+        }
+    }
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmZXSpectrum::FormResize(TObject *Sender)
+{
+    if (imgColourPicker->Picture->Bitmap == NULL)
+    {
+        imgColourPicker->Picture->Bitmap = new Graphics::TBitmap();
+        imgColourPicker->Picture->Bitmap->PixelFormat = pf32bit;
+    }
+    imgColourPicker->Picture->Bitmap->Width = imgColourPicker->Width;
+    imgColourPicker->Picture->Bitmap->Height = imgColourPicker->Height;
+    StretchBlt(imgColourPicker->Picture->Bitmap->Canvas->Handle,
+        0, 0, imgColourPicker->Picture->Bitmap->Width, imgColourPicker->Picture->Bitmap->Height,
+        m_ColorPicker->Canvas->Handle, 0, 0, m_ColorPicker->Width, m_ColorPicker->Height,
+        SRCCOPY);
+    // draw the cursor
+    imgColourPicker->Picture->Bitmap->Canvas->Brush->Color = clBlack;
+    int size = 8;
+    TRect rect(m_ColorCursor.x - size, m_ColorCursor.y - size, m_ColorCursor.x + size, m_ColorCursor.y + size);
+    imgColourPicker->Picture->Bitmap->Canvas->FrameRect(rect);
+    rect.left++;
+    rect.top++;
+    rect.right -= 2;
+    rect.bottom -= 2;
+    imgColourPicker->Picture->Bitmap->Canvas->Brush->Color = clWhite;
+    imgColourPicker->Picture->Bitmap->Canvas->FrameRect(rect);
 }
 //---------------------------------------------------------------------------
 
