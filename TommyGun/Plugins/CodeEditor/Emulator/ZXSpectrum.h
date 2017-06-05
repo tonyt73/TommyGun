@@ -53,16 +53,17 @@ public: // methods
 
     void        __fastcall  Debug(const String& msg);
     void        __fastcall  Debug(const String& msg, const String& value1);
-    void        __fastcall  Debug(const String& msg, const String& value1, const String& value2);
+	void        __fastcall  Debug(const String& msg, const String& value1, const String& value2);
+	void		__fastcall	DumpMemory();
 
-    void        __fastcall  SnapshotReset();
-    bool        __fastcall  SnapshotRewind();
-    bool        __fastcall  SnapshotForward();
+	void        __fastcall  SnapshotReset();
+	bool        __fastcall  SnapshotRewind();
+	bool        __fastcall  SnapshotForward();
 
-    __property ZXDisplay    Display     = { read = m_Display    };
-    __property ZXKeyboard   Keyboard    = { read = m_Keyboard   };
+	__property ZXDisplay    Display     = { read = m_Display    };
+	__property ZXKeyboard   Keyboard    = { read = m_Keyboard   };
 
-    __property Z80          Context     = { read = m_Z80Context };
+	__property Z80          Context     = { read = m_Z80Context };
 
 private:    // methods
 

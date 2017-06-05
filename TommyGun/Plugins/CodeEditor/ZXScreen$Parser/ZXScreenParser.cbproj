@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{bfac5cc7-c5b3-4937-9a00-02a208786f4e}</ProjectGuid>
-    <Config Condition="'$(Config)'==''">Release</Config>
+    <Config Condition="'$(Config)'==''">Debug</Config>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
     <Base>true</Base>
@@ -18,15 +18,15 @@
     <CfgParent>Base</CfgParent>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Base)'!=''">
-    <OutputExt>cpi</OutputExt>
     <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
-    <Defines>NO_STRICT</Defines>
+    <OutputExt>cpi</OutputExt>
     <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
+    <Defines>NO_STRICT</Defines>
     <DynamicRTL>true</DynamicRTL>
     <BCC_InstructionSet>6</BCC_InstructionSet>
     <ILINK_GenerateImportLibrary>true</ILINK_GenerateImportLibrary>
-    <ILINK_ObjectSearchPath>D:\Projects\CodeGear Rad Studio 2006\TommyGun\Plugins\CodeEditor\ZXScreen$Parser</ILINK_ObjectSearchPath>
     <UsePackages>true</UsePackages>
+    <ILINK_ObjectSearchPath>D:\Projects\CodeGear Rad Studio 2006\TommyGun\Plugins\CodeEditor\ZXScreen$Parser</ILINK_ObjectSearchPath>
     <ProjectType>CppDynamicLibrary</ProjectType>
     <FinalOutputDir>..\..\_ZX Spectrum\</FinalOutputDir>
     <PackageImports>vclx.bpi;vcl.bpi;rtl.bpi;Scorpio_R6.bpi</PackageImports>
@@ -39,10 +39,10 @@
     <BCC_CallingConvention>fastcall</BCC_CallingConvention>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Cfg_1)'!=''">
-    <DCC_Optimize>false</DCC_Optimize>
     <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
-    <Defines>_DEBUG;$(Defines)</Defines>
+    <DCC_Optimize>false</DCC_Optimize>
     <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
+    <Defines>_DEBUG;$(Defines)</Defines>
     <ILINK_FullDebugInfo>true</ILINK_FullDebugInfo>
     <BCC_InlineFunctionExpansion>false</BCC_InlineFunctionExpansion>
     <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
@@ -53,8 +53,8 @@
     <IntermediateOutputDir>Debug</IntermediateOutputDir>
     <TASM_DisplaySourceLines>true</TASM_DisplaySourceLines>
     <BCC_StackFrames>true</BCC_StackFrames>
-    <ILINK_LibraryPath>$(BDS)\lib\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
     <BCC_DisableOptimizations>true</BCC_DisableOptimizations>
+    <ILINK_LibraryPath>$(BDS)\lib\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
     <TASM_Debugging>Full</TASM_Debugging>
     <BCC_SourceDebuggingOn>true</BCC_SourceDebuggingOn>
   </PropertyGroup>

@@ -17,6 +17,8 @@ object frmCodeEditor: TfrmCodeEditor
   WindowState = wsMaximized
   OnCreate = FormCreate
   OnShow = FormShow
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object panMainContainer: TPanel
@@ -1811,6 +1813,7 @@ object frmCodeEditor: TfrmCodeEditor
               Left = 11
               Top = 2
               Width = 314
+              Height = 29
               Align = alClient
               AutoSize = True
               ButtonHeight = 32
@@ -1923,6 +1926,7 @@ object frmCodeEditor: TfrmCodeEditor
               Left = 338
               Top = 2
               Width = 522
+              Height = 29
               AutoSize = True
               ButtonHeight = 32
               ButtonWidth = 32
@@ -2420,7 +2424,6 @@ object frmCodeEditor: TfrmCodeEditor
               DefaultExt = '.txt'
               OnClosing = sciTabControlClosing
               OnDetectHighlighter = sciTabControlDetectHighlighter
-              ExplicitLeft = 703
               object sciEditorOther: TScintilla
                 Tag = 2
                 Left = 4
@@ -2871,7 +2874,6 @@ object frmCodeEditor: TfrmCodeEditor
               DefaultExt = '.txt'
               OnClosing = sciTabControlClosing
               OnDetectHighlighter = sciTabControlDetectHighlighter
-              ExplicitWidth = 699
               object sciEditor: TScintilla
                 Tag = 1
                 Left = 4
@@ -3330,6 +3332,10 @@ object frmCodeEditor: TfrmCodeEditor
             object tabConsole: TTabSheet
               Caption = 'Messages'
               ImageIndex = 11
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
               object panConsoleAligner: TPanel
                 Left = 0
                 Top = 0
@@ -3374,6 +3380,10 @@ object frmCodeEditor: TfrmCodeEditor
             end
             object tabSearchResults: TTabSheet
               Caption = 'Search Results'
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
               object lstSearchResults: TListBox
                 Left = 0
                 Top = 0
@@ -3400,6 +3410,10 @@ object frmCodeEditor: TfrmCodeEditor
               Caption = 'Breakpoints'
               ImageIndex = 48
               OnShow = tabBreakpointsShow
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
               object lstBreakpoints: TListView
                 Left = 0
                 Top = 24
@@ -3536,6 +3550,10 @@ object frmCodeEditor: TfrmCodeEditor
     object tabFiles: TTabSheet
       Caption = 'Project Files'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object scpSourceFiles: TScrollBox
         Left = 0
         Top = 0
@@ -4131,13 +4149,17 @@ object frmCodeEditor: TfrmCodeEditor
     object tabStateView: TTabSheet
       Caption = 'State View'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
   object imgIcons: TImageList
     Left = 368
     Top = 140
     Bitmap = {
-      494C0101360020023C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010136002002400210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000E0000000010020000000000000E0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -5996,7 +6018,7 @@ object frmCodeEditor: TfrmCodeEditor
     Left = 268
     Top = 140
     Bitmap = {
-      494C0101070009003C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010107000900400210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -6790,7 +6812,7 @@ object frmCodeEditor: TfrmCodeEditor
     Left = 300
     Top = 140
     Bitmap = {
-      494C0101050009003C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010105000900400210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -7122,7 +7144,7 @@ object frmCodeEditor: TfrmCodeEditor
     Left = 336
     Top = 140
     Bitmap = {
-      494C01010E0013003C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010E001300400210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000808080008080
       8000808080008080800080808000808080008080800080808000808080008080

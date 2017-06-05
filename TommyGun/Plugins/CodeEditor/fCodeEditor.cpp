@@ -434,18 +434,21 @@ void __fastcall TfrmCodeEditor::UpdateEditorSlots(void)
     {
         sciTabControl->Visible = sciTabControl->Count > 0 && !sciTabControl->ActiveDocument->IsUntitled();
         sciTabControlOther->Visible = sciTabControlOther->Count > 0 && !sciTabControlOther->ActiveDocument->IsUntitled();
-        String sMsg = IntToStr(m_ActiveEditor->Editor->GetCaretInLine() + 1) + ": " + IntToStr(m_ActiveEditor->Editor->GetCurrentLineNumber() + 1);
-        SetStatusSlot(m_PluginHandle, sMsg, 0);
-        sMsg = m_ActiveEditor->Editor->GetOvertype() ? "Overwrite" : "Insert";
-        SetStatusSlot(m_PluginHandle, sMsg, 1);
         lblFileLines->Caption = "?";
         lblFileCharacters->Caption = "?";
-        if (SAFE_PTR(((TScintilla*)m_ActiveEditor->Editor)->Lines))
+        if (m_ActiveEditor && m_ActiveEditor->Editor)
         {
-            lblFileLines->Caption = IntToStr(m_ActiveEditor->Editor->GetLineCount());
-            lblFileCharacters->Caption = IntToStr(m_ActiveEditor->Editor->GetLength());
+            String sMsg = IntToStr(m_ActiveEditor->Editor->GetCaretInLine() + 1) + ": " + IntToStr(m_ActiveEditor->Editor->GetCurrentLineNumber() + 1);
+            SetStatusSlot(m_PluginHandle, sMsg, 0);
+            sMsg = m_ActiveEditor->Editor->GetOvertype() ? "Overwrite" : "Insert";
+            SetStatusSlot(m_PluginHandle, sMsg, 1);
+            if (((TScintilla*)m_ActiveEditor->Editor)->Lines)
+            {
+                lblFileLines->Caption = IntToStr(m_ActiveEditor->Editor->GetLineCount());
+                lblFileCharacters->Caption = IntToStr(m_ActiveEditor->Editor->GetLength());
+            }
+            lblFileDirty->Caption = m_ActiveEditor->Editor->Modified ? String("Yes") : String("No");
         }
-        lblFileDirty->Caption = m_ActiveEditor->Editor->Modified ? String("Yes") : String("No");
     }
 }
 //---------------------------------------------------------------------------

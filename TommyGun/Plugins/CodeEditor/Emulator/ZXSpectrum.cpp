@@ -52,7 +52,6 @@ void __fastcall ZXSpectrum::Reset()
 //---------------------------------------------------------------------------
 void __fastcall ZXSpectrum::Run()
 {
-    
     m_Z80Context.Trace = 0;
     m_InstructionsToRun = -1;
     RunZ80(&m_Z80Context);
@@ -307,6 +306,11 @@ bool __fastcall ZXSpectrum::SnapshotRewind()
 bool __fastcall ZXSpectrum::SnapshotForward()
 {
     return m_SnapshotManager.Forward(&m_Z80Context, m_Memory);
+}
+//---------------------------------------------------------------------------
+void __fastcall ZXSpectrum::DumpMemory()
+{
+    
 }
 //---------------------------------------------------------------------------
 
