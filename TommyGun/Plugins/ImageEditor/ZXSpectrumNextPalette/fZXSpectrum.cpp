@@ -32,6 +32,9 @@ __fastcall TfrmZXSpectrum::TfrmZXSpectrum(TComponent* Owner)
 , m_SelectionIsInk(true)
 , m_ChangingPalettes(false)
 , m_ColorPicker(new Graphics::TBitmap())
+, m_CurrentPicker(ptGrid)
+, m_NextPicker(ptSpectrum)
+, m_QuickPickerWidth(4)
 {
 }
 //---------------------------------------------------------------------------
@@ -45,7 +48,7 @@ HRESULT __fastcall TfrmZXSpectrum::Initialize(TZX_HPLUGIN PluginHandle, HINSTANC
     m_ColorPicker->Width = 132;  // 2 + 384. 384 / 6 = 64
     m_ColorPicker->Height = 100;
     m_ColorPicker->PixelFormat = pf32bit;
-    DrawColorPicker();    
+    DrawPicker();    
 	return hResult;
 }
 //---------------------------------------------------------------------------
@@ -154,51 +157,54 @@ void __fastcall TfrmZXSpectrum::imgColourPickerMouseDown(TObject *Sender, TMouse
     m_ImageEditor.SystemRefreshView(m_PluginHandle);
 }
 //---------------------------------------------------------------------------
-void __fastcall TfrmZXSpectrum::DrawColorPicker()
-{
-    int greyWidth = 4;
-    m_ColorPicker->Canvas->Brush->Color = clBlack;
-    m_ColorPicker->Canvas->FillRect(Rect(0, 0, imgColourPicker->Picture->Bitmap->Width, imgColourPicker->Picture->Bitmap->Height));
-    // draw the greys on the left
-    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(0xff);
-    m_ColorPicker->Canvas->FillRect(Rect(0, 0, greyWidth, 20));
-    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(0x92);
-    m_ColorPicker->Canvas->FillRect(Rect(0, 20, greyWidth, 40));
-    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(0x49);
-    m_ColorPicker->Canvas->FillRect(Rect(0, 40, greyWidth, 60));
-    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(0x00);
-    m_ColorPicker->Canvas->FillRect(Rect(0, 60, greyWidth, 80));
-    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(m_Palette.ZXPalette::GetClosestColor(clFuchsia));
-    m_ColorPicker->Canvas->FillRect(Rect(0, 80, greyWidth, 100));
-
-    float w = m_ColorPicker->Width - greyWidth;
-    THsl hsl;
-    float h = m_ColorPicker->Height;
-    for (int y = 0; y < m_ColorPicker->Height; y++)
-    {
-        for (int x = 0; x < w; x++)
-        {
-            hsl.h = ((float)x / w);
-            hsl.s = 1.0f;
-            hsl.l = 1.0f - ((float)y / h);
-            m_ColorPicker->Canvas->Pixels[greyWidth + x][y] = m_Palette.ZXPalette::GetColor(m_Palette.ZXPalette::GetClosestColor(hsl));
-        }
-    }
-}
-//---------------------------------------------------------------------------
 void __fastcall TfrmZXSpectrum::FormResize(TObject *Sender)
 {
+    DrawPicker();
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmZXSpectrum::actPickerSpectrumExecute(TObject *Sender)
+{
+    m_NextPicker = ptSpectrum;
+    DrawPicker();
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmZXSpectrum::actPickerGridExecute(TObject *Sender)
+{
+    m_NextPicker = ptGrid;
+    DrawPicker();
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmZXSpectrum::DrawPicker()
+{
+    bool resized = false;
     if (imgColourPicker->Picture->Bitmap == NULL)
     {
         imgColourPicker->Picture->Bitmap = new Graphics::TBitmap();
         imgColourPicker->Picture->Bitmap->PixelFormat = pf32bit;
     }
-    imgColourPicker->Picture->Bitmap->Width = imgColourPicker->Width;
-    imgColourPicker->Picture->Bitmap->Height = imgColourPicker->Height;
+    if (imgColourPicker->Picture->Bitmap->Width != imgColourPicker->Width || imgColourPicker->Picture->Bitmap->Height != imgColourPicker->Height)
+    {
+        imgColourPicker->Picture->Bitmap->Width = imgColourPicker->Width;
+        imgColourPicker->Picture->Bitmap->Height = imgColourPicker->Height;
+        resized = true;
+    }
+
+    if (m_CurrentPicker != m_NextPicker || resized)
+    {
+        m_CurrentPicker = m_NextPicker; 
+        DrawQuickPicker();
+        switch (m_CurrentPicker)
+        {
+            case ptSpectrum:    DrawSpectrumPicker();   break;
+            case ptGrid:        DrawGridPicker();       break;
+        }
+    }
+    // show the picker bitmap
     StretchBlt(imgColourPicker->Picture->Bitmap->Canvas->Handle,
         0, 0, imgColourPicker->Picture->Bitmap->Width, imgColourPicker->Picture->Bitmap->Height,
         m_ColorPicker->Canvas->Handle, 0, 0, m_ColorPicker->Width, m_ColorPicker->Height,
         SRCCOPY);
+
     // draw the cursor
     imgColourPicker->Picture->Bitmap->Canvas->Brush->Color = clBlack;
     int size = 8;
@@ -210,6 +216,56 @@ void __fastcall TfrmZXSpectrum::FormResize(TObject *Sender)
     rect.bottom -= 2;
     imgColourPicker->Picture->Bitmap->Canvas->Brush->Color = clWhite;
     imgColourPicker->Picture->Bitmap->Canvas->FrameRect(rect);
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmZXSpectrum::DrawQuickPicker()
+{
+    m_ColorPicker->Canvas->Brush->Color = clBlack;
+    m_ColorPicker->Canvas->FillRect(Rect(0, 0, imgColourPicker->Picture->Bitmap->Width, imgColourPicker->Picture->Bitmap->Height));
+    // draw the greys on the left
+    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(0xff);
+    m_ColorPicker->Canvas->FillRect(Rect(0, 0, m_QuickPickerWidth, 20));
+    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(0x92);
+    m_ColorPicker->Canvas->FillRect(Rect(0, 20, m_QuickPickerWidth, 40));
+    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(0x49);
+    m_ColorPicker->Canvas->FillRect(Rect(0, 40, m_QuickPickerWidth, 60));
+    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(0x00);
+    m_ColorPicker->Canvas->FillRect(Rect(0, 60, m_QuickPickerWidth, 80));
+    m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(m_Palette.ZXPalette::GetClosestColor(clFuchsia));
+    m_ColorPicker->Canvas->FillRect(Rect(0, 80, m_QuickPickerWidth, 100));
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmZXSpectrum::DrawSpectrumPicker()
+{
+    float w = m_ColorPicker->Width - m_QuickPickerWidth;
+    THsl hsl;
+    float h = m_ColorPicker->Height;
+    for (int y = 0; y < m_ColorPicker->Height; y++)
+    {
+        for (int x = 0; x < w; x++)
+        {
+            hsl.h = ((float)x / w);
+            hsl.s = 1.0f;
+            hsl.l = 1.0f - ((float)y / h);
+            m_ColorPicker->Canvas->Pixels[m_QuickPickerWidth + x][y] = m_Palette.ZXPalette::GetColor(m_Palette.ZXPalette::GetClosestColor(hsl));
+        }
+    }
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmZXSpectrum::DrawGridPicker()
+{
+    int cols = 32;
+    int rows = 256 / cols;
+    int w = (m_ColorPicker->Width - m_QuickPickerWidth) / cols;
+    float h = (float)m_ColorPicker->Height / (float)rows;
+    for (float r = 0; r < rows; r++)
+    {
+        for (int c = 0; c < cols; c++)
+        {
+            m_ColorPicker->Canvas->Brush->Color = m_Palette.ZXPalette::GetColor(r * cols + c);
+            m_ColorPicker->Canvas->FillRect(Rect(m_QuickPickerWidth + c * w, r * h, m_QuickPickerWidth + c * w + w, r * h + h));
+        }
+    }
 }
 //---------------------------------------------------------------------------
 

@@ -31,6 +31,9 @@
 //---------------------------------------------------------------------------
 #include "..\ZXImageInterface.h"
 #include "SpectrumNextPalette.h"
+#include <ActnList.hpp>
+#include <ActnMan.hpp>
+#include <XPStyleActnCtrls.hpp>
 //---------------------------------------------------------------------------
 namespace Scorpio
 {
@@ -51,16 +54,33 @@ namespace Scorpio
             TLabel *Label6;
             TPanel *panPen;
             TPanel *panBrush;
-    TLabel *lblPenRGB;
-    TLabel *lblPenIndex;
-    TLabel *lblBrushRGB;
-    TLabel *lblBrushIndex;
+            TLabel *lblPenRGB;
+            TLabel *lblPenIndex;
+            TLabel *lblBrushRGB;
+            TLabel *lblBrushIndex;
+            TPanel *Panel1;
+            TImageList *ImageList1;
+            TToolBar *ToolBar1;
+            TToolButton *ToolButton1;
+            TToolButton *ToolButton2;
+            TActionList *ActionList1;
+            TAction *actPickerSpectrum;
+            TAction *actPickerGrid;
             void __fastcall FormShow(TObject *Sender);
             void __fastcall cmbPalettesChange(TObject *Sender);
             void __fastcall imgColourPickerMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
             void __fastcall imgColourPickerMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
-                void __fastcall FormResize(TObject *Sender);
+            void __fastcall FormResize(TObject *Sender);
+            void __fastcall actPickerSpectrumExecute(TObject *Sender);
+            void __fastcall actPickerGridExecute(TObject *Sender);
         private:	// User declarations
+            enum PickerType
+            {
+                ptSpectrum,         // colour spectrum picker
+                ptGrid,             // grid base palette picker
+                ptHueSorted,        // grid sorted by hue
+                ptLuminanceSorted   // grid sorted by luminance
+            };
             ZXSpectrumNextPalette       m_Palette;
             ZXImageInterface            m_ImageEditor;
             TZX_HPLUGIN                 m_PluginHandle;
@@ -68,11 +88,17 @@ namespace Scorpio
             bool                        m_ChangingPalettes;
             Graphics::TBitmap*          m_ColorPicker;
             TPoint                      m_ColorCursor;
+            PickerType                  m_CurrentPicker;
+            PickerType                  m_NextPicker;
+            int                         m_QuickPickerWidth;
 
             void        __fastcall      OnUpdatePaletteGUI(void);
             void        __fastcall      UpdatePaletteImage();
             void        __fastcall      UpdatePalettes();
-            void        __fastcall      DrawColorPicker();
+            void        __fastcall      DrawPicker();
+            void        __fastcall      DrawQuickPicker();
+            void        __fastcall      DrawSpectrumPicker();
+            void        __fastcall      DrawGridPicker();
 
         public:		// User declarations
                         __fastcall      TfrmZXSpectrum(TComponent* Owner);
