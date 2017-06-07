@@ -22,6 +22,8 @@
 #include "ZXImage.h"
 #include <map>
 #include <math.h>
+#include <vector>
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 //---------------------------------------------------------------------------
@@ -136,7 +138,7 @@ int __fastcall ZXPalette::GetColor(TColor Color)
         if (m_pColorTable[i] == Color)
             return i;
     }
-    return clBlack;//GetClosestColor(Color);
+    return GetClosestColor(Color);
 }
 //---------------------------------------------------------------------------
 double __fastcall ZXPalette::HsbDistance(int c1, int c2)
@@ -178,6 +180,10 @@ unsigned int __fastcall ZXPalette::GetClosestColor(THsb hsb, const double wHue, 
         {
             minDistance = distance;
             minIndex = idx;
+        }
+        else if (distance == minDistance)
+        {
+            
         }
     }
     return minIndex;
@@ -405,6 +411,113 @@ bool __fastcall ZXPalette::SetColorTable(KXmlInfo& xmlInfo)
 {
     // override to load your own color table
     return false;
+}
+//---------------------------------------------------------------------------
+bool __fastcall ZXPalette::GetColorTable(TColor* colorTable, unsigned int sizeOfTable, ctsColorTableSort sortBy)
+{
+    if (colorTable != NULL && sizeOfTable >= m_iColorsInTable)
+    {
+        memcpy(colorTable, m_pColorTable, sizeof(TColor) * m_iColorsInTable);
+        switch (sortBy)
+        {
+            case ctsRGB:
+                SortColorsByRGB(colorTable);
+                break;
+            case ctsHueHSBSorted:
+                SortColorsByHueHSB(colorTable);
+                break;
+            case ctsHueHSVSorted:
+                SortColorsByHueHSV(colorTable);
+                break;
+            case ctsLuminance:
+                SortColorsByLuminance(colorTable);
+                break;
+            case ctsUnsorted:
+            default:
+                break;
+        }
+        return true;
+    }
+    return false;
+}
+//---------------------------------------------------------------------------
+void __fastcall ZXPalette::SortColorsByRGB(TColor* colorTable)
+{
+}
+//---------------------------------------------------------------------------
+struct ColorCompare
+{
+    double value;
+    int index;
+    ColorCompare(double value, int index)
+    : value(value)
+    , index(index)
+    {
+    }
+    static bool Less(const ColorCompare& h1, const ColorCompare& h2)
+    {
+        return h1.value < h2.value;
+    }
+};
+//---------------------------------------------------------------------------
+void __fastcall ZXPalette::SortColorsByHueHSB(TColor* colorTable)
+{
+    std::vector<ColorCompare> hues;
+    // calculate the hue value for
+    for (unsigned int i = 0; i < m_iColorsInTable; i++)
+    {
+        TRgb rgb(m_pColorTable[i]);
+        THsb hsb = RgbToHsb(rgb);
+        ColorCompare hue(hsb.h, i);
+        hues.push_back(hue);
+    }
+    std::sort(hues.begin(), hues.end(), ColorCompare::Less);
+    // apply to color table
+    int i = 0;
+    for (std::vector<ColorCompare>::iterator it = hues.begin(); it != hues.end(); it++, i++)
+    {
+        colorTable[i] = m_pColorTable[(*it).index];
+    }
+}
+//---------------------------------------------------------------------------
+void __fastcall ZXPalette::SortColorsByHueHSV(TColor* colorTable)
+{
+    std::vector<ColorCompare> hues;
+    // calculate the hue value for
+    for (unsigned int i = 0; i < m_iColorsInTable; i++)
+    {
+        TRgb rgb(m_pColorTable[i]);
+        THsv hsv = RgbToHsv(rgb);
+        ColorCompare hue(hsv.h, i);
+        hues.push_back(hue);
+    }
+    std::sort(hues.begin(), hues.end(), ColorCompare::Less);
+    // apply to color table
+    int i = 0;
+    for (std::vector<ColorCompare>::iterator it = hues.begin(); it != hues.end(); it++, i++)
+    {
+        colorTable[i] = m_pColorTable[(*it).index];
+    }
+}
+//---------------------------------------------------------------------------
+void __fastcall ZXPalette::SortColorsByLuminance(TColor* colorTable)
+{
+    std::vector<ColorCompare> hues;
+    // calculate the hue value for
+    for (unsigned int i = 0; i < m_iColorsInTable; i++)
+    {
+        TRgb rgb(m_pColorTable[i]);
+        THsb hsb = RgbToHsb(rgb);
+        ColorCompare hue(hsb.b, i);
+        hues.push_back(hue);
+    }
+    std::sort(hues.begin(), hues.end(), ColorCompare::Less);
+    // apply to color table
+    int i = 0;
+    for (std::vector<ColorCompare>::iterator it = hues.begin(); it != hues.end(); it++, i++)
+    {
+        colorTable[i] = m_pColorTable[(*it).index];
+    }
 }
 //---------------------------------------------------------------------------
 void __fastcall ZXPalette::Save(KXmlInfo& xmlInfo)

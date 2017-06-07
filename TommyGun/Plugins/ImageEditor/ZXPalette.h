@@ -76,6 +76,15 @@ typedef struct {
     double l;       // a fraction between 0 and 1
 } THsl;
 //---------------------------------------------------------------------------
+enum ctsColorTableSort
+{
+    ctsUnsorted,
+    ctsRGB,
+    ctsHueHSBSorted,
+    ctsHueHSVSorted,
+    ctsLuminance,
+};
+//---------------------------------------------------------------------------
 __declspec( dllexport ) class ZXPalette
 {
 private:
@@ -127,8 +136,13 @@ protected:
     virtual void    __fastcall  Loaded(void);
     virtual void    __fastcall  SetColor(unsigned char iColor);
     unsigned char   __fastcall  FlipBits(unsigned char iBits);
+    void            __fastcall  SortColorsByRGB(TColor* colorTable);
+    void            __fastcall  SortColorsByHueHSB(TColor* colorTable);
+    void            __fastcall  SortColorsByHueHSV(TColor* colorTable);
+    void            __fastcall  SortColorsByLuminance(TColor* colorTable);
 
 public:
+
                     __fastcall  ZXPalette(unsigned int iColors, unsigned int iScreenWidth, unsigned int iScreenHeight, bool bSaveColors = false, bool bScreenResizeable = false);
                     __fastcall  ZXPalette(const ZXPalette& Palette);
     virtual         __fastcall ~ZXPalette();
@@ -154,6 +168,7 @@ public:
     virtual void    __fastcall  Load(KXmlInfo& xmlInfo);
   virtual KXmlInfo* __fastcall  GetColorTable(void);
     virtual bool    __fastcall  SetColorTable(KXmlInfo& xmlInfo);
+            bool    __fastcall  GetColorTable(TColor* colorTable, unsigned int sizeOfTable, ctsColorTableSort sortBy = ctsUnsorted);
 
 
     unsigned int    __fastcall  CalculateStride(unsigned int iWidth) const;

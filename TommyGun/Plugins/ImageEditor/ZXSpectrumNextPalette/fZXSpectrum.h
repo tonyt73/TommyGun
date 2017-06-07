@@ -66,6 +66,13 @@ namespace Scorpio
             TActionList *ActionList1;
             TAction *actPickerSpectrum;
             TAction *actPickerGrid;
+            TImage *imgHeatMapPick;
+            TToolButton *ToolButton3;
+            TAction *actPickerHeat;
+            TToolButton *ToolButton4;
+            TAction *actPickerHue;
+            TAction *actPickerLuminance;
+    TToolButton *ToolButton5;
             void __fastcall FormShow(TObject *Sender);
             void __fastcall cmbPalettesChange(TObject *Sender);
             void __fastcall imgColourPickerMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
@@ -73,20 +80,29 @@ namespace Scorpio
             void __fastcall FormResize(TObject *Sender);
             void __fastcall actPickerSpectrumExecute(TObject *Sender);
             void __fastcall actPickerGridExecute(TObject *Sender);
+            void __fastcall actPickerHeatExecute(TObject *Sender);
+            void __fastcall actPickerHueExecute(TObject *Sender);
+            void __fastcall actPickerLuminanceExecute(TObject *Sender);
         private:	// User declarations
             enum PickerType
             {
-                ptSpectrum,         // colour spectrum picker
-                ptGrid,             // grid base palette picker
-                ptHueSorted,        // grid sorted by hue
-                ptLuminanceSorted   // grid sorted by luminance
+                ptSpectrum,             // colour spectrum picker
+                ptGrid,                 // grid base palette picker
+                ptHueSorted,            // grid sorted by hue
+                ptLuminanceSorted,      // grid sorted by luminance
+                ptHeatMap,              // heat map picker
             };
             ZXSpectrumNextPalette       m_Palette;
             ZXImageInterface            m_ImageEditor;
             TZX_HPLUGIN                 m_PluginHandle;
             bool                        m_SelectionIsInk;
             bool                        m_ChangingPalettes;
-            Graphics::TBitmap*          m_ColorPicker;
+            bool                        m_PaletteChanged;
+            Graphics::TBitmap*          m_QuickColorPicker;
+            Graphics::TBitmap*          m_SpectrumColorPicker;
+            Graphics::TBitmap*          m_GridColorPicker;
+            Graphics::TBitmap*          m_HueColorPicker;
+            Graphics::TBitmap*          m_LuminanceColorPicker;
             TPoint                      m_ColorCursor;
             PickerType                  m_CurrentPicker;
             PickerType                  m_NextPicker;
@@ -99,6 +115,8 @@ namespace Scorpio
             void        __fastcall      DrawQuickPicker();
             void        __fastcall      DrawSpectrumPicker();
             void        __fastcall      DrawGridPicker();
+            void        __fastcall      DrawHuePicker();
+            void        __fastcall      DrawLuminancePicker();
 
         public:		// User declarations
                         __fastcall      TfrmZXSpectrum(TComponent* Owner);
