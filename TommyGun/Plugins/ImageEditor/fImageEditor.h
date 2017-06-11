@@ -165,6 +165,12 @@ namespace Scorpio
             TRadioButton *radModeScaleDefault;
             TRadioButton *radModeScaleCustom;
             TRadioButton *radModeScaleRemove;
+            TGroupBox *grpTransparency;
+            TLabel *lblTransparentColor;
+            TPanel *panTransparentColor;
+            TCheckBox *chkTransparentHide;
+    TToolButton *tbnPaletteToggleTransparentColor;
+    TToolButton *ToolButton3;
             void __fastcall FormCreate(TObject *Sender);
             void __fastcall slrDisplayMagnificationChange(TObject *Sender);
             void __fastcall actZoomInExecute(TObject *Sender);
@@ -202,6 +208,9 @@ namespace Scorpio
             void __fastcall edtDisplayScreenMagnificationChanged(TObject *Sender, int value);
             void __fastcall edtMaskTransparencyChanged(TObject *Sender, int value);
             void __fastcall pgcToolsDrawTab(TCustomTabControl *Control, int TabIndex, const TRect &Rect, bool Active);
+            void __fastcall panTransparentColorClick(TObject *Sender);
+            void __fastcall chkTransparentHideClick(TObject *Sender);
+    void __fastcall tbnPaletteToggleTransparentColorClick(TObject *Sender);
         private:	// User declarations
 
             typedef struct

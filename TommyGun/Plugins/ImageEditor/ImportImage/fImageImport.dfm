@@ -1,8 +1,8 @@
 object frmImageImport: TfrmImageImport
   Left = 981
   Top = 26
-  ClientHeight = 100
-  ClientWidth = 144
+  ClientHeight = 548
+  ClientWidth = 738
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

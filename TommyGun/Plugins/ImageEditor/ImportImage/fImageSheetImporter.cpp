@@ -186,6 +186,7 @@ void __fastcall TdlgImageSheetImporter::imgSheetMouseUp(TObject *Sender, TMouseB
             m_Operation = opNone;
         }
     }
+    ResetCanvas(true);
     UpdateStats();
 }
 //---------------------------------------------------------------------------
@@ -211,6 +212,7 @@ void __fastcall TdlgImageSheetImporter::sbxImageMouseWheel(TObject *Sender, TShi
         edtZoom->Value = edtZoom->Value - 1;
         delta += threshold;
     }
+    ResetCanvas(true);
     UpdateStats();
 }
 //---------------------------------------------------------------------------
@@ -220,6 +222,7 @@ void __fastcall TdlgImageSheetImporter::chkImageIsMaskedClick(TObject *Sender)
     radMaskBackground->Enabled = chkImageIsMasked->Checked;
     panMaskColour->Enabled = chkImageIsMasked->Checked;
     lblMaskColour->Enabled = chkImageIsMasked->Checked;
+    ResetCanvas(true);
     UpdateStats();
 }
 //---------------------------------------------------------------------------
@@ -228,12 +231,14 @@ void __fastcall TdlgImageSheetImporter::radTypeTileClick(TObject *Sender)
     lblSpriteMultiFrameWidth->Enabled = radTypeSprite->Checked;
     edtSpriteMultiFrameWidth->Enabled = radTypeSprite->Checked;
     lblFrames->Enabled = radTypeSprite->Checked;
+    ResetCanvas(true);
     UpdateStats();
 }
 //---------------------------------------------------------------------------
 void __fastcall TdlgImageSheetImporter::edtSpriteMultiFrameWidthChange(TObject *Sender)
 {
     UpdateStats();
+    ResetCanvas(true);
 }
 //---------------------------------------------------------------------------
 void __fastcall TdlgImageSheetImporter::edtNewNameChange(TObject *Sender)
@@ -244,6 +249,7 @@ void __fastcall TdlgImageSheetImporter::edtNewNameChange(TObject *Sender)
     {
         if (m_Images[i].Name.LowerCase() == edtNewName->Text.LowerCase().Trim())
         {
+            btnAdd->Caption = "Add";
             btnAdd->Enabled = false;
             break;
         }
@@ -303,6 +309,7 @@ void __fastcall TdlgImageSheetImporter::btnAddClick(TObject *Sender)
         ImageInfo.MaskColor     = panMaskColour->Color;
         lstImages->Items->Strings[lstImages->ItemIndex] = ImageInfo.Name + String(ImageInfo.Type ? " - Tile" : " - Sprite");
     }
+    ResetCanvas(true);
     UpdateStats();
 }
 //---------------------------------------------------------------------------
@@ -317,6 +324,8 @@ void __fastcall TdlgImageSheetImporter::btnRemoveClick(TObject *Sender)
 
     lstImages->ItemIndex = -1;
     btnRemove->Enabled = false;
+    btnAdd->Caption = "Add";
+    btnAdd->Enabled = false;
 }
 //---------------------------------------------------------------------------
 void __fastcall TdlgImageSheetImporter::lstImagesClick(TObject *Sender)

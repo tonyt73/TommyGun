@@ -3,8 +3,8 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
   Top = 192
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Image Sheet Importer'
-  ClientHeight = 494
-  ClientWidth = 628
+  ClientHeight = 774
+  ClientWidth = 954
   Color = clWhite
   Constraints.MinHeight = 512
   Constraints.MinWidth = 600
@@ -17,13 +17,13 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
   Position = poMainFormCenter
   OnMouseWheel = sbxImageMouseWheel
   DesignSize = (
-    628
-    494)
+    954
+    774)
   PixelsPerInch = 96
   TextHeight = 13
   object btnHelp: TSpeedButton
-    Left = 316
-    Top = 466
+    Left = 642
+    Top = 746
     Width = 80
     Height = 24
     Hint = 'Show help on how to use the Importer Dialog'
@@ -34,10 +34,12 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
     ParentShowHint = False
     ShowHint = True
     OnClick = btnHelpClick
+    ExplicitLeft = 316
+    ExplicitTop = 466
   end
   object panStats: TPanel
     Left = 8
-    Top = 456
+    Top = 736
     Width = 229
     Height = 41
     Anchors = [akLeft, akBottom]
@@ -108,7 +110,7 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
       Height = 20
       Hint = 'Current frame being edited or animating'
       BevelOuter = bvLowered
-      ParentColor = True
+      Color = clWhite
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
@@ -124,7 +126,7 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
   object panMessageHeader: TPanel
     Left = 0
     Top = 0
-    Width = 628
+    Width = 954
     Height = 57
     Align = alTop
     BevelOuter = bvNone
@@ -132,7 +134,7 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
     ParentBackground = False
     TabOrder = 0
     DesignSize = (
-      628
+      954
       57)
     object lblMessageTitle: TLabel
       Left = 56
@@ -150,7 +152,7 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
     object lblShortMessage: TLabel
       Left = 68
       Top = 28
-      Width = 524
+      Width = 850
       Height = 13
       Anchors = [akLeft, akTop, akRight]
       AutoSize = False
@@ -164,13 +166,15 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
       Font.Style = []
       ParentFont = False
       WordWrap = True
+      ExplicitWidth = 524
     end
     object bvlMessageTop: TBevel
       Left = 0
       Top = 55
-      Width = 628
+      Width = 954
       Height = 2
       Align = alBottom
+      ExplicitWidth = 628
     end
     object imgInformation: TImage
       Left = 12
@@ -4217,7 +4221,7 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
       Transparent = True
     end
     object Image1: TImage
-      Left = 587
+      Left = 913
       Top = 12
       Width = 32
       Height = 32
@@ -4292,6 +4296,7 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
         0404040404040404040404040404040404040404040404040404040404040404
         0404}
       Transparent = True
+      ExplicitLeft = 587
     end
     object penRed: TPanel
       Left = 4
@@ -4333,16 +4338,16 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
   object panContainer: TPanel
     Left = 8
     Top = 64
-    Width = 620
-    Height = 389
+    Width = 946
+    Height = 669
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
     TabOrder = 1
     object sbxImage: TScrollBox
       Left = 0
       Top = 0
-      Width = 388
-      Height = 389
+      Width = 714
+      Height = 669
       HorzScrollBar.Smooth = True
       HorzScrollBar.Tracking = True
       VertScrollBar.Smooth = True
@@ -4361,10 +4366,10 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
       end
     end
     object panImages: TPanel
-      Left = 388
+      Left = 714
       Top = 0
       Width = 232
-      Height = 389
+      Height = 669
       Align = alRight
       BevelOuter = bvNone
       Font.Charset = ANSI_CHARSET
@@ -4376,7 +4381,7 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
       TabOrder = 1
       DesignSize = (
         232
-        389)
+        669)
       object lblNewName: TLabel
         Left = 12
         Top = 4
@@ -4462,15 +4467,15 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
           Height = 20
           Hint = 'Current frame being edited or animating'
           BevelOuter = bvLowered
+          Color = clWhite
           Enabled = False
-          Step = 8
-          Max = 256
-          Min = 8
-          ParentColor = True
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
           Value = 32
+          Min = 8
+          Max = 256
+          Step = 8
           OnChanged = edtSpriteMultiFrameWidthChange
           DesignSize = (
             57
@@ -4572,7 +4577,7 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
         Left = 56
         Top = 276
         Width = 172
-        Height = 110
+        Height = 390
         Anchors = [akLeft, akTop, akRight, akBottom]
         ItemHeight = 13
         TabOrder = 9
@@ -4622,8 +4627,8 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
     end
   end
   object panHelp: TPanel
-    Left = 88
-    Top = 184
+    Left = 414
+    Top = 464
     Width = 308
     Height = 281
     Anchors = [akRight, akBottom]
@@ -4785,8 +4790,8 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
     end
   end
   object cmdImport: TButton
-    Left = 461
-    Top = 466
+    Left = 778
+    Top = 742
     Width = 80
     Height = 24
     Hint = 'Import the current List of Images'
@@ -4800,8 +4805,8 @@ object dlgImageSheetImporter: TdlgImageSheetImporter
     OnClick = cmdImportClick
   end
   object cmdClose: TButton
-    Left = 549
-    Top = 466
+    Left = 870
+    Top = 742
     Width = 80
     Height = 24
     Hint = 'Close the Importer Dialog and return to TommyGun'

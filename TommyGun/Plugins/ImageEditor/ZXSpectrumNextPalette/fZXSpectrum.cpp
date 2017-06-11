@@ -70,7 +70,7 @@ HRESULT __fastcall TfrmZXSpectrum::Initialize(TZX_HPLUGIN PluginHandle, HINSTANC
     m_LuminanceColorPicker->Width = 32;
     m_LuminanceColorPicker->Height = 8;
     m_LuminanceColorPicker->PixelFormat = pf32bit;
-    DrawPicker();
+    DrawPicker(); 
 	return hResult;
 }
 //---------------------------------------------------------------------------

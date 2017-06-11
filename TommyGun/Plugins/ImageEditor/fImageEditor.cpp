@@ -523,9 +523,11 @@ void __fastcall TfrmImageEditor::panBackgroundColorClick(TObject *Sender)
     if (true == dlgColor->Execute())
     {
         panBackgroundColor->Color = dlgColor->Color;
+        ZXImage::SetBackgroundColor(dlgColor->Color);
         if (true == SAFE_PTR(m_pImage))
         {
             sbxEditor->Color = dlgColor->Color;
+            m_pImage->Invalidate();
         }
         RefreshView();
     }
@@ -762,6 +764,33 @@ void __fastcall TfrmImageEditor::pgcToolsDrawTab(TCustomTabControl *Control, int
         TRect tr(Rect.left, Rect.top, Rect.right, Rect.top + 5);
         Control->Canvas->StretchDraw(tr, bm);
     }
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmImageEditor::panTransparentColorClick(TObject *Sender)
+{
+    dlgColor->Color = panTransparentColor->Color;
+    if (true == dlgColor->Execute())
+    {
+        panTransparentColor->Color = dlgColor->Color;
+        chkTransparentHideClick(NULL);
+    }
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmImageEditor::chkTransparentHideClick(TObject *Sender)
+{
+    ZXImage::SetTransparentMode(chkTransparentHide->Checked);
+    ZXImage::SetTransparentColor(panTransparentColor->Color);
+    if (true == SAFE_PTR(m_pImage))
+    {
+        m_pImage->Invalidate();
+    }
+    RefreshView();
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmImageEditor::tbnPaletteToggleTransparentColorClick(TObject *Sender)
+{
+    chkTransparentHide->Checked = tbnPaletteToggleTransparentColor->Down;
+    chkTransparentHideClick(NULL);
 }
 //---------------------------------------------------------------------------
 

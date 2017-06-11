@@ -4,8 +4,8 @@ object frmImportBitmap: TfrmImportBitmap
   ActiveControl = radImportAsScreen
   BorderStyle = bsDialog
   Caption = 'Import Bitmap'
-  ClientHeight = 508
-  ClientWidth = 641
+  ClientHeight = 761
+  ClientWidth = 997
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -50,8 +50,8 @@ object frmImportBitmap: TfrmImportBitmap
   OldCreateOrder = False
   Position = poMainFormCenter
   DesignSize = (
-    641
-    508)
+    997
+    761)
   PixelsPerInch = 96
   TextHeight = 13
   object lblBitmapPreview: TLabel
@@ -63,7 +63,7 @@ object frmImportBitmap: TfrmImportBitmap
   end
   object lblBitmap_Size: TLabel
     Left = 12
-    Top = 395
+    Top = 648
     Width = 54
     Height = 13
     Anchors = [akLeft, akBottom]
@@ -72,7 +72,7 @@ object frmImportBitmap: TfrmImportBitmap
   end
   object lblBitmap_Format: TLabel
     Left = 12
-    Top = 475
+    Top = 728
     Width = 69
     Height = 13
     Anchors = [akLeft, akBottom]
@@ -81,7 +81,7 @@ object frmImportBitmap: TfrmImportBitmap
   end
   object lblBitmapSize: TLabel
     Left = 76
-    Top = 395
+    Top = 648
     Width = 24
     Height = 13
     Anchors = [akLeft, akBottom]
@@ -90,7 +90,7 @@ object frmImportBitmap: TfrmImportBitmap
   end
   object lblBitmapFormat: TLabel
     Left = 88
-    Top = 475
+    Top = 728
     Width = 51
     Height = 13
     Anchors = [akLeft, akBottom]
@@ -98,7 +98,7 @@ object frmImportBitmap: TfrmImportBitmap
     ExplicitTop = 497
   end
   object lblImportBitmapAs: TLabel
-    Left = 428
+    Left = 784
     Top = 66
     Width = 106
     Height = 13
@@ -108,7 +108,7 @@ object frmImportBitmap: TfrmImportBitmap
   end
   object lblImageFormat: TLabel
     Left = 276
-    Top = 413
+    Top = 666
     Width = 67
     Height = 13
     Anchors = [akLeft, akBottom]
@@ -118,7 +118,7 @@ object frmImportBitmap: TfrmImportBitmap
   end
   object lblName: TLabel
     Left = 12
-    Top = 413
+    Top = 666
     Width = 208
     Height = 13
     Anchors = [akLeft, akBottom]
@@ -129,15 +129,16 @@ object frmImportBitmap: TfrmImportBitmap
   object panMessageHeader: TPanel
     Left = 0
     Top = 0
-    Width = 641
+    Width = 997
     Height = 57
     Align = alTop
     BevelOuter = bvNone
     Color = 8675650
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 641
     DesignSize = (
-      641
+      997
       57)
     object lblMessageTitle: TLabel
       Left = 56
@@ -170,7 +171,7 @@ object frmImportBitmap: TfrmImportBitmap
     object bvlMessageTop: TBevel
       Left = 0
       Top = 55
-      Width = 641
+      Width = 997
       Height = 2
       Align = alBottom
       ExplicitWidth = 632
@@ -4220,7 +4221,7 @@ object frmImportBitmap: TfrmImportBitmap
       Transparent = True
     end
     object Image1: TImage
-      Left = 588
+      Left = 944
       Top = 3
       Width = 48
       Height = 48
@@ -4332,6 +4333,7 @@ object frmImportBitmap: TfrmImportBitmap
         49EAD245926AD5FA5500714FFD8E5952695A9792A3A5ED5C8EFB0F7625368B2B
         6DBA350000000049454E44AE426082}
       Transparent = True
+      ExplicitLeft = 588
     end
     object Panel10: TPanel
       Left = 4
@@ -4373,8 +4375,8 @@ object frmImportBitmap: TfrmImportBitmap
   object sbxBitmap: TScrollBox
     Left = 8
     Top = 84
-    Width = 405
-    Height = 306
+    Width = 761
+    Height = 559
     HorzScrollBar.Smooth = True
     HorzScrollBar.Style = ssFlat
     HorzScrollBar.Tracking = True
@@ -4386,6 +4388,8 @@ object frmImportBitmap: TfrmImportBitmap
     BevelInner = bvNone
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitWidth = 405
+    ExplicitHeight = 306
     object imgBitmap: TImage
       Left = 0
       Top = 0
@@ -4396,17 +4400,19 @@ object frmImportBitmap: TfrmImportBitmap
   end
   object panButtons: TPanel
     Left = 0
-    Top = 466
-    Width = 641
+    Top = 719
+    Width = 997
     Height = 42
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitTop = 466
+    ExplicitWidth = 641
     DesignSize = (
-      641
+      997
       42)
     object cmdCancel: TButton
-      Left = 550
+      Left = 906
       Top = 10
       Width = 80
       Height = 24
@@ -4415,9 +4421,10 @@ object frmImportBitmap: TfrmImportBitmap
       Caption = 'Cancel'
       ModalResult = 2
       TabOrder = 0
+      ExplicitLeft = 550
     end
     object cmdImport: TButton
-      Left = 462
+      Left = 818
       Top = 10
       Width = 80
       Height = 24
@@ -4426,10 +4433,11 @@ object frmImportBitmap: TfrmImportBitmap
       Default = True
       ModalResult = 1
       TabOrder = 1
+      ExplicitLeft = 462
     end
   end
   object radImportAsScreen: TRadioButton
-    Left = 440
+    Left = 796
     Top = 84
     Width = 145
     Height = 17
@@ -4445,10 +4453,11 @@ object frmImportBitmap: TfrmImportBitmap
     TabOrder = 3
     TabStop = True
     OnClick = radImportAsScreenClick
+    ExplicitLeft = 440
   end
   object cmbImageFormat: TComboBox
     Left = 276
-    Top = 433
+    Top = 686
     Width = 201
     Height = 21
     Style = csDropDownList
@@ -4463,9 +4472,10 @@ object frmImportBitmap: TfrmImportBitmap
       'ZX Spectrum'
       'Sam Coupe'
       'Amstrad CPC464/6128')
+    ExplicitTop = 433
   end
   object radImportAsSprite: TRadioButton
-    Left = 440
+    Left = 796
     Top = 124
     Width = 113
     Height = 17
@@ -4479,15 +4489,17 @@ object frmImportBitmap: TfrmImportBitmap
     ParentFont = False
     TabOrder = 5
     OnClick = radImportAsSpriteClick
+    ExplicitLeft = 440
   end
   object panSprite: TPanel
-    Left = 456
+    Left = 812
     Top = 144
     Width = 181
     Height = 145
     Anchors = [akTop, akRight]
     BevelOuter = bvNone
     TabOrder = 6
+    ExplicitLeft = 456
     object lblSpriteMultiFrameWidth: TLabel
       Left = 16
       Top = 116
@@ -4594,7 +4606,7 @@ object frmImportBitmap: TfrmImportBitmap
     end
   end
   object radImportAsTile: TRadioButton
-    Left = 440
+    Left = 796
     Top = 104
     Width = 145
     Height = 17
@@ -4608,16 +4620,18 @@ object frmImportBitmap: TfrmImportBitmap
     ParentFont = False
     TabOrder = 7
     OnClick = radImportAsTileClick
+    ExplicitLeft = 440
   end
   object edtName: TEdit
     Left = 12
-    Top = 433
+    Top = 686
     Width = 253
     Height = 21
     Anchors = [akLeft, akBottom]
     Color = clWhite
     TabOrder = 8
     OnChange = edtNameChange
+    ExplicitTop = 433
   end
   object edtBitmap: KSpinEdit
     Left = 96
@@ -4637,7 +4651,7 @@ object frmImportBitmap: TfrmImportBitmap
       20)
   end
   object chkImageIsMasked: TCheckBox
-    Left = 440
+    Left = 796
     Top = 292
     Width = 97
     Height = 17
@@ -4646,9 +4660,10 @@ object frmImportBitmap: TfrmImportBitmap
     Enabled = False
     TabOrder = 10
     OnClick = chkMaskEmptyClick
+    ExplicitLeft = 440
   end
   object panImageIsMasked: TPanel
-    Left = 463
+    Left = 819
     Top = 312
     Width = 166
     Height = 69
@@ -4657,6 +4672,7 @@ object frmImportBitmap: TfrmImportBitmap
     Color = clWhite
     ParentBackground = False
     TabOrder = 11
+    ExplicitLeft = 463
     DesignSize = (
       166
       69)

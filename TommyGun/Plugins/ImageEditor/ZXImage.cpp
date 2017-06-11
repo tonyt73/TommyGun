@@ -28,6 +28,10 @@
 //---------------------------------------------------------------------------
 const char g_cHex[16] = "0123456789ABCDEF";
 //---------------------------------------------------------------------------
+TColor ZXImage::g_BackgroundColor = clBlack;
+TColor ZXImage::g_TransparentColor = clFuchsia;
+bool ZXImage::g_bTransparentMode = false;
+//---------------------------------------------------------------------------
 __fastcall ZXImage::ZXImage(int iWidth, int iHeight, bool bMasked, ZXPalette* Palette, bool bCanResize)
 : m_sName("Unnamed"),
   m_pPalette(Palette),
@@ -263,6 +267,20 @@ void __fastcall ZXImage::DrawImage(void)
     {
         // get the palette object to draw the changes to the dirty regions of the image
         m_pPalette->Draw(*this, m_pImage);
+        // replace transparent color
+        if (g_bTransparentMode)
+        {
+            for (int y = 0; y < m_iHeight; y++)
+            {
+                for (int x = 0; x < m_iWidth; x++)
+                {
+                    if (m_pImage->Canvas->Pixels[x][y] == g_TransparentColor)
+                    {
+                        m_pImage->Canvas->Pixels[x][y] = g_BackgroundColor;
+                    }
+                }
+            }
+        }
         // apply the mask if needed
         if (true == m_bMaskMode && true == SAFE_PTR(m_pMaskImage))
         {
@@ -1206,6 +1224,21 @@ void __fastcall ZXImage::GenerateMask(int BorderStyle, int iPaletteIndex)
 bool __fastcall ZXImage::GetUsesHotSpot(void)
 {
     return m_iHotSpotX >= 0 || m_iHotSpotY >= 0;
+}
+//---------------------------------------------------------------------------
+void __fastcall ZXImage::SetBackgroundColor(TColor color)
+{
+    g_BackgroundColor = color;
+}
+//---------------------------------------------------------------------------
+void __fastcall ZXImage::SetTransparentColor(TColor color)
+{
+    g_TransparentColor = color;
+}
+//---------------------------------------------------------------------------
+void __fastcall ZXImage::SetTransparentMode(bool mode)
+{
+    g_bTransparentMode = mode;
 }
 //---------------------------------------------------------------------------
 

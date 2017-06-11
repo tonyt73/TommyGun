@@ -60,6 +60,9 @@ private:
     float                       m_fMaskAlpha;               // the value of the mask alpha (transparency, see through-ness)
     TColor                      m_MaskColor;                // the color to render the mask
     bool                        m_bMaskMode;                // flag: true is editing the mask, and false is editing the image
+    static TColor               g_BackgroundColor;          // the images background color
+    static TColor               g_TransparentColor;         // the images transparent color
+    static bool                 g_bTransparentMode;         // flag: true - hide the transparent color, false show it
     bool                        m_bIsMasked;                // flag: true - there is a mask image attached to this image (masks have no attributes)
     bool                        m_bIsDirty;                 // flag: true the image has been changed
     bool                        m_bCanResize;               // flag: indicates if you can resize the image
@@ -135,33 +138,36 @@ public:
             void    __fastcall  Resize(int iLeft, int iTop, int iNewWidth, int iNewHeight);
             void    __fastcall  InvertMask(void);
             void    __fastcall  GenerateMask(int BorderStyle, int iPaletteIndex);
+    static  void    __fastcall  SetBackgroundColor(TColor color);
+    static  void    __fastcall  SetTransparentColor(TColor color);
+    static  void    __fastcall  SetTransparentMode(bool mode);
 
 
     // access functions
-    __property  String          Name        = { read = m_sName      , write = m_sName       };
-    __property  ZXPalette*      Palette     = { read = m_pPalette                           };
-    __property  int             SubType     = { read = m_iSubType   , write = m_iSubType    };
-    __property  int             Width       = { read = m_iWidth                             };
-    __property  int             Height      = { read = m_iHeight                            };
-    __property  int             HotSpotX    = { read = m_iHotSpotX  , write = m_iHotSpotX   };
-    __property  int             HotSpotY    = { read = m_iHotSpotY  , write = m_iHotSpotY   };
-    __property  bool            IsMasked    = { read = m_bIsMasked                          };
-    __property  bool            MaskMode    = { read = m_bMaskMode  , write = SetMaskMode   };
-    __property  bool            IsDirty     = { read = m_bIsDirty                           };
-    __property  bool            CanResize   = { read = m_bCanResize , write = m_bCanResize  };
-    __property  bool            UsesHotSpot = { read = GetUsesHotSpot                       };
-    __property  bool            HotSpotMode = { read = m_bHotSpotMode,write = SetHotSpotMode};
-    __property  float           MaskAlpha   = { read = m_fMaskAlpha , write = SetMaskAlpha  };
-    __property  TColor          MaskColor   = { read = m_MaskColor  , write = SetMaskColor  };
-    __property  unsigned char*  Pixels      = { read = m_pPixelBuffer                       };
-    __property  unsigned char*  Attributes  = { read = m_pAttributeBuffer                   };
-    __property  unsigned char*  Masks       = { read = m_pMaskBuffer                        };
-    __property  TRect           DirtyRect   = { read = GetDirtyRect                         };
-    __property  float           ModeScaleX  = { read = m_fModeScaleX, write = m_fModeScaleX };
-    __property  float           ModeScaleY  = { read = m_fModeScaleY, write = m_fModeScaleY };
-    __property  unsigned long   PixelBufSize= { read = m_iPixelBufferSize                   };
-    __property  unsigned long   AttrBufSize = { read = m_iAttributeBufferSize               };
-    __property  unsigned long   MaskBufSize = { read = m_iMaskBufferSize                    };
+    __property  String          Name                = { read = m_sName              , write = m_sName               };
+    __property  ZXPalette*      Palette             = { read = m_pPalette                                           };
+    __property  int             SubType             = { read = m_iSubType           , write = m_iSubType            };
+    __property  int             Width               = { read = m_iWidth                                             };
+    __property  int             Height              = { read = m_iHeight                                            };
+    __property  int             HotSpotX            = { read = m_iHotSpotX          , write = m_iHotSpotX           };
+    __property  int             HotSpotY            = { read = m_iHotSpotY          , write = m_iHotSpotY           };
+    __property  bool            IsMasked            = { read = m_bIsMasked                                          };
+    __property  bool            MaskMode            = { read = m_bMaskMode          , write = SetMaskMode           };
+    __property  bool            IsDirty             = { read = m_bIsDirty                                           };
+    __property  bool            CanResize           = { read = m_bCanResize         , write = m_bCanResize          };
+    __property  bool            UsesHotSpot         = { read = GetUsesHotSpot                                       };
+    __property  bool            HotSpotMode         = { read = m_bHotSpotMode       ,write = SetHotSpotMode         };
+    __property  float           MaskAlpha           = { read = m_fMaskAlpha         , write = SetMaskAlpha          };
+    __property  TColor          MaskColor           = { read = m_MaskColor          , write = SetMaskColor          };
+    __property  unsigned char*  Pixels              = { read = m_pPixelBuffer                                       };
+    __property  unsigned char*  Attributes          = { read = m_pAttributeBuffer                                   };
+    __property  unsigned char*  Masks               = { read = m_pMaskBuffer                                        };
+    __property  TRect           DirtyRect           = { read = GetDirtyRect                                         };
+    __property  float           ModeScaleX          = { read = m_fModeScaleX        , write = m_fModeScaleX         };
+    __property  float           ModeScaleY          = { read = m_fModeScaleY        , write = m_fModeScaleY         };
+    __property  unsigned long   PixelBufSize        = { read = m_iPixelBufferSize                                   };
+    __property  unsigned long   AttrBufSize         = { read = m_iAttributeBufferSize                               };
+    __property  unsigned long   MaskBufSize         = { read = m_iMaskBufferSize                                    };
 };
 //---------------------------------------------------------------------------
 #endif

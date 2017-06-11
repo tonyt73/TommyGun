@@ -212,6 +212,9 @@ void __fastcall TfrmImageEditor::OnTabShow(TObject *Sender)
     {
         //ZX_LOG_ERROR(lfGeneral, "The ToolBar list and the ToolbarMenu list sizes do not match!")
     }
+    ZXImage::SetTransparentMode(chkTransparentHide->Checked);
+    ZXImage::SetBackgroundColor(panBackgroundColor->Color);
+    ZXImage::SetTransparentColor(panTransparentColor->Color);
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmImageEditor::RefreshView(void)
@@ -488,8 +491,7 @@ void __fastcall TfrmImageEditor::DrawGridLines(TRect& UpdateRect)
     m_pCanvas->Canvas->Pen->Color = panBackgroundColor->Color;
     m_pCanvas->Canvas->MoveTo(m_pCanvas->Width - 1, 0);
     m_pCanvas->Canvas->LineTo(m_pCanvas->Width - 1, m_pCanvas->Height - 1);
-    m_pCanvas->Canvas->MoveTo(0, m_pCanvas->Height - 1);
-    m_pCanvas->Canvas->LineTo(m_pCanvas->Width - 1, m_pCanvas->Height - 1);
+    m_pCanvas->Canvas->LineTo(0, m_pCanvas->Height - 1);
 
     if (true == tbnGridPixel->Down && 4 <= m_iMagnification)
     {
@@ -523,8 +525,8 @@ void __fastcall TfrmImageEditor::DrawGridLines(TRect& UpdateRect)
         }
         for (int y = ys; y <= ye; y += 8)
         {
-            m_pCanvas->Canvas->MoveTo(UpdateRect.Left  * fScalarX * m_iMagnification, y * fScalarY * m_iMagnification);
-            m_pCanvas->Canvas->LineTo(UpdateRect.Right * fScalarX * m_iMagnification, y * fScalarY * m_iMagnification);
+            m_pCanvas->Canvas->MoveTo(UpdateRect.Left  * fScalarX * m_iMagnification    , y * fScalarY * m_iMagnification);
+            m_pCanvas->Canvas->LineTo(UpdateRect.Right * fScalarX * m_iMagnification + 1, y * fScalarY * m_iMagnification);
         }
     }
     //PERFORMANCE_POP(__FUNC__);
