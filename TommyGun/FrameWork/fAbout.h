@@ -54,12 +54,7 @@ __published:	// IDE-managed Components
     TLabel *Label4;
     TShape *Shape1;
     TLabel *Label5;
-    void __fastcall lblEmailClick(TObject *Sender);
-    void __fastcall lblWebsiteClick(TObject *Sender);
-    void __fastcall lblSynEditClick(TObject *Sender);
-    void __fastcall lblFooodWebSiteClick(TObject *Sender);
-    void __fastcall Label2Click(TObject *Sender);
-    void __fastcall Label4Click(TObject *Sender);
+    void __fastcall lblGotoLinkClick(TObject *Sender);
 private:	// User declarations
     void __fastcall OpenLink(char* sLink);
 public:		// User declarations

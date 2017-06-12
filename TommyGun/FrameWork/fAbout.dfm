@@ -2664,7 +2664,7 @@ object frmAbout: TfrmAbout
     Top = 86
     Width = 64
     Height = 13
-    Caption = 'Version 1.3'
+    Caption = 'Version 1.4'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
@@ -2714,7 +2714,7 @@ object frmAbout: TfrmAbout
     ParentFont = False
     ParentShowHint = False
     ShowHint = True
-    OnClick = lblSynEditClick
+    OnClick = lblGotoLinkClick
   end
   object imgClickMe: TImage
     Left = 29
@@ -2745,7 +2745,7 @@ object frmAbout: TfrmAbout
     Width = 125
     Height = 13
     Cursor = crHandPoint
-    Hint = 'tommygun.ide@gmail.com'
+    Hint = 'mailto:tommygun.ide@gmail.com'
     Anchors = [akTop, akRight]
     Caption = 'tommygun.ide@gmail.com'
     Font.Charset = DEFAULT_CHARSET
@@ -2754,7 +2754,7 @@ object frmAbout: TfrmAbout
     Font.Name = 'Tahoma'
     Font.Style = [fsUnderline]
     ParentFont = False
-    OnClick = lblEmailClick
+    OnClick = lblGotoLinkClick
   end
   object lblFooodsIcons: TLabel
     Left = 243
@@ -2785,7 +2785,7 @@ object frmAbout: TfrmAbout
     ParentFont = False
     ParentShowHint = False
     ShowHint = True
-    OnClick = lblFooodWebSiteClick
+    OnClick = lblGotoLinkClick
   end
   object imgEMail: TImage
     Left = 270
@@ -2809,7 +2809,7 @@ object frmAbout: TfrmAbout
       ADAD}
     ShowHint = True
     Transparent = True
-    OnClick = lblEmailClick
+    OnClick = lblGotoLinkClick
   end
   object lblAboutSynEdit: TLabel
     Left = 8
@@ -2825,14 +2825,14 @@ object frmAbout: TfrmAbout
     ParentFont = False
   end
   object lblWebsite: TLabel
-    Left = 289
-    Top = 118
-    Width = 132
+    Left = 318
+    Top = 121
+    Width = 103
     Height = 13
     Cursor = crHandPoint
-    Hint = 'https://sourceforge.net/projects/tommygun/'
+    Hint = 'https://github.com/tonyt73/TommyGun'
     Anchors = [akTop, akRight]
-    Caption = 'TommyGun on SourceForge'
+    Caption = 'TommyGun on GitHub'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlue
     Font.Height = -11
@@ -2841,7 +2841,7 @@ object frmAbout: TfrmAbout
     ParentFont = False
     ParentShowHint = False
     ShowHint = True
-    OnClick = lblWebsiteClick
+    OnClick = lblGotoLinkClick
   end
   object Label1: TLabel
     Left = 8
@@ -2872,7 +2872,7 @@ object frmAbout: TfrmAbout
     ParentFont = False
     ParentShowHint = False
     ShowHint = True
-    OnClick = Label2Click
+    OnClick = lblGotoLinkClick
   end
   object Label3: TLabel
     Left = 228
@@ -2903,7 +2903,7 @@ object frmAbout: TfrmAbout
     ParentFont = False
     ParentShowHint = False
     ShowHint = True
-    OnClick = Label4Click
+    OnClick = lblGotoLinkClick
   end
   object Shape1: TShape
     Left = 8
@@ -2971,7 +2971,7 @@ object frmAbout: TfrmAbout
     object Image1: TImage
       Left = 0
       Top = 0
-      Width = 426
+      Width = 429
       Height = 80
       Align = alClient
       AutoSize = True
@@ -6179,6 +6179,7 @@ object frmAbout: TfrmAbout
         4284614284614284614284614284614284614284614284614284614284614284
         6142846142846142846142846142846142846142846142846142846142846142
         42FF}
+      ExplicitWidth = 426
     end
   end
 end

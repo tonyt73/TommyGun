@@ -50,40 +50,9 @@ void __fastcall TfrmAbout::OpenLink(char* sLink)
     ShellExecuteEx( &shi );
 }
 //---------------------------------------------------------------------------
-void __fastcall TfrmAbout::lblEmailClick(TObject *Sender)
+void __fastcall TfrmAbout::lblGotoLinkClick(TObject *Sender)
 {
-    char sWebLink[] = "mailto:tommygun.ide@gmail.com\0";
-    OpenLink(sWebLink);
-}
-//---------------------------------------------------------------------------
-void __fastcall TfrmAbout::lblWebsiteClick(TObject *Sender)
-{
-    char sWebLink[] = "https://sourceforge.net/projects/tommygun/\0";
-    OpenLink(sWebLink);
-}
-//---------------------------------------------------------------------------
-void __fastcall TfrmAbout::lblSynEditClick(TObject *Sender)
-{
-    char sWebLink[] = "http://www.scintilla.org/\0";
-    OpenLink(sWebLink);
-}
-//---------------------------------------------------------------------------
-void __fastcall TfrmAbout::lblFooodWebSiteClick(TObject *Sender)
-{
-    char sWebLink[] = "http://www.iconaholic.com/\0";
-    OpenLink(sWebLink);
-}
-//---------------------------------------------------------------------------
-void __fastcall TfrmAbout::Label2Click(TObject *Sender)
-{
-    char sWebLink[] = "http://pasmo.speccy.org/\0";
-    OpenLink(sWebLink);
-}
-//---------------------------------------------------------------------------
-void __fastcall TfrmAbout::Label4Click(TObject *Sender)
-{
-    char sWebLink[] = "http://fms.komkon.org/EMUL8/\0";
-    OpenLink(sWebLink);
+    OpenLink(((TLabel*)Sender)->Hint.c_str());
 }
 //---------------------------------------------------------------------------
 
