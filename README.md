@@ -1,7 +1,6 @@
-
-        Welcome to TommyGun
-           Version 1.3
-  (c) copyright 2004-2017 Tony Thompson
+# Welcome to TommyGun
+## Version 1.3
+### (c) copyright 2004-2017 Tony Thompson
 
 TommyGun is a retro development environment for creating ZX Spectrum games.
 
