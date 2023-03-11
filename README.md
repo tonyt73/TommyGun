@@ -1,8 +1,8 @@
 <img src="TommyGun/Images/tommygun-logo.png">
 
-[![license](https://img.shields.io/github/license/tonyt73/TommyGun)](./LICENSE.txt)
-[![release](https://img.shields.io/github/v/release/tonyt73/TommyGun?include_prereleases)](https://github.com/tonyt73/TommyGun/releases)
-[![release](https://img.shields.io/github/downloads/tonyt73/tommygun/total)](https://github.com/tonyt73/TommyGun/releases)
+[![license](https://img.shields.io/github/license/tonyt73/TommyGun?style=for-the-badge)](./LICENSE.txt)
+[![release](https://img.shields.io/github/v/release/tonyt73/TommyGun?include_prereleases&style=for-the-badge)](https://github.com/tonyt73/TommyGun/releases)
+[![release](https://img.shields.io/github/downloads/tonyt73/tommygun/total?style=for-the-badge)](https://github.com/tonyt73/TommyGun/releases)
 
 ![stars](https://img.shields.io/github/stars/tonyt73/TommyGun?style=social)
 ![forks](https://img.shields.io/github/forks/tonyt73/TommyGun?style=social)
