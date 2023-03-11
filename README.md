@@ -1,6 +1,6 @@
 <img src="TommyGun/Images/tommygun-logo.png" height="314">
 
-[![license](https://img.shields.io/github/license/tonyt73/tommygun?logo=MIT)](./LICENSE.txt)
+[![license](https://img.shields.io/github/license/tonyt73/TommyGun)](./LICENSE.txt)
 
 # Welcome to TommyGun
 ## Version 1.3
