@@ -1,6 +1,8 @@
 <img src="TommyGun/Images/tommygun-logo.png">
 
-[![license](https://img.shields.io/github/license/tonyt73/TommyGun)](./LICENSE.txt) ![release](https://img.shields.io/github/v/release/tonyt73/TommyGun?include_prereleases)
+[![license](https://img.shields.io/github/license/tonyt73/TommyGun)](./LICENSE.txt)
+![release](https://img.shields.io/github/v/release/tonyt73/TommyGun?include_prereleases)
+![release](https://img.shields.io/github/downloads/tonyt73/tommygun/total)
 
 # Welcome to TommyGun
 ### (c) copyright 2004-2017 Tony Thompson
