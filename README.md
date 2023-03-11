@@ -1,4 +1,4 @@
-<img src="TommyGun/Images/tommygun-logo.png" width="800">
+<img src="TommyGun/Images/tommygun-logo.png" height="314">
 
 # Welcome to TommyGun
 ## Version 1.3
