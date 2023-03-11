@@ -4,31 +4,31 @@
 
 TommyGun is a retro development environment for creating ZX Spectrum games.
 
-Contact Me:
+## Contact Me:
 ===========
 tommygun.ide@gmail.com
 My name is TONY; not Tommy and not TommyGun.
 TommyGun is the name of the application.
 
 
-Pasmo Z80 Assembler
+## Pasmo Z80 Assembler
 ===================
 http://pasmo.speccy.org/
 Pasmo is used with permission from Julián Albo
 Please see the Pasmo folder for open source licencing information
 
-Portable Z80 emulator
+## Portable Z80 emulator
 =====================
 (c) 2007 Marat Fayzullin
 http://fms.komkon.org/EMUL8/
 
 
-Quick Start Guide
+## Quick Start Guide
 =================
 Want to see what TommyGun can do but without having to write any code or draw any artwork?
 Then please read the Getting Started Guide.doc for how to run the SabreWulf project.
 
-Whats New?
+## Whats New?
 ==========
 1.3.8 (June 2017)
 * Scorpio VCL Components
