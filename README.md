@@ -6,6 +6,7 @@
 
 ![stars](https://img.shields.io/github/stars/tonyt73/agd-studio?style=social)
 ![forks](https://img.shields.io/github/forks/tonyt73/agd-studio?style=social)
+![watchers](https://img.shields.io/github/watchers/tonyt73/agd-studio?style=social)
 
 # Welcome to TommyGun
 ### (c) copyright 2004-2017 Tony Thompson
