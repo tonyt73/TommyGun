@@ -1,4 +1,4 @@
-<img src="Images/Logo.png" width="800">
+<img src="TommyGun/Images/Logo.png" width="800">
 
 # Welcome to TommyGun
 ## Version 1.3
