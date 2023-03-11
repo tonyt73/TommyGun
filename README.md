@@ -1,4 +1,4 @@
-<img src="TommyGun/Images/tommygun-logo.png" height="314">
+<img src="TommyGun/Images/tommygun-logo.png" height="265">
 
 [![license](https://img.shields.io/github/license/tonyt73/TommyGun)](./LICENSE.txt) ![release](https://img.shields.io/github/v/release/tonyt73/TommyGun?include_prereleases)
 
