@@ -1,3 +1,5 @@
+<img src="Images/Logo.png" width="800">
+
 # Welcome to TommyGun
 ## Version 1.3
 ### (c) copyright 2004-2017 Tony Thompson
