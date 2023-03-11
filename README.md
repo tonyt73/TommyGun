@@ -3,14 +3,15 @@
 [![license](https://img.shields.io/github/license/tonyt73/TommyGun)](./LICENSE.txt) ![release](https://img.shields.io/github/v/release/tonyt73/TommyGun?include_prereleases)
 
 # Welcome to TommyGun
-## Version 1.4
 ### (c) copyright 2004-2017 Tony Thompson
 
 TommyGun is a retro development environment for creating ZX Spectrum games.
 
 ### Contact Me:
 tommygun.ide@gmail.com
+
 My name is TONY; not Tommy and not TommyGun.
+
 TommyGun is the name of the application.
 
 
