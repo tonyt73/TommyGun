@@ -4,9 +4,9 @@
 ![release](https://img.shields.io/github/v/release/tonyt73/TommyGun?include_prereleases)
 ![release](https://img.shields.io/github/downloads/tonyt73/tommygun/total)
 
-![stars](https://img.shields.io/github/stars/tonyt73/agd-studio?style=social)
-![forks](https://img.shields.io/github/forks/tonyt73/agd-studio?style=social)
-![watchers](https://img.shields.io/github/watchers/tonyt73/agd-studio?style=social)
+![stars](https://img.shields.io/github/stars/tonyt73/TommyGun?style=social)
+![forks](https://img.shields.io/github/forks/tonyt73/TommyGun?style=social)
+![watchers](https://img.shields.io/github/watchers/tonyt73/TommyGun?style=social)
 
 # Welcome to TommyGun
 ### (c) copyright 2004-2017 Tony Thompson
