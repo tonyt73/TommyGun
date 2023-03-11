@@ -1,5 +1,7 @@
 <img src="TommyGun/Images/tommygun-logo.png" height="314">
 
+[![license](https://img.shields.io/badge/mit-blue.svg)](./LICENSE.txt)
+
 # Welcome to TommyGun
 ## Version 1.3
 ### (c) copyright 2004-2017 Tony Thompson
