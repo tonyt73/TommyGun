@@ -33,16 +33,16 @@ Whats New?
 ==========
 1.3.8 (June 2017)
 * Scorpio VCL Components
-  o Removed all unusued components and their references from all plugins
+  * Removed all unusued components and their references from all plugins
 * Core
-  o Fixed dialog color
-  o Changed folder dialog to use Windows Select Folder dialog
+  * Fixed dialog color
+  * Changed folder dialog to use Windows Select Folder dialog
 * Image Editor
-  o Added ZX Spectrum Next 256 color palette support
-  o Added check to not load duplicate palette plugins
+  * Added ZX Spectrum Next 256 color palette support
+  * Added check to not load duplicate palette plugins
 * Code Editor
-  o Added Scintilla syntax highligher colour editor
-  o Added Move to other view for side by side editing like Notepad++
+  * Added Scintilla syntax highligher colour editor
+  * Added Move to other view for side by side editing like Notepad++
   
 
 1.3.7 (January 2017)
