@@ -4,7 +4,7 @@
 ![release](https://img.shields.io/github/v/release/tonyt73/TommyGun?include_prereleases)
 ![release](https://img.shields.io/github/downloads/tonyt73/tommygun/total)
 
-!(https://img.shields.io/github/stars/tonyt73/agd-studio?style=social)
+![stars](https://img.shields.io/github/stars/tonyt73/agd-studio?style=social)
 
 # Welcome to TommyGun
 ### (c) copyright 2004-2017 Tony Thompson
