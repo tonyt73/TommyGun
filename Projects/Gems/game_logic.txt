@@ -1,0 +1,104 @@
+
+
+                        The Gem Machine
+                Written by Team World of Spectrum
+
+
+Purpose:
+This document will describe the logic behind the game - the Gem Machine.
+
+
+
+Things TODO:
+    * Check entire board for matches once a match scroll has finished
+    * Generate a clean board with no matches
+    * Score bonuses for multiple matches with a scoring round
+    * Increment time limit in timed mode
+    * Increment completion bar during normal mode
+    *
+
+
+
+
+
+            Clear the screen and border
+            Draw the score panel
+            Reset game flags to start the menu
+
+MainLoop:
+            switch (GameFlags)
+            case Quit:
+                Quit game
+            case Menu:
+                gosub MainMenu
+            case StartGame:
+                gosub GameStart
+            case PlayingGame:
+                gosub GamePlay
+            goto MainLoop
+            
+Quit:       return to BASIC
+
+
+
+MainMenu:   Display main menu
+MM_Lp:      Get key press
+            switch(key)
+            case 1:
+                Start Normal Game
+                return
+            case 2:
+                Start Timed Game
+                return
+            case 3:
+                gosub MenuControl
+            case 4:
+                gosub MenuMusic
+            case 5:
+                gosub MenuRules
+            case 6:
+                Continue Game
+                return
+            case 7:
+                Quit game
+                return
+            goto MainMenuLp
+                
+MenuControl:
+            Display Control Menu
+MC_Loop:    Get Key press
+            switch(key)
+            case 1:
+                Keyboard
+                return to main menu
+            case 2:
+                Interface II joystick
+                return to main menu
+            case 3:
+                Kempston joystick
+                return to main menu
+            case 4:
+                Kempston mouse
+                return to main menu
+            goto MC_Loop
+
+
+MenuMusic:  Display Music menu
+MMc_Lp:     Get key press
+            switch(key)
+            case 1:
+                Play Theme 1
+            case 2:
+                Play Theme 2:
+            case 3:
+                Play Theme 3
+            case 4:
+                return to main menu
+            goto MMc_Lp
+
+
+MenuRules:  Display Game Rules menu
+            get key press
+            if space then return to main menu
+            goto get key press
+            

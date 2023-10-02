@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<TommyGunProject>
+  <Version>2.0</Version>
+  <Machine>ZX Spectrum</Machine>
+  <ImageEditor>
+    <Palettes>
+      <Palette>
+        <Name>Monochrome</Name>
+        <BitsPerPixel>1</BitsPerPixel>
+        <BitPerAttribute>1</BitPerAttribute>
+        <PixelsWidePerAttribute>1</PixelsWidePerAttribute>
+        <PixelsHighPerAttribute>1</PixelsHighPerAttribute>
+        <PixelsPerByte>8.000000</PixelsPerByte>
+        <SupportsPixelsOnly>true</SupportsPixelsOnly>
+      </Palette>
+      <Palette>
+        <Name>ZX Spectrum</Name>
+        <BitsPerPixel>1</BitsPerPixel>
+        <BitPerAttribute>8</BitPerAttribute>
+        <PixelsWidePerAttribute>8</PixelsWidePerAttribute>
+        <PixelsHighPerAttribute>8</PixelsHighPerAttribute>
+        <PixelsPerByte>8.000000</PixelsPerByte>
+        <SupportsPixelsOnly>false</SupportsPixelsOnly>
+      </Palette>
+      <Palette>
+        <Name>Monochrome</Name>
+        <BitsPerPixel>1</BitsPerPixel>
+        <BitPerAttribute>1</BitPerAttribute>
+        <PixelsWidePerAttribute>1</PixelsWidePerAttribute>
+        <PixelsHighPerAttribute>1</PixelsHighPerAttribute>
+        <PixelsPerByte>8.000000</PixelsPerByte>
+        <SupportsPixelsOnly>true</SupportsPixelsOnly>
+      </Palette>
+    </Palettes>
+  </ImageEditor>
+  <MapEditor>
+    <Settings>
+      <ScorePanel>
+        <Show>false</Show>
+        <XOverlap>0</XOverlap>
+        <YOverlap>0</YOverlap>
+      </ScorePanel>
+      <ScreenLayout>
+        <DontIntersectTiles>true</DontIntersectTiles>
+        <SnapToGrid>true</SnapToGrid>
+        <GridWidth>8</GridWidth>
+        <GridHeight>8</GridHeight>
+        <Magnification>1</Magnification>
+      </ScreenLayout>
+      <StartScreen>
+        <Screen>-1</Screen>
+      </StartScreen>
+      <MapLayout>
+        <Scale>100</Scale>
+        <Gap>0</Gap>
+      </MapLayout>
+    </Settings>
+    <Properties>
+      <ScreenWidth>256</ScreenWidth>
+      <ScreenHeight>192</ScreenHeight>
+      <ScreensAcross>16</ScreensAcross>
+      <ScreensDown>16</ScreensDown>
+      <BackgroundColor>clBlack</BackgroundColor>
+      <GridWidth>8</GridWidth>
+      <GridHeight>8</GridHeight>
+    </Properties>
+    <Screens/>
+    <Objects/>
+  </MapEditor>
+  <CodeEditor>
+    <Settings>
+      <BuildTools>
+        <Tool1>Z88DK C Compiler</Tool1>
+        <Parameters1>+zx -lndos -create-app -o %game% *.c</Parameters1>
+      </BuildTools>
+      <Emulator>
+        <Tool>ZX Spin v0.7s</Tool>
+        <Parameters>%Pfolder%\%game%.tap</Parameters>
+      </Emulator>
+    </Settings>
+    <Files>
+      <File>main.c</File>
+      <File>library.c</File>
+      <File>library.h</File>
+    </Files>
+    <Files>
+      <File>main.c</File>
+      <File>library.c</File>
+      <File>library.h</File>
+    </Files>
+  </CodeEditor>
+</TommyGunProject>
